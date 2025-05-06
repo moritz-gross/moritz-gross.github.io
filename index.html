@@ -6,7 +6,6 @@
     <title>Moritz Groß</title>
 
     <style>
-        /* wrap all your page content in a fixed-max container */
         .container {
             width: 66.666%; /* roughly two-thirds of viewport */
             max-width: 800px; /* never wider than 800px */
@@ -16,12 +15,25 @@
             box-sizing: border-box; /* include padding in the width */
         }
 
-        /* optional: tighten up very narrow screens */
         @media (max-width: 400px) {
             .container {
                 width: 90%;
                 padding: 0.5rem;
             }
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .contact-links a {
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-links a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -31,6 +43,14 @@
     <div class="container">
         <header>
             <h2>Moritz Groß</h2>
+
+            <section id="contact">
+                <div class="contact-links">
+                    <a href="mailto:hi@mgross.dev">Email</a>
+                    <a href="https://github.com/moritz-gross" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://linkedin.com/in/moritz-gross" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </div>
+            </section>
 
             <p>
                 I'm pursuing a Master's degree in Data Science, focusing on AI, algorithms, complexity, and their
@@ -78,17 +98,6 @@
                         <strong><a href="https://github.com/moritz-gross/FixCon" target="_blank" rel="noopener noreferrer">FixCon</a></strong>
                         <br> implementation and benchmark of an algorithmic framework developed for the theoretical computer
                         science group.
-                    </li>
-                </ul>
-            </section>
-
-            <section id="contact">
-                <h3>Contact</h3>
-                <ul>
-                    <li>Email: <a href="mailto:hi@mgross.dev">hi@mgross.dev</a></li>
-                    <li>GitHub: <a href="https://github.com/moritz-gross" target="_blank" rel="noopener noreferrer">moritz-gross</a>
-                    </li>
-                    <li>LinkedIn: <a href="https://linkedin.com/in/moritz-gross" target="_blank" rel="noopener noreferrer">moritz-gross</a>
                     </li>
                 </ul>
             </section>
