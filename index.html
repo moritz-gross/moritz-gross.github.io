@@ -4,65 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moritz Groß</title>
-    </head>
+
+    <style>
+        /* wrap all your page content in a fixed-max container */
+        .container {
+            width: 66.666%; /* roughly two-thirds of viewport */
+            max-width: 800px; /* never wider than 800px */
+            min-width: 320px; /* don’t shrink below 320px */
+            margin: 0 auto; /* center horizontally */
+            padding: 2rem; /* give a little breathing room */
+            box-sizing: border-box; /* include padding in the width */
+        }
+
+        /* optional: tighten up very narrow screens */
+        @media (max-width: 400px) {
+            .container {
+                width: 90%;
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+
 <body>
-    <header>
-        <h1>Moritz Groß</h1>
+    <div class="container">
+        <header>
+            <h2>Moritz Groß</h2>
 
-        <p>
-            I'm pursuing a Master's degree in Data Science, focusing on AI, algorithms, complexity, and their intersection.
-            <br>
-            I'm also working for <a href="https://www.math4vip.org">www.math4vip.org</a>, a university project focused on making STEM
+            <p>
+                I'm pursuing a Master's degree in Data Science, focusing on AI, algorithms, complexity, and their
+                intersection.
+                <br>
+                I'm also working for <a href="https://www.math4vip.org">www.math4vip.org</a>, a university project focused
+                on making STEM
                 accessible to blind people.
-        </p>
+            </p>
 
-        <p>
-            <br>
-            Before that, I was a data scientist at an <a href="https://xentral.com/en">ERP company</a> and was a software engineering intern working on a
-            <a href="https://www.getflip.com/">social app</a>. <br>
-            I also had multiple jobs at my university, including being a <a href="https://www.mathematik.uni-marburg.de/modulhandbuch/20232/BSc_Data_Science_en/Practical_Modules/Programming_Lab.html">teaching assistant</a>
-            and an engineer for the <a href="https://www.uni-marburg.de/en/fb12/research-groups/algorith/software/fixcon">algorithms research group</a>.
-        </p>
+            <p>
+                <br>
+                Before that, I was a data scientist at an <a href="https://xentral.com/en">ERP company</a> and was a
+                software engineering intern working on a
+                <a href="https://www.getflip.com/">social app</a>. <br>
+                I also had multiple jobs at my university, including being a <a
+                    href="https://www.mathematik.uni-marburg.de/modulhandbuch/20232/BSc_Data_Science_en/Practical_Modules/Programming_Lab.html">teaching
+                assistant</a>
+                and an engineer for the <a
+                    href="https://www.uni-marburg.de/en/fb12/research-groups/algorith/software/fixcon">algorithms research
+                group</a>.
+            </p>
 
 
         </header>
 
 
-    <main>
+        <main>
 
-        <section id="projects">
-            <h2>Projects</h2>
-            <ul>
-                <li>
-                    <strong><a href="https://github.com/sipura/Sipura" target="_blank" rel="noopener noreferrer">Sipura</a></strong> <br> A library providing data structures and algorithms for graphs. It's based on tooling needed for my bachelor thesis, and has been used for some theses since.
-                </li>
-                <li>
-                    <strong><a href="https://github.com/GWSoftwareTools/VertexCover" target="_blank" rel="noopener noreferrer">Solver for Vertex Cover</a></strong> <br> Winning entry from a hackathon during undergrad.
-                </li>
-                <li>
-                    <strong><a href="https://github.com/moritz-gross/FixCon" target="_blank" rel="noopener noreferrer">FixCon</a></strong> <br> implementation and benchmark of an algorithmic framework developed for the theoretical computer science group.
-                </li>
+            <section id="projects">
+                <h3>Projects</h3>
+                <ul>
+                    <li>
+                        <strong><a href="https://github.com/sipura/Sipura" target="_blank"
+                                   rel="noopener noreferrer">Sipura</a></strong> <br> A library providing data structures
+                        and algorithms for graphs. It's based on tooling needed for my bachelor thesis, and has been used
+                        for some theses since.
+                    </li>
+                    <li>
+                        <strong><a href="https://github.com/GWSoftwareTools/VertexCover" target="_blank"
+                                   rel="noopener noreferrer">Solver for Vertex Cover</a></strong> <br> Winning entry from a
+                        hackathon during undergrad.
+                    </li>
+                    <li>
+                        <strong><a href="https://github.com/moritz-gross/FixCon" target="_blank" rel="noopener noreferrer">FixCon</a></strong>
+                        <br> implementation and benchmark of an algorithmic framework developed for the theoretical computer
+                        science group.
+                    </li>
                 </ul>
-        </section>
+            </section>
 
-        <section id="contact">
-            <h2>Contact</h2>
-            <ul>
-                <li>Email:    <a href="mailto:hi@mgross.dev">hi@mgross.dev</a></li>
-                <li>GitHub:   <a href="https://github.com/moritz-gross" target="_blank" rel="noopener noreferrer">moritz-gross</a></li>
-                <li>LinkedIn: <a href="https://linkedin.com/in/moritz-gross" target="_blank" rel="noopener noreferrer">moritz-gross</a></li>
+            <section id="contact">
+                <h3>Contact</h3>
+                <ul>
+                    <li>Email: <a href="mailto:hi@mgross.dev">hi@mgross.dev</a></li>
+                    <li>GitHub: <a href="https://github.com/moritz-gross" target="_blank" rel="noopener noreferrer">moritz-gross</a>
+                    </li>
+                    <li>LinkedIn: <a href="https://linkedin.com/in/moritz-gross" target="_blank" rel="noopener noreferrer">moritz-gross</a>
+                    </li>
                 </ul>
-        </section>
+            </section>
 
-        <section id="misc-unsorted">
-            <h3>misc unsorted</h3>
-            <ul>
-                <li>0 frameworks were used to make this simple responsive website, inspired by https://karpathy.ai </li>
-                <li>A discontinued side project is a <a href="https://www.youtube.com/@valinor-edu" target="_blank" rel="noopener noreferrer">youtube channel</a> making <em>3blue1brown</em>-style explainers for ML topics</li>
-            </ul>
-        </section>
+            <section id="misc-unsorted">
+                <h4>misc unsorted</h4>
+                <ul>
+                    <li>0 frameworks were used to make this simple responsive website, inspired by https://karpathy.ai</li>
+                    <li>A discontinued side project is a <a href="https://www.youtube.com/@valinor-edu" target="_blank"
+                                                            rel="noopener noreferrer">youtube channel</a> making <em>3blue1brown</em>-style
+                        explainers for ML topics
+                    </li>
+                </ul>
+            </section>
 
         </main>
 
+    </div>
 </body>
 </html>
