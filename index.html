@@ -29,6 +29,18 @@
             }
         }
 
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .portrait {
+            width: 20%;
+            height: auto;
+            border-radius: 10%;
+        }
+
         .contact-links {
             display: flex;
             gap: 20px;
@@ -49,16 +61,22 @@
 <body>
     <div class="container">
         <header>
-            <h3>Moritz Groß</h3>
+            <div class="header-left">
+                <h3>Moritz Groß</h3>
 
-            <section id="contact">
-                <div class="contact-links">
-                    <a href="mailto:hi@mgross.dev">Email</a>
-                    <a href="https://github.com/moritz-gross" target="_blank" rel="noopener noreferrer">GitHub</a>
-                    <a href="https://linkedin.com/in/moritz-gross" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                </div>
-            </section>
+                <section id="contact">
+                    <div class="contact-links">
+                        <a href="mailto:hi@mgross.dev">Email</a>
+                        <a href="https://github.com/moritz-gross" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        <a href="https://linkedin.com/in/moritz-gross" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    </div>
+                </section>
+            </div>
 
+            <img src="portrait.jpg" alt="Portrait of Moritz Groß" class="portrait">
+        </header>
+
+        <main>
             <section id="about">
                 <h4>About</h4>
                 <p>
@@ -78,11 +96,6 @@
                     and being a software engineering intern for a <a href="https://www.getflip.com/">social app</a>.
                 </p>
             </section>
-
-        </header>
-
-
-        <main>
 
             <section id="past_projects">
                 <h4>(selected) past projects</h4>
