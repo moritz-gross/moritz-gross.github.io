@@ -1,0 +1,34 @@
+body {
+    font-family: "JetBrains Mono", monospace;
+    line-height: 1.3;
+}
+
+.container {
+    width: 75%;
+    max-width: 880px;
+    min-width: 320px;
+    margin: 0 auto; /* center horizontally */
+    padding: 2rem; /* give a little breathing room */
+    box-sizing: border-box; /* include padding in the width */
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.portrait {
+    width: 20%;
+    height: auto;
+    border-radius: 10%;
+}
+
+.contact-links {
+    display: flex;
+    gap: 20px;
+}
+
+li {
+    padding: .25rem
+}
