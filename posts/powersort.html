@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Powersort</title>
+    <title>Powersort</title>
 
-  <link rel="stylesheet" href="../styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
-  <style>
-    .array-chart {
-      display: flex;
-      align-items: flex-end; /* align at the bottom of the chart */
-      gap: 1.5rem; /* space between bars */
-      margin-bottom: 1.5rem;
-      height: 200px; /* overall chart height */
-      font-family: "JetBrains Mono", monospace;
-    }
+    <style>
+        .array-chart {
+            display: flex;
+            align-items: flex-end; /* align at the bottom of the chart */
+            gap: 1.5rem; /* space between bars */
+            margin-bottom: 1.5rem;
+            height: 200px; /* overall chart height */
+            font-family: "JetBrains Mono", monospace;
+        }
 
-    .array-bar {
-      flex: 1;
-      border-radius: 4px 4px 0 0;
-      border: 1px solid #ccc;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      font-size: 0.75rem;
-      padding-bottom: 0.25rem;
-    }
-  </style>
+        .array-bar {
+            flex: 1;
+            border-radius: 4px 4px 0 0;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            font-size: 0.75rem;
+            padding-bottom: 0.25rem;
+        }
+    </style>
 
 </head>
 
 <body>
-  <div class="container">
+<div class="container">
     <header>
         <div class="header-left">
             <h3>Moritz Groß</h3>
@@ -44,124 +44,76 @@
     </header>
 
     <main>
-      <article class="post">
+        <article class="post">
 
-        <header class="post-header">
-          <h3 class="post-title">Powersort</h3>
-        </header>
+            <header class="post-header">
+                <h3 class="post-title">Powersort</h3>
+            </header>
 
-        <section class="post-content">
+            <section class="post-content">
 
-            <aside>
-              <i>This article is a work in progress. Details and examples may change.</i>
-            </aside>
+                <aside>
+                    <i>This article is a work in progress. Details and examples may change.</i>
+                </aside>
 
-            <p>
-            Powersort is a modern sorting algorithm (invented 2018) that keeps the same worst-case guarantees of
-            previous algorithms like Quicksort and Mergesort, but works particularly fast on "easy" inputs.
-            This leads us to first define what we exactly mean by easy and hard, and how we can exploit these
-            ideas reliably without spending much computation on them.
-            </p>
+                <p>
+                    Powersort is a modern sorting algorithm (invented 2018) that keeps the same worst-case guarantees of
+                    previous algorithms like Quicksort and Mergesort, but works particularly fast on "easy" inputs.
+                    This leads us to first define what we exactly mean by easy and hard, and how we can exploit these
+                    ideas reliably without spending much computation on them.
+                </p>
 
-            <p>
-            Even though all following thoughts can be applied to any comparable type of object (e.g. strings), we use
-            integers in the range from 1 to 10 for easy visualization. First off, we consider the "easiest" input possible
-            for sorting, an ascending array, which is an array that is already sorted. In this case, nothing needs to be done:
-            </p>
+                <p>
+                    Even though all following thoughts can be applied to any comparable type of object (e.g. strings),
+                    we use
+                    integers in the range from 1 to 10 for easy visualization. First off, we consider the "easiest"
+                    input possible
+                    for sorting, an ascending array, which is an array that is already sorted. In this case, nothing
+                    needs to be done:
+                </p>
 
-            <div class="array-chart">
-                <div class="array-bar" style="height: 10%;">1</div>
-                <div class="array-bar" style="height: 20%;">2</div>
-                <div class="array-bar" style="height: 30%;">3</div>
-                <div class="array-bar" style="height: 40%;">4</div>
-                <div class="array-bar" style="height: 50%;">5</div>
-                <div class="array-bar" style="height: 60%;">6</div>
-                <div class="array-bar" style="height: 70%;">7</div>
-                <div class="array-bar" style="height: 80%;">8</div>
-                <div class="array-bar" style="height: 90%;">9</div>
-                <div class="array-bar" style="height: 100%;">10</div>
-            </div>
+                <div class="array-chart" id="chart-ascending"></div>
 
-            <p>
-            Next up, let's consider very hard inputs. A very straightforward approach is just taking the opposite
-                of the previous array; one that is fully descending:
-            </p>
 
-            <div class="array-chart">
-                <div class="array-bar" style="height: 100%;">10</div>
-                <div class="array-bar" style="height: 90%;">9</div>
-                <div class="array-bar" style="height: 80%;">8</div>
-                <div class="array-bar" style="height: 70%;">7</div>
-                <div class="array-bar" style="height: 60%;">6</div>
-                <div class="array-bar" style="height: 50%;">5</div>
-                <div class="array-bar" style="height: 40%;">4</div>
-                <div class="array-bar" style="height: 30%;">3</div>
-                <div class="array-bar" style="height: 20%;">2</div>
-                <div class="array-bar" style="height: 10%;">1</div>
-            </div>
+                <p>
+                    Next up, let's consider very hard inputs. A very straightforward approach is just taking the
+                    opposite
+                    of the previous array; one that is fully descending:
+                </p>
 
-            <p>
-            Just from visual intuition, we can sense that this should not be considered as "hard", as we can just flip
-             it horizontally and be done.
-            </p>
+                <div class="array-chart" id="chart-descending"></div>
 
-            <p>
-                After a bit of tinkering with the array, a promising hard candidate might look like the following, even
-                though there might be other hard ones:
-            </p>
 
-            <div class="array-chart">
-                <div class="array-bar" style="height: 90%;">9</div>
-                <div class="array-bar" style="height: 40%;">4</div>
-                <div class="array-bar" style="height: 10%;">1</div>
-                <div class="array-bar" style="height: 80%;">8</div>
-                <div class="array-bar" style="height: 100%;">10</div>
-                <div class="array-bar" style="height: 60%;">6</div>
-                <div class="array-bar" style="height: 30%;">3</div>
-                <div class="array-bar" style="height: 50%;">5</div>
-                <div class="array-bar" style="height: 20%;">2</div>
-                <div class="array-bar" style="height: 70%;">7</div>
-            </div>
+                <p>
+                    Just from visual intuition, we can sense that this should not be considered as "hard", as we can
+                    just flip
+                    it horizontally and be done.
+                </p>
 
-            <p>
-                One way to quantify why this one is harder than the previous ones is counting the subarrays that are
-                already in order. In the very first input, there was just one big subarray, the whole array.
-                In the second as well, though the order is descending instead of ascending.
-                For the hard input, the color-coded subarrays (which we will call <i>runs</i> from now on) look like this:
-            </p>
+                <p>
+                    After a bit of tinkering with the array, a promising hard candidate might look like the following,
+                    even
+                    though there might be other hard ones:
+                </p>
 
-            <div class="array-chart">
-                <div class="array-bar" style="height: 90%;">9</div>
-                <div class="array-bar" style="height: 40%;">4</div>
-                <div class="array-bar" style="height: 10%;">1</div>
-                <div class="array-bar" style="height: 80%;">8</div>
-                <div class="array-bar" style="height: 100%;">10</div>
-                <div class="array-bar" style="height: 60%;">6</div>
-                <div class="array-bar" style="height: 30%;">3</div>
-                <div class="array-bar" style="height: 50%;">5</div>
-                <div class="array-bar" style="height: 20%;">2</div>
-                <div class="array-bar" style="height: 70%;">7</div>
-            </div>
+                <div class="array-chart" id="chart-hard-1"></div>
 
-            <div style="display: flex; margin-top: -1rem; height: 10px;">
-                <div style="flex: 73; border-bottom: 3px solid #007bff;"></div>
-                <div style="flex: 10; border-bottom: 3px solid #ffffff;"></div>
-                <div style="flex: 45; border-bottom: 3px solid #28a745;"></div>
-                <div style="flex: 10; border-bottom: 3px solid #ffffff;"></div>
-                <div style="flex: 45; border-bottom: 3px solid #dc3545;"></div>
-                <div style="flex: 10; border-bottom: 3px solid #ffffff;"></div>
-                <div style="flex: 45; border-bottom: 3px solid #17a2b8;"></div>
-                <div style="flex: 10; border-bottom: 3px solid #ffffff;"></div>
-                <div style="flex: 17; border-bottom: 3px solid #6f42c1;"></div>
-            </div>
 
-            <p>
-                TODO: define segments formally
-            </p>
+                <p>
+                    One way to quantify why this one is harder than the previous ones is counting the subarrays that are
+                    already in order. In the very first input, there was just one big subarray, the whole array.
+                    In the second as well, though the order is descending instead of ascending.
+                    For the hard input, the color-coded subarrays (which we will call <i>runs</i> from now on) look like
+                    this:
+                </p>
 
-        </section>
+                <p>
+                    TODO: define runs formally and add indicator for runs.
+                </p>
 
-      </article>
+            </section>
+
+        </article>
 
     </main>
 
@@ -171,13 +123,179 @@
         <section id="contact">
             <div class="contact-links">
                 <a href="mailto:hi@mgross.dev">Email</a>
-                <a href="https://github.com/moritz-gross" target="_blank" rel="noopener noreferrer">GitHub</a>
-                <a href="https://linkedin.com/in/moritz-gross" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://github.com/moritz-gross" rel="noopener noreferrer" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/moritz-gross" rel="noopener noreferrer" target="_blank">LinkedIn</a>
             </div>
         </section>
 
     </footer>
 
-  </div>
+</div>
+
+<script>
+    const chartConfigs = [
+        {
+            id: "chart-ascending",
+            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        },
+        {
+            id: "chart-descending",
+            data: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+        },
+        {
+            id: "chart-hard-1",
+            data: [9, 4, 1, 8, 10, 6, 3, 5, 2, 7],
+        },
+    ];
+
+    const chartRegistry = {};
+
+    // Helper: render one chart from its data array
+    function renderChart(element, data) {
+        element.innerHTML = "";
+
+        const maxVal = Math.max(...data) || 1;
+
+        data.forEach((value) => {
+            const bar = document.createElement("div");
+            bar.className = "array-bar";
+
+            // Make the bar draggable
+            bar.draggable = true;
+
+            // Height proportional to max
+            bar.style.height = (value / maxVal) * 100 + "%";
+
+            bar.textContent = value;
+            element.appendChild(bar);
+        });
+    }
+
+    function initCharts() {
+        chartConfigs.forEach((cfg) => {
+            const el = document.getElementById(cfg.id);
+            if (!el) return; // in case you remove one in the future
+
+            chartRegistry[cfg.id] = {
+                element: el,
+                data: cfg.data,
+            };
+
+            renderChart(el, cfg.data);
+            enableDragAndDrop(cfg.id);
+        });
+    }
+
+    // Public function: swap two positions in a given chart and re-render
+    function swapInChart(chartId, i, j) {
+        const entry = chartRegistry[chartId];
+        if (!entry) {
+            console.warn("Unknown chart id:", chartId);
+            return;
+        }
+
+        const arr = entry.data;
+        if (
+            i < 0 ||
+            j < 0 ||
+            i >= arr.length ||
+            j >= arr.length
+        ) {
+            console.warn("Swap indices out of range:", i, j);
+            return;
+        }
+
+        const tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+
+        renderChart(entry.element, arr);
+    }
+
+    // --- Drag & Drop support ---
+
+    // Shared drag state (which chart / index we started dragging)
+    const dragState = {
+        chartId: null,
+        fromIndex: null,
+    };
+
+    function enableDragAndDrop(chartId) {
+        const entry = chartRegistry[chartId];
+        if (!entry) return;
+        const element = entry.element;
+
+        // Use event delegation on the chart container so we don't have to
+        // reattach listeners after every render.
+        element.addEventListener("dragstart", (event) => {
+            const bar = event.target.closest(".array-bar");
+            if (!bar) return;
+
+            const children = Array.from(element.children);
+            const index = children.indexOf(bar);
+            if (index === -1) return;
+
+            dragState.chartId = chartId;
+            dragState.fromIndex = index;
+
+            if (event.dataTransfer) {
+                event.dataTransfer.effectAllowed = "move";
+            }
+        });
+
+        // Allow dropping by preventing default
+        element.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            if (event.dataTransfer) {
+                event.dataTransfer.dropEffect = "move";
+            }
+        });
+
+        element.addEventListener("drop", (event) => {
+            event.preventDefault();
+
+            const bar = event.target.closest(".array-bar");
+            if (!bar) {
+                // If you later want to allow dropping into empty space,
+                // you could handle that here.
+                resetDragState();
+                return;
+            }
+
+            const children = Array.from(element.children);
+            const toIndex = children.indexOf(bar);
+            if (toIndex === -1) {
+                resetDragState();
+                return;
+            }
+
+            if (
+                dragState.chartId === chartId &&
+                dragState.fromIndex != null &&
+                dragState.fromIndex !== toIndex
+            ) {
+                swapInChart(chartId, dragState.fromIndex, toIndex);
+            }
+
+            resetDragState();
+        });
+
+        element.addEventListener("dragend", () => {
+            resetDragState();
+        });
+    }
+
+    function resetDragState() {
+        dragState.chartId = null;
+        dragState.fromIndex = null;
+    }
+
+    // Expose the swap function globally for easy use from the console (optional)
+    window.swapInChart = swapInChart;
+
+    // Initialize once the DOM is ready
+    document.addEventListener("DOMContentLoaded", initCharts);
+</script>
+
 </body>
 </html>
