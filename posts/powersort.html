@@ -8,6 +8,29 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    .array-chart {
+      display: flex;
+      align-items: flex-end; /* align at the bottom of the chart */
+      gap: 1.5rem; /* space between bars */
+      margin-bottom: 1.5rem;
+      height: 200px; /* overall chart height */
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .array-bar {
+      flex: 1;
+      border-radius: 4px 4px 0 0;
+      border: 1px solid #ccc;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      font-size: 0.75rem;
+      padding-bottom: 0.25rem;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -18,7 +41,6 @@
             <a href="../index.html">Home</a>
             <a href="../blog.html">Blog</a>
         </div>
-
     </header>
 
     <main>
@@ -30,7 +52,112 @@
 
         <section class="post-content">
 
-          <p>hellooooooooooooooooooooooooooooooooooooooooo</p>
+            <aside>
+              <i>This article is a work in progress. Details and examples may change.</i>
+            </aside>
+
+            <p>
+            Powersort is a modern sorting algorithm (invented 2018) that keeps the same worst-case guarantees of
+            previous algorithms like Quicksort and Mergesort, but works particularly fast on "easy" inputs.
+            This leads us to first define what we exactly mean by easy and hard, and how we can exploit these
+            ideas reliably without spending much computation on them.
+            </p>
+
+            <p>
+            Even though all following thoughts can be applied to any comparable type of object (e.g. strings), we use
+            integers in the range from 1 to 10 for easy visualization. First off, we consider the "easiest" input possible
+            for sorting, an ascending array, which is an array that is already sorted. In this case, nothing needs to be done:
+            </p>
+
+            <div class="array-chart">
+                <div class="array-bar" style="height: 10%;">1</div>
+                <div class="array-bar" style="height: 20%;">2</div>
+                <div class="array-bar" style="height: 30%;">3</div>
+                <div class="array-bar" style="height: 40%;">4</div>
+                <div class="array-bar" style="height: 50%;">5</div>
+                <div class="array-bar" style="height: 60%;">6</div>
+                <div class="array-bar" style="height: 70%;">7</div>
+                <div class="array-bar" style="height: 80%;">8</div>
+                <div class="array-bar" style="height: 90%;">9</div>
+                <div class="array-bar" style="height: 100%;">10</div>
+            </div>
+
+            <p>
+            Next up, let's consider very hard inputs. A very straightforward approach is just taking the opposite
+                of the previous array; one that is fully descending:
+            </p>
+
+            <div class="array-chart">
+                <div class="array-bar" style="height: 100%;">10</div>
+                <div class="array-bar" style="height: 90%;">9</div>
+                <div class="array-bar" style="height: 80%;">8</div>
+                <div class="array-bar" style="height: 70%;">7</div>
+                <div class="array-bar" style="height: 60%;">6</div>
+                <div class="array-bar" style="height: 50%;">5</div>
+                <div class="array-bar" style="height: 40%;">4</div>
+                <div class="array-bar" style="height: 30%;">3</div>
+                <div class="array-bar" style="height: 20%;">2</div>
+                <div class="array-bar" style="height: 10%;">1</div>
+            </div>
+
+            <p>
+            Just from visual intuition, we can sense that this should not be considered as "hard", as we can just flip
+             it horizontally and be done.
+            </p>
+
+            <p>
+                After a bit of tinkering with the array, a promising hard candidate might look like the following, even
+                though there might be other hard ones:
+            </p>
+
+            <div class="array-chart">
+                <div class="array-bar" style="height: 90%;">9</div>
+                <div class="array-bar" style="height: 40%;">4</div>
+                <div class="array-bar" style="height: 10%;">1</div>
+                <div class="array-bar" style="height: 80%;">8</div>
+                <div class="array-bar" style="height: 100%;">10</div>
+                <div class="array-bar" style="height: 60%;">6</div>
+                <div class="array-bar" style="height: 30%;">3</div>
+                <div class="array-bar" style="height: 50%;">5</div>
+                <div class="array-bar" style="height: 20%;">2</div>
+                <div class="array-bar" style="height: 70%;">7</div>
+            </div>
+
+            <p>
+                One way to quantify why this one is harder than the previous ones is counting the subarrays that are
+                already in order. In the very first input, there was just one big subarray, the whole array.
+                In the second as well, though the order is descending instead of ascending.
+                For the hard input, the color-coded subarrays (which we will call <i>runs</i> from now on) look like this:
+            </p>
+
+            <div class="array-chart">
+                <div class="array-bar" style="height: 90%;">9</div>
+                <div class="array-bar" style="height: 40%;">4</div>
+                <div class="array-bar" style="height: 10%;">1</div>
+                <div class="array-bar" style="height: 80%;">8</div>
+                <div class="array-bar" style="height: 100%;">10</div>
+                <div class="array-bar" style="height: 60%;">6</div>
+                <div class="array-bar" style="height: 30%;">3</div>
+                <div class="array-bar" style="height: 50%;">5</div>
+                <div class="array-bar" style="height: 20%;">2</div>
+                <div class="array-bar" style="height: 70%;">7</div>
+            </div>
+
+            <div style="display: flex; margin-top: -1rem; height: 10px;">
+                <div style="flex: 73; border-bottom: 3px solid #007bff;"></div>
+                <div style="flex: 10; border-bottom: 3px solid #ffffff;"></div>
+                <div style="flex: 45; border-bottom: 3px solid #28a745;"></div>
+                <div style="flex: 10; border-bottom: 3px solid #ffffff;"></div>
+                <div style="flex: 45; border-bottom: 3px solid #dc3545;"></div>
+                <div style="flex: 10; border-bottom: 3px solid #ffffff;"></div>
+                <div style="flex: 45; border-bottom: 3px solid #17a2b8;"></div>
+                <div style="flex: 10; border-bottom: 3px solid #ffffff;"></div>
+                <div style="flex: 17; border-bottom: 3px solid #6f42c1;"></div>
+            </div>
+
+            <p>
+                TODO: define segments formally
+            </p>
 
         </section>
 
