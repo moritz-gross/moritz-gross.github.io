@@ -29,6 +29,26 @@
             font-size: 0.75rem;
             padding-bottom: 0.25rem;
         }
+
+        .array-bar.run-0 {
+            background-color: #f4a26133;
+            border-color: #f4a261;
+        }
+
+        .array-bar.run-1 {
+            background-color: #2a9d8f33;
+            border-color: #2a9d8f;
+        }
+
+        .array-bar.run-2 {
+            background-color: #e9c46a33;
+            border-color: #e9c46a;
+        }
+
+        .array-bar.run-3 {
+            background-color: #8ab5e133;
+            border-color: #8ab5e1;
+        }
     </style>
 
 </head>
@@ -150,13 +170,88 @@
 
     const chartRegistry = {};
 
-    // Helper: render one chart from its data array
+    // Find maximal monotone runs, greedily from left to right.
+    // Each run is { start, end, dir } with dir in {"asc", "desc", "flat"}.
+    function findRuns(data) {
+        const runs = [];
+        const n = data.length;
+        if (n === 0) return runs;
+
+        let i = 0;
+        while (i < n) {
+            const start = i;
+
+            // Handle singleton at the end
+            if (i === n - 1) {
+                runs.push({ start, end: i, dir: "flat" });
+                break;
+            }
+
+            // Determine direction from first non-equal step
+            let j = i + 1;
+            let dir = 0; // +1 = asc, -1 = desc
+
+            while (j < n && dir === 0) {
+                if (data[j] > data[j - 1]) {
+                    dir = 1;
+                } else if (data[j] < data[j - 1]) {
+                    dir = -1;
+                } else {
+                    j++;
+                }
+            }
+
+            // All remaining equal: treat as one ascending run
+            if (dir === 0) {
+                runs.push({ start, end: n - 1, dir: "asc" });
+                break;
+            }
+
+            // Grow run while it stays monotone (non-strict) in that direction
+            while (j < n) {
+                if (dir === 1 && data[j] >= data[j - 1]) {
+                    j++;
+                } else if (dir === -1 && data[j] <= data[j - 1]) {
+                    j++;
+                } else {
+                    break;
+                }
+            }
+
+            runs.push({
+                start,
+                end: j - 1,
+                dir: dir === 1 ? "asc" : "desc",
+            });
+
+            i = j;
+        }
+
+        return runs;
+    }
+
+    // Helper: render one chart from its data array, with run highlighting.
     function renderChart(element, data) {
         element.innerHTML = "";
 
         const maxVal = Math.max(...data) || 1;
 
-        data.forEach((value) => {
+        // Compute runs and map each index to run info
+        const runs = findRuns(data);
+        const runInfoByIndex = Array(data.length);
+        const numRunColors = 4; // we have run-0 .. run-3 in CSS
+
+        runs.forEach((run, runIndex) => {
+            const colorIndex = runIndex % numRunColors;
+            for (let idx = run.start; idx <= run.end; idx++) {
+                runInfoByIndex[idx] = {
+                    colorIndex,
+                    dir: run.dir,
+                };
+            }
+        });
+
+        data.forEach((value, index) => {
             const bar = document.createElement("div");
             bar.className = "array-bar";
 
@@ -167,6 +262,16 @@
             bar.style.height = (value / maxVal) * 100 + "%";
 
             bar.textContent = value;
+
+            // Attach run classes if available
+            const info = runInfoByIndex[index];
+            if (info) {
+                bar.classList.add(`run-${info.colorIndex}`);
+                if (info.dir === "asc" || info.dir === "desc") {
+                    bar.classList.add(`run-${info.dir}`);
+                }
+            }
+
             element.appendChild(bar);
         });
     }
