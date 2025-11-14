@@ -73,64 +73,83 @@
             <section class="post-content">
 
                 <aside>
-                    <i>This article is a work in progress. Details and examples may change.</i>
+                    <i>This article is a work in progress and may change.</i>
                 </aside>
 
                 <p>
-                    Powersort is a modern sorting algorithm (<a href="https://arxiv.org/pdf/1805.04154">proposed</a> 2018) that keeps the same worst-case guarantees of
-                    previous algorithms like Quicksort and Mergesort, but works particularly fast on "easy" inputs.
+                    <em>Powersort</em> is a modern sorting algorithm (<a href="https://arxiv.org/pdf/1805.04154">proposed</a> 2018)
+                    that keeps the worst-case guarantees of previous algorithms like Quicksort and Mergesort, but works
+                    faster on "easy" inputs.
                     This leads us to first define what we exactly mean by easy and hard, and how we can exploit these
                     ideas reliably without spending much computation on them.
                 </p>
 
                 <p>
-                    Even though all following thoughts can be applied to any comparable type of object (e.g. strings),
-                    we use
-                    integers in the range from 1 to 10 for easy visualization. First off, we consider the "easiest"
-                    input possible
-                    for sorting, an ascending array, which is an array that is already sorted. In this case, nothing
-                    needs to be done:
+                    Even though all the following can be applied to any comparable type of object (e.g. strings),
+                    we use integers for easy visualization. First off, we consider the arguably "easiest"
+                    input possible for sorting; an ascending array, i.e. an array that is already sorted.
+                    In this case, nothing needs to be done:
                 </p>
 
                 <div class="array-chart" id="chart-ascending"></div>
 
 
                 <p>
-                    Next up, let's consider very hard inputs. A very straightforward approach is just taking the
-                    opposite
-                    of the previous array; one that is fully descending:
+                    Next up, let's think about very <em>hard</em> inputs. A very straightforward idea could be just taking the
+                    opposite of the previous array; one that is fully descending:
                 </p>
 
                 <div class="array-chart" id="chart-descending"></div>
 
 
                 <p>
-                    Just from visual intuition, we can sense that this should not be considered as "hard", as we can
-                    just flip
-                    it horizontally and be done.
+                    Just from visual intuition, we can sense that this should not be considered as hard, as we can
+                    just flip it horizontally and be done.
                 </p>
 
                 <p>
-                    After a bit of tinkering with the array, a promising hard candidate might look like the following,
-                    even
-                    though there might be other hard ones:
+                    After a bit of testing, a promising hard candidate might look somewhat like the following:
                 </p>
 
                 <div class="array-chart" id="chart-hard-1"></div>
 
 
                 <p>
-                    One way to quantify why this one is harder than the previous ones is counting the subarrays that are
-                    already in order. In the very first input, there was just one big subarray, the whole array.
-                    In the second as well, though the order is descending instead of ascending.
-                    For the hard input, the color-coded subarrays (which we will call <i>runs</i> from now on) look like
-                    this:
+                    A way to quantify why this one is harder than the previous ones is counting the subarrays that are
+                    already sorted. From now on, these already sorted subarrays will be called <i>runs</i>. The runs
+                    are color-coded, so that two neighboring runs have different colors. We can easily see that the arrays
+                    shown at the start of the post are just one big run, while this new hard input consists of multiple
+                    smaller runs.
                 </p>
 
                 <p>
-                    TODO: define runs formally and add indicator for runs.
+                    TODO: define runs formally.
                 </p>
 
+                <p>
+                    To use these runs productively for sorting, we can borrow the merge-operation originally known from
+                    Mergesort.
+                    It takes two runs that are next to each other and merges them to one
+                    run that contains all the elements of the two input runs.
+                    Let <i>k</i> be the number of runs at the very start, then exactly <i>k-1</i> merge-operations are needed to
+                    sort the whole array, as each time the number of runs is reduced by 1, and the sorted array is known
+                    to be just one big run.
+                </p>
+
+                <p>
+                    So far, it is not specified in which order which runs are supposed to be merged.
+                    By just playing around with the array above, we can see that any order of merges results in a correctly
+                    sorted array. The difference lies in that different merge-orders generally take a different amount
+                    of time. Let's consider the array below, in which this effect is particularly strong:
+                </p>
+
+                <div class="array-chart" id="chart-merge-order"></div>
+
+                <p>
+                    There are 3 runs, the left one being by far the longest, and the middle and right one being short.
+                    Before reading further, try acting as the sorting algorithm by hand (it won't take long as there are
+                    only two choices).
+                </p>
             </section>
 
         </article>
@@ -165,6 +184,10 @@
         {
             id: "chart-hard-1",
             data: [9, 4, 1, 8, 10, 6, 3, 5, 2, 7],
+        },
+           {
+            id: "chart-merge-order",
+            data: [3, 4, 5, 6, 7, 8, 9, 2, 1, 10],
         },
     ];
 
