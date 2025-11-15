@@ -49,6 +49,69 @@
             background-color: #8ab5e133;
             border-color: #8ab5e1;
         }
+
+        /* --- Added Merge Tree Visualization Styles --- */
+        .merge-tree {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .merge-level {
+            display: flex;
+            gap: 1.5rem; /* Same as chart */
+            margin-bottom: 0.5rem; /* Space between levels */
+            position: relative;
+        }
+        .merge-block {
+            border: 1px solid #ccc;
+            padding: 0.5rem;
+            text-align: center;
+            border-radius: 4px;
+            min-width: 0; /* Allows flex-shrink to work properly */
+        }
+        .merge-block-spacer {
+             /* Just takes up space */
+             min-width: 0;
+        }
+        .merge-result {
+            min-width: 0;
+            position: relative;
+            padding-top: 1.5rem; /* Space for the line above */
+        }
+        .merge-line-connector {
+            /* This container centers the vertical line */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .merge-line-connector::before {
+            /* Horizontal line */
+            content: '';
+            position: absolute;
+            top: 0.75rem;
+            left: 0;
+            right: 0; /* Spans full width of parent */
+            height: 1px;
+            background-color: #555;
+        }
+        .merge-line-connector::after {
+            /* Vertical connector */
+            content: '';
+            width: 1px;
+            height: 0.75rem; /* from line down to block */
+            background-color: #555;
+            margin-top: 0.75rem; /* Start from below the horizontal line */
+        }
+
+        .merge-block.run-0, .merge-block.run-1, .merge-block.run-2, .merge-block.run-3, .merge-block.run-final {
+            background-color: #f4a26133;
+            border-color: #f4a261;
+        }
     </style>
 
 </head>
@@ -155,7 +218,8 @@
                     So far, it is not specified in which order which runs are supposed to be merged.
                     By just playing around with the array above, we can see that any order of merges results in a correctly
                     sorted array. The difference lies in that different merge-orders generally take a different amount
-                    of time. Let's consider the array below, in which this effect is particularly nice to see:
+                    of time. The cost of a merge is proportional to the total length of the runs being merged.
+                    Let's consider the array below, in which this effect is particularly nice to see:
                 </p>
 
                 <div class="array-chart" id="chart-merge-order"></div>
@@ -164,8 +228,65 @@
                     There are 3 runs, the left one being by far the longest, and the middle and right one being short.
                     Before reading further, try acting as the sorting algorithm by hand (it won't take long as there are
                     only two choices for the merging order).
+
                 </p>
-            </section>
+
+                <hr style="border-style: dashed; margin: 2rem 0;">
+
+                <div class="merge-tree">
+                    <div class="merge-level">
+                        <div class="merge-block run-0" style="flex: 7;">R1 (len 7)</div>
+                        <div class="merge-block run-1" style="flex: 2;">R2 (len 2)</div>
+                        <div class="merge-block run-2" style="flex: 1;">R3 (len 1)</div>
+                    </div>
+                    <div class="merge-level">
+                        <div class="merge-block-spacer" style="flex: 7;"></div>
+                        <div class="merge-result" style="flex: 3;">
+                            <div class="merge-line-connector"></div>
+                            <div class="merge-block run-3">R2+R3 (len 3)</div>
+                        </div>
+                    </div>
+                    <div class="merge-level">
+                        <div class="merge-result" style="flex: 10;">
+                            <div class="merge-line-connector"></div>
+                            <div class="merge-block run-final">Sorted (len 10)</div>
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <b>Total Cost</b>: (len(R2) + len(R3)) + (len(R1) + len(R2+R3)) = (2 + 1) + (7 + 3) = 3 + 10 = <b>13</b>
+                </p>
+
+                <hr style="border-style: dashed; margin: 2rem 0;">
+
+                <p>
+                    A naive left-to-right merge order would be very inefficient, creating an "unbalanced" merge tree.
+                </p>
+                <div class="merge-tree">
+                    <div class="merge-level">
+                        <div class="merge-block run-0" style="flex: 7;">R1 (len 7)</div>
+                        <div class="merge-block run-1" style="flex: 2;">R2 (len 2)</div>
+                        <div class="merge-block run-2" style="flex: 1;">R3 (len 1)</div>
+                    </div>
+                    <div class="merge-level">
+                        <div class="merge-result" style="flex: 9;">
+                             <div class="merge-line-connector"></div>
+                            <div class="merge-block run-3">R1+R2 (len 9)</div>
+                        </div>
+                        <div class="merge-block-spacer" style="flex: 1;"></div>
+                    </div>
+                    <div class="merge-level">
+                        <div class="merge-result" style="flex: 10;">
+                            <div class="merge-line-connector"></div>
+                            <div class="merge-block run-final">Sorted (len 10)</div>
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <b>Total Cost</b>:  (len(R1) + len(R2)) + (len(R1+R2) + len(R3)) = (7 + 2) + (9 + 1) = 9 + 10 = <b>19</b>
+                </p>
+
+                </section>
 
         </article>
 
