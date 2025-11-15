@@ -86,8 +86,11 @@
 
                 <p>
                     Even though all the following can be applied to any comparable type of object (e.g. strings),
-                    we use integers for easy visualization. First off, we consider the arguably "easiest"
-                    input possible for sorting; an ascending array, i.e. an array that is already sorted.
+                    we use integers for easy visualization. For length <i>n</i> &in; &Nopf;, write the array as
+                    <i>A</i> = (a<sub>0</sub>, a<sub>1</sub>, &hellip;, a<sub>n-1</sub>),
+                    where a<sub>i</sub> denotes the element at index <i>i</i>. We index arrays from 0 to <i>n</i>-1.
+                    First off, we consider the arguably "easiest" input possible for sorting; an ascending array,
+                    i.e. an array that is already sorted.
                     In this case, nothing needs to be done:
                 </p>
 
@@ -104,11 +107,12 @@
 
                 <p>
                     Just from visual intuition, we can sense that this should not be considered as hard, as we can
-                    just flip it horizontally and be done.
+                    just flip it horizontally.
                 </p>
 
                 <p>
-                    After a bit of testing, a promising hard candidate might look somewhat like the following:
+                    After a bit of testing, a promising hard candidate might look somewhat like the following. The bars
+                    can be swapped by drag-and-drop, so try out other arrangements.
                 </p>
 
                 <div class="array-chart" id="chart-hard-1"></div>
@@ -116,14 +120,25 @@
 
                 <p>
                     A way to quantify why this one is harder than the previous ones is counting the subarrays that are
-                    already sorted. From now on, these already sorted subarrays will be called <i>runs</i>. The runs
-                    are color-coded, so that two neighboring runs have different colors. We can easily see that the arrays
-                    shown at the start of the post are just one big run, while this new hard input consists of multiple
-                    smaller runs.
+                    already monotone. For indices 0 &le; i &le; j &lt; n, we write
+                    <i>A</i>[i..j] = (a<sub>i</sub>, a<sub>i+1</sub>, &hellip;, a<sub>j</sub>)
+                    for the contiguous subarray of <i>A</i> from position <i>i</i> to <i>j</i>.
+                    From now on, these monotone subarrays will be called <i>runs</i>.
                 </p>
 
                 <p>
-                    TODO: define runs formally.
+                    More precisely, an <em>ascending run</em> of <i>A</i> is a subarray <i>A</i>[i..j] with
+                    0 &le; i &le; j &lt; n such that
+                    a<sub>i</sub> &le; a<sub>i+1</sub> &le; &hellip; &le; a<sub>j</sub>.
+                    A <em>descending run</em> is defined analogously: it is a subarray <i>A</i>[i..j] with
+                    a<sub>i</sub> &ge; a<sub>i+1</sub> &ge; &hellip; &ge; a<sub>j</sub>. In this article, we use the word <i>run</i> for both
+                    ascending and descending runs.
+                </p>
+
+                <p>
+                    The runs are color-coded in the figures so that two neighboring runs have different colors.
+                    We can now state more precisely that the arrays shown at the start of the post each consist of a
+                    single run, while this new hard input decomposes into several shorter runs.
                 </p>
 
                 <p>
@@ -140,7 +155,7 @@
                     So far, it is not specified in which order which runs are supposed to be merged.
                     By just playing around with the array above, we can see that any order of merges results in a correctly
                     sorted array. The difference lies in that different merge-orders generally take a different amount
-                    of time. Let's consider the array below, in which this effect is particularly strong:
+                    of time. Let's consider the array below, in which this effect is particularly nice to see:
                 </p>
 
                 <div class="array-chart" id="chart-merge-order"></div>
@@ -148,7 +163,7 @@
                 <p>
                     There are 3 runs, the left one being by far the longest, and the middle and right one being short.
                     Before reading further, try acting as the sorting algorithm by hand (it won't take long as there are
-                    only two choices).
+                    only two choices for the merging order).
                 </p>
             </section>
 
