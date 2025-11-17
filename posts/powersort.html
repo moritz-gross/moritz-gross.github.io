@@ -4,7 +4,6 @@
     <title>Powersort</title>
 
     <link href="../styles.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
     <meta charset="UTF-8"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -16,7 +15,6 @@
             gap: 1.5rem; /* space between bars */
             margin-bottom: 1.5rem;
             height: 200px; /* overall chart height */
-            font-family: "JetBrains Mono", monospace;
         }
 
         .array-bar {
@@ -30,29 +28,33 @@
             padding-bottom: 0.25rem;
         }
 
-        .array-bar.run-0 {
-            background-color: #f4a26133;
-            border-color: #f4a261;
-        }
-
-        .array-bar.run-1 {
-            background-color: #2a9d8f33;
-            border-color: #2a9d8f;
+        .array-bar.run-3 {
+            background-color: rgba(244, 131, 97, 0.2);
+            border-color: #f47761;
         }
 
         .array-bar.run-2 {
-            background-color: #e9c46a33;
-            border-color: #e9c46a;
+            background-color: rgba(42, 157, 117, 0.2);
+            border-color: #2a9d71;
         }
 
-        .array-bar.run-3 {
+        .array-bar.run-1 {
+            background-color: rgba(233, 203, 106, 0.2);
+            border-color: #e9d06a;
+        }
+
+        .array-bar.run-0,
+        .merge-block.run-0,
+        .merge-block.run-1,
+        .merge-block.run-2,
+        .merge-block.run-3,
+        .merge-block.run-final {
             background-color: #8ab5e133;
             border-color: #8ab5e1;
         }
 
         /* --- Added Merge Tree Visualization Styles --- */
         .merge-tree {
-            font-family: "JetBrains Mono", monospace;
             font-size: 0.8rem;
             margin-bottom: 1.5rem;
         }
@@ -80,10 +82,6 @@
         .merge-result {
             position: relative;
             padding-top: 1.5rem; /* Space for the line above */
-        }
-        .merge-block.run-0, .merge-block.run-1, .merge-block.run-2, .merge-block.run-3, .merge-block.run-final {
-            background-color: #f4a26133;
-            border-color: #f4a261;
         }
     </style>
 
