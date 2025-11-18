@@ -43,12 +43,7 @@
             border-color: #e9d06a;
         }
 
-        .array-bar.run-0,
-        .merge-block.run-0,
-        .merge-block.run-1,
-        .merge-block.run-2,
-        .merge-block.run-3,
-        .merge-block.run-final {
+        .array-bar.run-0 {
             background-color: #8ab5e133;
             border-color: #8ab5e1;
         }
@@ -83,6 +78,23 @@
             position: relative;
             padding-top: 1.5rem; /* Space for the line above */
         }
+
+        .merge-block.run-0,
+        .merge-block.run-1,
+        .merge-block.run-2,
+        .merge-block.run-3,
+        .merge-block.run-final {
+            background-color: rgba(147, 147, 147, 0.2);
+            border-color: #aaaaaa;
+        }
+
+        /* Make the final merge bar "open" / different at the top */
+        .merge-block.run-3,
+        .merge-block.run-final {
+            border-top-style: dashed;   /* or dotted */
+            border-top-width: 2px;      /* a bit more pronounced */
+        }
+
     </style>
 
 </head>
