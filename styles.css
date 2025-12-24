@@ -122,3 +122,15 @@ li {
 :root.dark .token.number { color: #f08d49; }
 :root.dark .token.function { color: #6699cc; }
 :root.dark .token.operator { color: #67cdcc; }
+
+/* Table of Contents */
+.toc {
+    background: color-mix(in srgb, var(--text) 5%, transparent);
+    border-radius: 4px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.toc ul { margin: 0.5rem 0 0; padding-left: 1.25rem; }
+.toc li { padding: 0.15rem 0; }
+.toc a { text-decoration: none; }
+.toc a:hover { text-decoration: underline; }

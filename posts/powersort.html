@@ -125,6 +125,9 @@
                     <i>This article is a work in progress and may change.</i>
                 </aside>
 
+                <script src="../components/toc.js"></script>
+
+                <h4>Introduction</h4>
                 <p>
                     <em>Powersort</em> is a modern sorting algorithm (<a href="https://arxiv.org/pdf/1805.04154">proposed</a> 2018)
                     that keeps the worst-case guarantees of previous algorithms like Quicksort and Mergesort, but works
@@ -421,19 +424,14 @@
                     The difference is a factor of 3&times; in this example, solely from choosing a different order of operations.
                     The key insight: creating large intermediate results can heavily influence overall runtime.
                 </p>
-            </section>
 
-        </article>
+                <h4>Code</h4>
 
-    </main>
+                <p>
+                    Here is the main code for Powersort. TODO: integrate properly into the whole text.
+                </p>
 
-    <hr style="border-style: dashed; margin: 2rem 0;">
-
-    <p>
-        Here is the main code for Powersort. TODO: integrate properly into the whole text.
-    </p>
-
-    <pre><code class="language-c">static int powerloop(npy_intp s1, npy_intp n1, npy_intp n2, npy_intp num)
+                <pre><code class="language-c">static int powerloop(npy_intp s1, npy_intp n1, npy_intp n2, npy_intp num)
 {
     int result = 0;
     npy_intp a = 2 * s1 + n1;  /* 2*a */
@@ -451,12 +449,11 @@
         b <<= 1;
     }
     return result;
-}   </code></pre>
+}               </code></pre>
 
-    <p>Here comes how it is used:</p>
+                <p>Here is how it is used:</p>
 
-    <pre><code class="language-c">
-static int found_new_run_(type *arr, run *stack, npy_intp *stack_ptr, npy_intp n2, npy_intp num, buffer_ *buffer)
+                <pre><code class="language-c">static int found_new_run_(type *arr, run *stack, npy_intp *stack_ptr, npy_intp n2, npy_intp num, buffer_ *buffer)
 {
     int ret;
     if (*stack_ptr > 0) {
@@ -470,12 +467,21 @@ static int found_new_run_(type *arr, run *stack, npy_intp *stack_ptr, npy_intp n
         }
     }
     stack[*stack_ptr - 1].power = power;
-}   </code></pre>
+}
+                </code></pre>
 
-    <p>
-        When a new run is found, its power is calculated, and it gets placed onto the stack. Then the stack is collapsed
-        as deep as possible based on the powers of the elements.
-    </p>
+                <p>
+                    When a new run is found, its power is calculated, and it gets placed onto the stack. Then the stack is collapsed
+                    as deep as possible based on the powers of the elements.
+                </p>
+
+            </section>
+
+        </article>
+
+    </main>
+
+    <hr style="border-style: dashed; margin: 2rem 0;">
 
 
     <script src="../components/footer.js"></script>
