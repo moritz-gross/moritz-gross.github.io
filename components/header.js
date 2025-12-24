@@ -11,6 +11,6 @@ document.currentScript.insertAdjacentHTML('afterend', `
             <a href="${pathPrefix}blog.html">Blog</a>
         </nav>
     </div>
-    ${isHome ? `<img src="${pathPrefix}portrait.jpg" alt="Portrait of Moritz Groß" class="portrait">` : ''}
+    ${isHome ? `<img src="${pathPrefix}portrait.jpg" alt="Portrait of Moritz Groß" class="portrait" loading="lazy">` : ''}
 </header>
 `);
