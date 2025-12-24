@@ -225,89 +225,89 @@
                     costs <i>m</i> &middot; <i>n</i> &middot; <i>p</i> scalar multiplications.
                 </p>
 
-                <!-- Scale: 2px per unit, so 10→20px, 30→60px -->
+                <!-- Scale: 3px per unit, so 10→30px, 30→90px -->
                 <!-- Equation chain layout: A × B × C  →  intermediate × remaining  →  Result -->
-                <svg viewBox="0 0 590 175" style="max-width: 700px; display: block; margin: 1.5rem auto; font-family: inherit; font-size: 10px;">
+                <svg viewBox="0 0 720 210" style="max-width: 800px; display: block; margin: 1.5rem auto; font-family: inherit; font-size: 10px;">
                     <!-- Row 1: (A × B) × C = 6,000 ops (good order) -->
                     <g transform="translate(5, 5)">
                         <!-- Step 1: A × B × C -->
-                        <rect x="0" y="20" width="60" height="20" fill="#e8f4e8" stroke="#2a9d71" />
-                        <text x="30" y="34" text-anchor="middle">A</text>
+                        <rect x="0" y="30" width="90" height="30" fill="#e8f4e8" stroke="#2a9d71"/>
+                        <text x="45" y="50" text-anchor="middle">A</text>
 
-                        <text x="68" y="35" text-anchor="middle">×</text>
+                        <text x="100" y="50" text-anchor="middle">×</text>
 
-                        <rect x="76" y="0" width="20" height="60" fill="#fff4e8" stroke="#e9a06a" />
-                        <text x="86" y="34" text-anchor="middle">B</text>
+                        <rect x="110" y="0" width="30" height="90" fill="#fff4e8" stroke="#e9a06a"/>
+                        <text x="125" y="50" text-anchor="middle">B</text>
 
-                        <text x="104" y="35" text-anchor="middle">×</text>
+                        <text x="150" y="50" text-anchor="middle">×</text>
 
-                        <rect x="112" y="20" width="60" height="20" fill="#e8f0ff" stroke="#8ab5e1" />
-                        <text x="142" y="34" text-anchor="middle">C</text>
+                        <rect x="160" y="30" width="90" height="30" fill="#e8f0ff" stroke="#8ab5e1"/>
+                        <text x="205" y="50" text-anchor="middle">C</text>
 
                         <!-- Arrow 1 -->
-                        <text x="185" y="35" text-anchor="middle">→</text>
-                        <text x="185" y="52" text-anchor="middle" fill="#555">3,000</text>
+                        <text x="270" y="50" text-anchor="middle">→</text>
+                        <text x="270" y="70" text-anchor="middle" fill="#555">3,000</text>
 
-                        <!-- Step 2: (A×B) × C -->
-                        <rect x="200" y="20" width="20" height="20" fill="#d4edda" stroke="#2a9d71" />
-                        <text x="210" y="34" text-anchor="middle">A×B</text>
+                        <!-- Step 2: (A×B) × C - centered to align arrow 2 with row 2 -->
+                        <rect x="320" y="30" width="30" height="30" fill="#d4edda" stroke="#2a9d71"/>
+                        <text x="335" y="50" text-anchor="middle">A×B</text>
 
-                        <text x="230" y="35" text-anchor="middle">×</text>
+                        <text x="370" y="50" text-anchor="middle">×</text>
 
-                        <rect x="240" y="20" width="60" height="20" fill="#e8f0ff" stroke="#8ab5e1" />
-                        <text x="270" y="34" text-anchor="middle">C</text>
+                        <rect x="390" y="30" width="90" height="30" fill="#e8f0ff" stroke="#8ab5e1"/>
+                        <text x="435" y="50" text-anchor="middle">C</text>
 
                         <!-- Arrow 2 -->
-                        <text x="315" y="35" text-anchor="middle" >→</text>
-                        <text x="315" y="52" text-anchor="middle" fill="#555">3,000</text>
+                        <text x="505" y="50" text-anchor="middle">→</text>
+                        <text x="505" y="70" text-anchor="middle" fill="#555">3,000</text>
 
                         <!-- Step 3: Result -->
-                        <rect x="330" y="20" width="60" height="20" fill="#d4edda" stroke="#2a9d71" />
-                        <text x="360" y="34" text-anchor="middle">Result</text>
+                        <rect x="530" y="30" width="90" height="30" fill="#d4edda" stroke="#2a9d71"/>
+                        <text x="575" y="50" text-anchor="middle">Result</text>
 
                         <!-- Total -->
-                        <text x="480" y="35" text-anchor="middle" font-weight="bold" fill="#2a9d71">Total: 6,000</text>
+                        <text x="665" y="50" text-anchor="middle" font-weight="bold" fill="#2a9d71">Total: 6,000</text>
                     </g>
 
                     <!-- Row 2: A × (B × C) = 18,000 ops (bad order) -->
-                    <g transform="translate(5, 100)">
+                    <g transform="translate(5, 110)">
                         <!-- Step 1: A × B × C -->
-                        <rect x="0" y="20" width="60" height="20" fill="#e8f4e8" stroke="#2a9d71"/>
-                        <text x="30" y="34" text-anchor="middle">A</text>
+                        <rect x="0" y="30" width="90" height="30" fill="#e8f4e8" stroke="#2a9d71"/>
+                        <text x="45" y="50" text-anchor="middle">A</text>
 
-                        <text x="68" y="35" text-anchor="middle" >×</text>
+                        <text x="100" y="50" text-anchor="middle">×</text>
 
-                        <rect x="76" y="0" width="20" height="60" fill="#fff4e8" stroke="#e9a06a"/>
-                        <text x="86" y="34" text-anchor="middle">B</text>
+                        <rect x="110" y="0" width="30" height="90" fill="#fff4e8" stroke="#e9a06a"/>
+                        <text x="125" y="50" text-anchor="middle">B</text>
 
-                        <text x="104" y="35" text-anchor="middle">×</text>
+                        <text x="150" y="50" text-anchor="middle">×</text>
 
-                        <rect x="112" y="20" width="60" height="20" fill="#e8f0ff" stroke="#8ab5e1"/>
-                        <text x="142" y="34" text-anchor="middle">C</text>
+                        <rect x="160" y="30" width="90" height="30" fill="#e8f0ff" stroke="#8ab5e1"/>
+                        <text x="205" y="50" text-anchor="middle">C</text>
 
                         <!-- Arrow 1 -->
-                        <text x="185" y="35" text-anchor="middle">→</text>
-                        <text x="185" y="52" text-anchor="middle" fill="#555">9,000</text>
+                        <text x="270" y="50" text-anchor="middle">→</text>
+                        <text x="270" y="70" text-anchor="middle" fill="#555">9,000</text>
 
                         <!-- Step 2: A × (B×C) -->
-                        <rect x="200" y="20" width="60" height="20" fill="#e8f4e8" stroke="#2a9d71" />
-                        <text x="230" y="34" text-anchor="middle">A</text>
+                        <rect x="295" y="30" width="90" height="30" fill="#e8f4e8" stroke="#2a9d71"/>
+                        <text x="340" y="50" text-anchor="middle">A</text>
 
-                        <text x="268" y="35" text-anchor="middle">×</text>
+                        <text x="395" y="50" text-anchor="middle">×</text>
 
-                        <rect x="276" y="0" width="60" height="60" fill="#f8d7da" stroke="#c94a4a" />
-                        <text x="306" y="34" text-anchor="middle">B×C</text>
+                        <rect x="405" y="0" width="90" height="90" fill="#f8d7da" stroke="#c94a4a"/>
+                        <text x="450" y="50" text-anchor="middle">B×C</text>
 
                         <!-- Arrow 2 -->
-                        <text x="350" y="35" text-anchor="middle">→</text>
-                        <text x="350" y="52" text-anchor="middle" fill="#555">9,000</text>
+                        <text x="505" y="50" text-anchor="middle">→</text>
+                        <text x="505" y="70" text-anchor="middle" fill="#555">9,000</text>
 
                         <!-- Step 3: Result -->
-                        <rect x="365" y="20" width="60" height="20" fill="#f8d7da" stroke="#c94a4a" />
-                        <text x="395" y="34" text-anchor="middle">Result</text>
+                        <rect x="530" y="30" width="90" height="30" fill="#f8d7da" stroke="#c94a4a"/>
+                        <text x="575" y="50" text-anchor="middle">Result</text>
 
                         <!-- Total -->
-                        <text x="510" y="35" text-anchor="middle" font-weight="bold" fill="#c94a4a">Total: 18,000</text>
+                        <text x="665" y="50" text-anchor="middle" font-weight="bold" fill="#c94a4a">Total: 18,000</text>
                     </g>
                 </svg>
 
