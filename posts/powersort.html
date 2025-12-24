@@ -4,6 +4,10 @@
     <title>Powersort</title>
 
     <link href="../styles.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
 
     <meta charset="UTF-8"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -423,6 +427,33 @@
         </article>
 
     </main>
+
+    <hr style="border-style: dashed; margin: 2rem 0;">
+
+    <p>
+        Here is the main code for Powersort. TODO: integrate properly into the whole text.
+    </p>
+
+    <pre><code class="language-c">static int
+powerloop(npy_intp s1, npy_intp n1, npy_intp n2, npy_intp num)
+{
+    int result = 0;
+    npy_intp a = 2 * s1 + n1;  /* 2*a */
+    npy_intp b = a + n1 + n2;  /* 2*b */
+    for (;;) {
+        ++result;
+        if (a >= num) {  /* both quotient bits are 1 */
+            a -= num;
+            b -= num;
+        }
+        else if (b >= num) {  /* a/num bit is 0, b/num bit is 1 */
+            break;
+        }
+        a <<= 1;
+        b <<= 1;
+    }
+    return result;
+}</code></pre>
 
     <footer>
         <hr>
