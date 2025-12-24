@@ -128,9 +128,25 @@ li {
     background: color-mix(in srgb, var(--text) 5%, transparent);
     border-radius: 4px;
     padding: 1rem 1.5rem;
-    margin-bottom: 1.5rem;
 }
 .toc ul { margin: 0.5rem 0 0; padding-left: 1.25rem; }
 .toc li { padding: 0.15rem 0; }
 .toc a { text-decoration: none; }
 .toc a:hover { text-decoration: underline; }
+
+.toc-inline { display: none; }
+.toc-sidebar {
+    display: block;
+    position: fixed;
+    left: calc((100vw - 880px) / 2 - 220px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 180px;
+    max-height: 70vh;
+    overflow-y: auto;
+    font-size: 0.85rem;
+}
+.toc-sidebar ul { padding-left: 1rem; }
+.toc-sidebar a { opacity: 0.6; transition: opacity 0.2s; }
+.toc-sidebar a:hover, .toc-sidebar a.toc-active { opacity: 1; }
+.toc-sidebar a.toc-active { font-weight: 700; }
