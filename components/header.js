@@ -2,6 +2,9 @@
 const pathPrefix = location.pathname.includes('/posts/') ? '../' : '';
 const isHome = location.pathname.endsWith('index.html') || location.pathname.endsWith('/');
 
+const isDark = localStorage.getItem('theme') === 'dark';
+if (isDark) document.documentElement.classList.add('dark');
+
 document.currentScript.insertAdjacentHTML('afterend', `
 <header>
     <div class="header-left">
@@ -10,7 +13,13 @@ document.currentScript.insertAdjacentHTML('afterend', `
             <a href="${pathPrefix}index.html">Home</a>
             <a href="${pathPrefix}blog.html">Blog</a>
         </nav>
+        <button class="theme-toggle">${isDark ? '☼' : '☾'}</button>
     </div>
     ${isHome ? `<img src="${pathPrefix}portrait.jpg" alt="Portrait of Moritz Groß" class="portrait" loading="lazy">` : ''}
 </header>
 `);
+
+document.querySelector('.theme-toggle').addEventListener('click', function() {
+    const dark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+});
