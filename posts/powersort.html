@@ -211,7 +211,9 @@
 
     for (int x = 0; x < k; x++) arr[left + x] = buf[x]; // copy elements from buffer
 }</code></pre>
-
+                <p>
+                    (Also see section <em>B.1 Merging</em> of <a href="https://arxiv.org/pdf/1805.04154">Nearly-Optimal Mergesorts</a>)
+                </p>
                 <p>
                     The cost of merging two runs is proportional to their combined length, as each element
                     is compared and copied exactly once.
