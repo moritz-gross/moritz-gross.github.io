@@ -202,122 +202,6 @@
                     of time.
                 </p>
 
-                <h4>Interlude: Matrix Chain Multiplication</h4>
-
-                <p>
-                    This phenomenon is well-known in a different context: matrix multiplication.
-                    When multiplying three matrices <i>A</i> &times; <i>B</i> &times; <i>C</i>, the result is identical
-                    whether we compute (<i>A</i> &times; <i>B</i>) &times; <i>C</i> or
-                    <i>A</i> &times; (<i>B</i> &times; <i>C</i>). However, the computational cost can differ dramatically.
-                </p>
-
-                <p>
-                    Consider three matrices with dimensions:
-                </p>
-                <ul>
-                    <li><i>A</i>: 10 &times; 30</li>
-                    <li><i>B</i>: 30 &times; 10</li>
-                    <li><i>C</i>: 10 &times; 30</li>
-                </ul>
-
-                <p>
-                    Multiplying two matrices of dimensions (<i>m</i> &times; <i>n</i>) and (<i>n</i> &times; <i>p</i>)
-                    costs <i>m</i> &middot; <i>n</i> &middot; <i>p</i> scalar multiplications.
-                </p>
-
-                <!-- Scale: 3px per unit, so 10→30px, 30→90px -->
-                <!-- Equation chain layout: A × B × C  →  intermediate × remaining  →  Result -->
-                <svg viewBox="0 0 740 210" style="max-width: 820px; display: block; margin: 1.5rem auto; font-family: inherit; font-size: 13px;">
-                    <!-- Row 1: (A × B) × C = 6,000 ops (good order) -->
-                    <g transform="translate(5, 5)">
-                        <!-- Step 1: A × B × C -->
-                        <rect x="0" y="30" width="90" height="30" fill="#e8f4e8" stroke="#2a9d71"/>
-                        <text x="45" y="50" text-anchor="middle">A</text>
-
-                        <text x="100" y="50" text-anchor="middle">×</text>
-
-                        <rect x="110" y="0" width="30" height="90" fill="#fff4e8" stroke="#e9a06a"/>
-                        <text x="125" y="50" text-anchor="middle">B</text>
-
-                        <text x="150" y="50" text-anchor="middle">×</text>
-
-                        <rect x="160" y="30" width="90" height="30" fill="#e8f0ff" stroke="#8ab5e1"/>
-                        <text x="205" y="50" text-anchor="middle">C</text>
-
-                        <!-- Arrow 1 -->
-                        <text x="270" y="50" text-anchor="middle">→</text>
-                        <text x="270" y="70" text-anchor="middle" fill="#555">3,000</text>
-
-                        <!-- Step 2: (A×B) × C - centered to align arrow 2 with row 2 -->
-                        <rect x="320" y="30" width="30" height="30" fill="#d4edda" stroke="#2a9d71"/>
-                        <text x="335" y="50" text-anchor="middle">A×B</text>
-
-                        <text x="370" y="50" text-anchor="middle">×</text>
-
-                        <rect x="390" y="30" width="90" height="30" fill="#e8f0ff" stroke="#8ab5e1"/>
-                        <text x="435" y="50" text-anchor="middle">C</text>
-
-                        <!-- Arrow 2 -->
-                        <text x="520" y="50" text-anchor="middle">→</text>
-                        <text x="520" y="70" text-anchor="middle" fill="#555">3,000</text>
-
-                        <!-- Step 3: Result -->
-                        <rect x="550" y="30" width="90" height="30" fill="#d4edda" stroke="#2a9d71"/>
-                        <text x="595" y="50" text-anchor="middle">Result</text>
-
-                        <!-- Total -->
-                        <text x="690" y="50" text-anchor="middle" font-weight="bold" fill="#2a9d71">Total: 6,000</text>
-                    </g>
-
-                    <!-- Row 2: A × (B × C) = 18,000 ops (bad order) -->
-                    <g transform="translate(5, 110)">
-                        <!-- Step 1: A × B × C -->
-                        <rect x="0" y="30" width="90" height="30" fill="#e8f4e8" stroke="#2a9d71"/>
-                        <text x="45" y="50" text-anchor="middle">A</text>
-
-                        <text x="100" y="50" text-anchor="middle">×</text>
-
-                        <rect x="110" y="0" width="30" height="90" fill="#fff4e8" stroke="#e9a06a"/>
-                        <text x="125" y="50" text-anchor="middle">B</text>
-
-                        <text x="150" y="50" text-anchor="middle">×</text>
-
-                        <rect x="160" y="30" width="90" height="30" fill="#e8f0ff" stroke="#8ab5e1"/>
-                        <text x="205" y="50" text-anchor="middle">C</text>
-
-                        <!-- Arrow 1 -->
-                        <text x="270" y="50" text-anchor="middle">→</text>
-                        <text x="270" y="70" text-anchor="middle" fill="#555">9,000</text>
-
-                        <!-- Step 2: A × (B×C) -->
-                        <rect x="295" y="30" width="90" height="30" fill="#e8f4e8" stroke="#2a9d71"/>
-                        <text x="340" y="50" text-anchor="middle">A</text>
-
-                        <text x="395" y="50" text-anchor="middle">×</text>
-
-                        <rect x="405" y="0" width="90" height="90" fill="#f8d7da" stroke="#c94a4a"/>
-                        <text x="450" y="50" text-anchor="middle">B×C</text>
-
-                        <!-- Arrow 2 -->
-                        <text x="520" y="50" text-anchor="middle">→</text>
-                        <text x="520" y="70" text-anchor="middle" fill="#555">9,000</text>
-
-                        <!-- Step 3: Result -->
-                        <rect x="550" y="30" width="90" height="30" fill="#f8d7da" stroke="#c94a4a"/>
-                        <text x="595" y="50" text-anchor="middle">Result</text>
-
-                        <!-- Total -->
-                        <text x="690" y="50" text-anchor="middle" font-weight="bold" fill="#c94a4a">Total: 18,000</text>
-                    </g>
-                </svg>
-
-                <p>
-                    The difference is a factor of 3&times; in this example, solely from choosing a different order of operations.
-                    The key insight: creating large intermediate results can heavily influence overall runtime.
-                </p>
-
-                <h4>Back to Merging Runs</h4>
-
                 <p>
                     The same principle applies to merging runs. The cost of a merge is proportional to the total length
                     of the runs being merged.
@@ -419,7 +303,121 @@
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
 
-                TODO: Introduce power and powerloop
+                <h4>Related example: Matrix Chain Multiplication</h4>
+
+                <p>
+                    A similar idea appears in a different context: matrix multiplication.
+                    When multiplying three matrices <i>A</i> &times; <i>B</i> &times; <i>C</i>, the result is identical
+                    whether we compute (<i>A</i> &times; <i>B</i>) &times; <i>C</i> or
+                    <i>A</i> &times; (<i>B</i> &times; <i>C</i>). However, the computational cost can differ dramatically.
+                </p>
+
+                <p>
+                    Consider three matrices with dimensions:
+                </p>
+                <ul>
+                    <li><i>A</i>: 10 &times; 30</li>
+                    <li><i>B</i>: 30 &times; 10</li>
+                    <li><i>C</i>: 10 &times; 30</li>
+                </ul>
+
+                <p>
+                    Multiplying two matrices of dimensions (<i>m</i> &times; <i>n</i>) and (<i>n</i> &times; <i>p</i>)
+                    costs <i>m</i> &middot; <i>n</i> &middot; <i>p</i> scalar multiplications.
+                </p>
+
+                <!-- Scale: 3px per unit, so 10→30px, 30→90px -->
+                <!-- Equation chain layout: A × B × C  →  intermediate × remaining  →  Result -->
+                <svg viewBox="0 0 740 210" style="max-width: 820px; display: block; margin: 1.5rem auto; font-family: inherit; font-size: 13px;">
+                    <!-- Row 1: (A × B) × C = 6,000 ops (good order) -->
+                    <g transform="translate(5, 5)">
+
+                        <!-- Step 1: A × B × C -->
+                        <rect x="0" y="30" width="90" height="30" fill="#e8f4e8" stroke="#2a9d71"/>
+                        <text x="45" y="50" text-anchor="middle">A</text>
+
+                        <text x="100" y="50" text-anchor="middle">×</text>
+
+                        <rect x="110" y="0" width="30" height="90" fill="#fff4e8" stroke="#e9a06a"/>
+                        <text x="125" y="50" text-anchor="middle">B</text>
+
+                        <text x="150" y="50" text-anchor="middle">×</text>
+
+                        <rect x="160" y="30" width="90" height="30" fill="#e8f0ff" stroke="#8ab5e1"/>
+                        <text x="205" y="50" text-anchor="middle">C</text>
+
+                        <!-- Arrow 1 -->
+                        <text x="270" y="50" text-anchor="middle">→</text>
+                        <text x="270" y="70" text-anchor="middle" fill="#555">3,000</text>
+
+                        <!-- Step 2: (A×B) × C - centered to align arrow 2 with row 2 -->
+                        <rect x="320" y="30" width="30" height="30" fill="#d4edda" stroke="#2a9d71"/>
+                        <text x="335" y="50" text-anchor="middle">A×B</text>
+
+                        <text x="370" y="50" text-anchor="middle">×</text>
+
+                        <rect x="390" y="30" width="90" height="30" fill="#e8f0ff" stroke="#8ab5e1"/>
+                        <text x="435" y="50" text-anchor="middle">C</text>
+
+                        <!-- Arrow 2 -->
+                        <text x="520" y="50" text-anchor="middle">→</text>
+                        <text x="520" y="70" text-anchor="middle" fill="#555">3,000</text>
+
+                        <!-- Step 3: Result -->
+                        <rect x="550" y="30" width="90" height="30" fill="#d4edda" stroke="#2a9d71"/>
+                        <text x="595" y="50" text-anchor="middle">Result</text>
+
+                        <!-- Total -->
+                        <text x="690" y="50" text-anchor="middle" font-weight="bold" fill="#2a9d71">Total: 6,000</text>
+                    </g>
+
+                    <!-- Row 2: A × (B × C) = 18,000 ops (bad order) -->
+                    <g transform="translate(5, 110)">
+
+                        <!-- Step 1: A × B × C -->
+                        <rect x="0" y="30" width="90" height="30" fill="#e8f4e8" stroke="#2a9d71"/>
+                        <text x="45" y="50" text-anchor="middle">A</text>
+
+                        <text x="100" y="50" text-anchor="middle">×</text>
+
+                        <rect x="110" y="0" width="30" height="90" fill="#fff4e8" stroke="#e9a06a"/>
+                        <text x="125" y="50" text-anchor="middle">B</text>
+
+                        <text x="150" y="50" text-anchor="middle">×</text>
+
+                        <rect x="160" y="30" width="90" height="30" fill="#e8f0ff" stroke="#8ab5e1"/>
+                        <text x="205" y="50" text-anchor="middle">C</text>
+
+                        <!-- Arrow 1 -->
+                        <text x="270" y="50" text-anchor="middle">→</text>
+                        <text x="270" y="70" text-anchor="middle" fill="#555">9,000</text>
+
+                        <!-- Step 2: A × (B×C) -->
+                        <rect x="295" y="30" width="90" height="30" fill="#e8f4e8" stroke="#2a9d71"/>
+                        <text x="340" y="50" text-anchor="middle">A</text>
+
+                        <text x="395" y="50" text-anchor="middle">×</text>
+
+                        <rect x="405" y="0" width="90" height="90" fill="#f8d7da" stroke="#c94a4a"/>
+                        <text x="450" y="50" text-anchor="middle">B×C</text>
+
+                        <!-- Arrow 2 -->
+                        <text x="520" y="50" text-anchor="middle">→</text>
+                        <text x="520" y="70" text-anchor="middle" fill="#555">9,000</text>
+
+                        <!-- Step 3: Result -->
+                        <rect x="550" y="30" width="90" height="30" fill="#f8d7da" stroke="#c94a4a"/>
+                        <text x="595" y="50" text-anchor="middle">Result</text>
+
+                        <!-- Total -->
+                        <text x="690" y="50" text-anchor="middle" font-weight="bold" fill="#c94a4a">Total: 18,000</text>
+                    </g>
+                </svg>
+
+                <p>
+                    The difference is a factor of 3&times; in this example, solely from choosing a different order of operations.
+                    The key insight: creating large intermediate results can heavily influence overall runtime.
+                </p>
             </section>
 
         </article>
