@@ -425,6 +425,27 @@
                     The key insight: creating large intermediate results can heavily influence overall runtime.
                 </p>
 
+                <h4>Locality of Reference</h4>
+
+                <p>
+                    Beyond the number of comparisons and swaps, real-world sorting performance depends heavily on
+                    <em>locality of reference</em>&mdash;how well an algorithm's memory access patterns align with
+                    the CPU's cache hierarchy.
+                </p>
+
+                <p>
+                    Modern processors have multiple levels of <a href="https://en.wikipedia.org/wiki/CPU_cache">cache</a>
+                    (L1, L2, L3) that are orders of magnitude faster than main memory.
+                    <em>Spatial locality</em> means accessing memory addresses that are close together;
+                    <em>temporal locality</em> means accessing the same addresses repeatedly in a short time window.
+                    Algorithms that exhibit good locality keep their working set in cache and avoid expensive
+                    memory fetches.
+                </p>
+
+                <p>
+                    TODO: integrate <a href="https://arxiv.org/abs/2209.06909">Multiway Powersort</a>.
+                </p>
+
                 <h4>Code</h4>
 
                 <p>
