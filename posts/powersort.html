@@ -246,7 +246,8 @@
                 <div class="array-chart" id="chart-merge-order"></div>
 
                 <p>
-                    There are 3 runs, the left one being by far the longest, and the middle and right one being short.
+                    There are 3 runs, the left one being by far the longest with 7 items, and the middle and right one
+                    being shorter with size 2 and 1 respectively.
                     Before reading further, try acting out the sorting algorithm by hand (it won't take long as there are
                     only two choices for the merging order).
                 </p>
@@ -454,45 +455,6 @@
                     The key insight: creating large intermediate results can heavily influence overall runtime.
                 </p>
 
-                <h4>Caching Behaviour</h4>
-
-                <p>
-                    The cost analysis above counts element copies, but real-world performance also depends on
-                    <em>cache efficiency</em>. Modern CPUs have multiple levels of
-                    <a href="https://en.wikipedia.org/wiki/CPU_cache">cache</a> (L1, L2, L3) that are
-                    orders of magnitude faster than main memory. Algorithms that keep their working set
-                    small and access memory sequentially run much faster than those that have irregular accessing patterns.
-                </p>
-
-                <p>
-                    When merging two runs, the CPU streams through both, comparing elements and copying
-                    them to a buffer. If both runs fit in cache, this is fast. If they don't, the CPU
-                    repeatedly stalls waiting for main memory.
-                </p>
-
-                <p>
-                    Powersort's "merge small neighbors first" strategy is cache-friendly for two reasons:
-                </p>
-
-                <ul>
-                    <li>
-                        <strong>Small working sets:</strong> High-power merges combine short, adjacent runs.
-                        Their combined data often fits entirely in L2 or L3 cache, making the merge fast.
-                        Low-power merges (spanning large portions of the array) happen last, when there's
-                        no choice but to process more data.
-                    </li>
-                    <li>
-                        <strong>Temporal locality:</strong> Runs are pushed onto the stack as they're discovered
-                        by scanning left-to-right. When two high-power runs get merged immediately, their
-                        elements were just touched, so they're likely still in cache.
-                    </li>
-                </ul>
-
-                <p>
-                    In contrast, a left-to-right merge order would repeatedly stream through a growing
-                    intermediate result, evicting useful data and causing cache thrashing.
-                </p>
-
 
                 <h4>The Power of a Run</h4>
 
@@ -667,8 +629,70 @@
                 </p>
 
                 <p>
-                    When a new run is found, its power is calculated, and it gets placed onto the stack. Then the stack is collapsed
-                    as deep as possible based on the powers of the elements.
+                    <strong>Worked example:</strong> Let's compute the power for the runs from our earlier
+                    merge-order example: \(R_1\) (length 7), \(R_2\) (length 2), \(R_3\) (length 1), with total array length 10.
+                </p>
+
+                <p>
+                    <strong>Power of \((R_1, R_2)\):</strong> Here \(s_1 = 0\), \(n_1 = 7\), \(n_2 = 2\), \(n = 10\).
+                </p>
+                <ul>
+                    <li>Initialize: \(a = 2·0+7 = 7, b = 7+7+2 = 16\)</li>
+                    <li>Iteration 1: \(a = 7 < 10 \) (bit 0), \(b = 16 ≥ 10\) (bit 1) → bits differ, return <strong>1</strong></li>
+                </ul>
+
+                <p>
+                    <strong>Power of \((R_2, R_3)\):</strong> Here \(s_1 = 7\), \(n_1 = 2\), \(n_2 = 1\), \(n = 10\).
+                </p>
+                <ul>
+                    <li>Initialize: \(a = 2·7+2 = 16\), \(b = 16+2+1 = 19\)</li>
+                    <li>Iteration 1: \(a = 16 ≥ 10\), \(b = 19 ≥ 10\) → both 1, subtract and double: \(a = 12\), \(b = 18\)</li>
+                    <li>Iteration 2: \(a = 12 ≥ 10\), \(b = 18 ≥ 10\) → both 1, subtract and double: \(a = 4\), \(b = 16\)</li>
+                    <li>Iteration 3: \(a = 4 < 10\) (bit 0), \(b = 16 ≥ 10\) (bit 1) → bits differ, return <strong>3</strong></li>
+                </ul>
+
+                <p>
+                    Since power\((R_2, R_3) = 3 > 1 = \)power\((R_1, R_2)\), the algorithm merges \(R_2\) and \(R_3\) first.
+                    This matches the optimal order we identified earlier.
+                </p>
+
+                <h4>Caching Behaviour</h4>
+
+                <p>
+                    The cost analysis above counts element copies, but real-world performance also depends on
+                    <em>cache efficiency</em>. Modern CPUs have multiple levels of
+                    <a href="https://en.wikipedia.org/wiki/CPU_cache">cache</a> (L1, L2, L3) that are
+                    orders of magnitude faster than main memory. Algorithms that keep their working set
+                    small and access memory sequentially run much faster than those that have irregular accessing patterns.
+                </p>
+
+                <p>
+                    When merging two runs, the CPU streams through both, comparing elements and copying
+                    them to a buffer. If both runs fit in cache, this is fast. If they don't, the CPU
+                    repeatedly stalls waiting for main memory.
+                </p>
+
+                <p>
+                    Powersort's "merge small neighbors first" strategy is cache-friendly for two reasons:
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>Small working sets:</strong> High-power merges combine short, adjacent runs.
+                        Their combined data often fits entirely in L2 or L3 cache, making the merge fast.
+                        Low-power merges (spanning large portions of the array) happen last, when there's
+                        no choice but to process more data.
+                    </li>
+                    <li>
+                        <strong>Temporal locality:</strong> Runs are pushed onto the stack as they're discovered
+                        by scanning left-to-right. When two high-power runs get merged immediately, their
+                        elements were just touched, so they're likely still in cache.
+                    </li>
+                </ul>
+
+                <p>
+                    In contrast, a left-to-right merge order would repeatedly stream through a growing
+                    intermediate result, evicting useful data and causing cache thrashing.
                 </p>
 
             </section>

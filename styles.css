@@ -150,3 +150,11 @@ li {
 .toc-sidebar a { opacity: 0.6; transition: opacity 0.2s; }
 .toc-sidebar a:hover, .toc-sidebar a.toc-active { opacity: 1; }
 .toc-sidebar a.toc-active { font-weight: 700; }
+
+ code {
+      font-family: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
+      font-size: 0.9em;  /* compensate for monospace appearing smaller */
+      background: color-mix(in srgb, var(--text) 8%, transparent);
+      padding: 0.1em 0.3em;
+      border-radius: 3px;
+  }
