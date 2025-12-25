@@ -9,7 +9,7 @@
 
     <link href="../styles.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
@@ -143,9 +143,9 @@
 
                 <p>
                     Even though all the following can be applied to any comparable type of object (e.g. strings),
-                    we use integers for easy visualization. For length <i>n</i> &in; &Nopf;, write the array as
-                    <i>A</i> = (a<sub>0</sub>, a<sub>1</sub>, &hellip;, a<sub>n-1</sub>),
-                    where a<sub>i</sub> denotes the element at index <i>i</i>.
+                    we use integers for easy visualization. For length \(n \in \mathbb{N}\), write the array as
+                    \(A = (a_0, a_1, \dots, a_{n-1})\),
+                    where \(a_i\) denotes the element at index \(i\).
                     First off, we consider the arguably "easiest" input possible for sorting; an ascending array,
                     i.e. an array that is already sorted.
                     In this case, nothing needs to be done:
@@ -177,17 +177,17 @@
 
                 <p>
                     A way to quantify why this one is harder than the previous inputs is counting the subarrays that are
-                    already monotone. For indices 0 &le; i &le; j &lt; n, we write
-                    <i>A</i>[i..j] = (a<sub>i</sub>, a<sub>i+1</sub>, &hellip;, a<sub>j</sub>)
-                    for the contiguous subarray of <i>A</i> from position <i>i</i> to <i>j</i>.
-                    From now on, these monotone subarrays will be called <i>runs</i>.
+                    already monotone. For indices \(0 \le i \le j < n\), we write
+                    \(A[i..j] = (a_i, a_{i+1}, \dots, a_j)\)
+                    for the contiguous subarray of \(A\) from position \(i\) to \(j\).
+                    From now on, these monotone subarrays will be called <em>runs</em>.
                 </p>
 
                 <p>
-                    More precisely, an <em>ascending run</em> of <i>A</i> is a subarray <i>A</i>[i..j] with
-                    0 &le; i &le; j &lt; n such that
-                    a<sub>i</sub> &le; a<sub>i+1</sub> &le; &hellip; &le; a<sub>j</sub>, i.e. monotonically increasing.
-                    A <em>descending run</em> is defined analogously. In this article, we use the word <i>run</i> for both
+                    More precisely, an <em>ascending run</em> of \(A\) is a subarray \(A[i..j]\) with
+                    \(0 \le i \le j < n\) such that
+                    \(a_i \le a_{i+1} \le \dots \le a_j\), i.e. monotonically increasing.
+                    A <em>descending run</em> is defined analogously. In this article, we use the word <em>run</em> for both
                     ascending and descending runs.
                 </p>
 
@@ -225,7 +225,7 @@
                 </p>
 
                 <p>
-                    Let <i>k</i> be the number of runs at the very start, then exactly <i>k-1</i> merge-operations are needed to
+                    Let \(k\) be the number of runs at the very start, then exactly \(k-1\) merge-operations are needed to
                     sort the whole array, as each time the number of runs is reduced by 1, and the sorted array is known
                     to be just one big run.
                 </p>
@@ -279,13 +279,13 @@
 
                 <div class="merge-tree">
                     <div class="merge-level">
-                        <div class="merge-block run-0" style="width: calc(70% - 2.1rem);">R1 (len 7)</div>
-                        <div class="merge-block run-1" style="width: calc(20% - 0.6rem);">R2 (len 2)</div>
-                        <div class="merge-block run-2" style="width: calc(10% - 0.3rem);">R3 (len 1)</div>
+                        <div class="merge-block run-0" style="width: calc(70% - 2.1rem);">\(R_1\) (len 7)</div>
+                        <div class="merge-block run-1" style="width: calc(20% - 0.6rem);">\(R_2\) (len 2)</div>
+                        <div class="merge-block run-2" style="width: calc(10% - 0.3rem);">\(R_3\) (len 1)</div>
                     </div>
                     <div class="merge-level">
                         <div class="merge-result" style="width: calc(90% - 1.2rem);">
-                            <div class="merge-block run-3">R1+R2 (len 9)</div>
+                            <div class="merge-block run-3">\(R_1+R_2\) (len 9)</div>
                         </div>
                         <div class="merge-block-spacer" style="width: calc(10% - 0.3rem);"></div>
                     </div>
@@ -297,12 +297,12 @@
                 </div>
 
                 <p>
-                    Total Cost:  (len(R1) + len(R2)) + (len(R1+R2) + len(R3)) = (7 + 2) + (9 + 1) = 9 + 10 = 19
+                    Total Cost:  \(\text{len}(R_1) + \text{len}(R_2) + \text{len}(R_1+R_2) + \text{len}(R_3) = (7 + 2) + (9 + 1) = 9 + 10 = 19\)
                 </p>
 
                 <p>
                     A naive left-to-right merge order is very inefficient, creating an "unbalanced" order of operations.
-                    The created array R1+R2 appears unnecessarily big.
+                    The created array \(R_1+R_2\) appears unnecessarily big.
                 </p>
 
 
@@ -310,14 +310,14 @@
 
                 <div class="merge-tree">
                     <div class="merge-level">
-                        <div class="merge-block run-0" style="width: calc(70% - 2.1rem);">R1 (len 7)</div>
-                        <div class="merge-block run-1" style="width: calc(20% - 0.6rem);">R2 (len 2)</div>
-                        <div class="merge-block run-2" style="width: calc(10% - 0.3rem);">R3 (len 1)</div>
+                        <div class="merge-block run-0" style="width: calc(70% - 2.1rem);">\(R_1\) (len 7)</div>
+                        <div class="merge-block run-1" style="width: calc(20% - 0.6rem);">\(R_2\) (len 2)</div>
+                        <div class="merge-block run-2" style="width: calc(10% - 0.3rem);">\(R_3\) (len 1)</div>
                     </div>
                     <div class="merge-level">
                         <div class="merge-block-spacer" style="width: calc(70% - 2.1rem);"></div>
                         <div class="merge-result" style="width: calc(30% + 0.6rem);">
-                            <div class="merge-block run-3">R2+R3 (len 3)</div>
+                            <div class="merge-block run-3">\(R_2+R_3\) (len 3)</div>
                         </div>
                     </div>
                     <div class="merge-level">
@@ -327,12 +327,12 @@
                     </div>
                 </div>
                 <p>
-                    Total Cost: (len(R2) + len(R3)) + (len(R1) + len(R2+R3)) = (2 + 1) + (7 + 3) = 3 + 10 = 13
+                    Total Cost: \(\text{len}(R_2) + \text{len}(R_3) + \text{len}(R_1) + \text{len}(R_2+R_3) = (2 + 1) + (7 + 3) = 3 + 10 = 13\)
                 </p>
 
                 <p>
-                    Merging the two smaller runs R2 and R3 first is much cheaper. The reason appears to be related because
-                    R2 and R3 have a similar size, while R1 is much bigger, thus merging it with any other run doesn't change
+                    Merging the two smaller runs \(R_2\) and \(R_3\) first is much cheaper. The reason appears to be related because
+                    \(R_2\) and \(R_3\) have a similar size, while \(R_1\) is much bigger, thus merging it with any other run doesn't change
                     its size much.
                 </p>
 
@@ -342,23 +342,23 @@
 
                 <p>
                     A similar idea appears in a different context: matrix multiplication.
-                    When multiplying three matrices <i>A</i> &times; <i>B</i> &times; <i>C</i>, the result is identical
-                    whether we compute (<i>A</i> &times; <i>B</i>) &times; <i>C</i> or
-                    <i>A</i> &times; (<i>B</i> &times; <i>C</i>). However, the computational cost can differ dramatically.
+                    When multiplying three matrices \(A \times B \times C\), the result is identical
+                    whether we compute \((A \times B) \times C\) or
+                    \(A \times (B \times C)\). However, the computational cost can differ dramatically.
                 </p>
 
                 <p>
                     Consider three matrices with dimensions:
                 </p>
                 <ul>
-                    <li><i>A</i>: 10 &times; 30</li>
-                    <li><i>B</i>: 30 &times; 10</li>
-                    <li><i>C</i>: 10 &times; 30</li>
+                    <li>\(A\): \(10 \times 30\)</li>
+                    <li>\(B\): \(30 \times 10\)</li>
+                    <li>\(C\): \(10 \times 30\)</li>
                 </ul>
 
                 <p>
-                    Multiplying two matrices of dimensions (<i>m</i> &times; <i>n</i>) and (<i>n</i> &times; <i>p</i>)
-                    costs <i>m</i> &middot; <i>n</i> &middot; <i>p</i> scalar multiplications.
+                    Multiplying two matrices of dimensions \((m \times n)\) and \((n \times p)\)
+                    costs \(m \cdot n \cdot p\) scalar multiplications.
                 </p>
 
                 <!-- Scale: 3px per unit, so 10→30px, 30→90px -->
@@ -450,7 +450,7 @@
                 </svg>
 
                 <p>
-                    The difference is a factor of 3&times; in this example, solely from choosing a different order of operations.
+                    The difference is a factor of \(3\times\) in this example, solely from choosing a different order of operations.
                     The key insight: creating large intermediate results can heavily influence overall runtime.
                 </p>
 
@@ -487,10 +487,10 @@
                 </p>
 
                 <p>
-                    Consider two consecutive runs R<sub>1</sub> and R<sub>2</sub>, where
-                    R<sub>1</sub> starts at position s<sub>1</sub> with length n<sub>1</sub>,
-                    and R<sub>2</sub> immediately follows with length n<sub>2</sub>.
-                    Define their <em>midpoints</em> as fractions of the total array length n:
+                    Consider two consecutive runs \(R_1\) and \(R_2\), where
+                    \(R_1\) starts at position \(s_1\) with length \(n_1\),
+                    and \(R_2\) immediately follows with length \(n_2\).
+                    Define their <em>midpoints</em> as fractions of the total array length \(n\):
                 </p>
 
                 $$
@@ -501,9 +501,9 @@
                 $$
 
                 <p>
-                    Both midpoints lie in the interval [0, 1]. The <em>power</em> of the run pair is
-                    defined as the first bit position where the binary representations of m<sub>1</sub> and
-                    m<sub>2</sub> differ, i.e., the smallest integer k &geq; 1 such that:
+                    Both midpoints lie in the interval \([0, 1]\). The <em>power</em> of the run pair is
+                    defined as the first bit position where the binary representations of \(m_1\) and
+                    \(m_2\) differ, i.e., the smallest integer \(k \ge 1\) such that:
                     $$\lfloor 2^k \cdot m_1 \rfloor \neq \lfloor 2^k \cdot m_2 \rfloor$$
                 </p>
 
@@ -609,28 +609,28 @@
 
                 <p>
                     <strong>Initialization:</strong> We want to compare
-                    m<sub>1</sub> = (s<sub>1</sub> + n<sub>1</sub>/2) / n and
-                    m<sub>2</sub> = (s<sub>1</sub> + n<sub>1</sub> + n<sub>2</sub>/2) / n.
-                    To avoid fractions, we scale everything by 2n:
+                    \(m_1 = (s_1 + n_1/2) / n\) and
+                    \(m_2 = (s_1 + n_1 + n_2/2) / n\).
+                    To avoid fractions, we scale everything by \(2n\):
                 </p>
                 <ul>
-                    <li><code>a = 2 * s1 + n1</code> represents 2n &middot; m<sub>1</sub> = 2s<sub>1</sub> + n<sub>1</sub></li>
-                    <li><code>b = a + n1 + n2</code> represents 2n &middot; m<sub>2</sub> = 2s<sub>1</sub> + 2n<sub>1</sub> + n<sub>2</sub></li>
+                    <li><code>a = 2 * s1 + n1</code> represents \(2n \cdot m_1 = 2s_1 + n_1\)</li>
+                    <li><code>b = a + n1 + n2</code> represents \(2n \cdot m_2 = 2s_1 + 2n_1 + n_2\)</li>
                 </ul>
 
                 <p>
-                    <strong>The loop:</strong> Each iteration examines the next bit of m<sub>1</sub> and
-                    m<sub>2</sub>. The key insight: the k-th bit of a fraction x is 1
-                    iff &lfloor;2<sup>k</sup>x&rfloor; is odd, which happens iff
-                    2<sup>k</sup>x &ge; &lfloor;2<sup>k</sup>x&rfloor; + 1 after removing
+                    <strong>The loop:</strong> Each iteration examines the next bit of \(m_1\) and
+                    \(m_2\). The key insight: the \(k\)-th bit of a fraction \(x\) is \(1\)
+                    iff \(\lfloor 2^k x \rfloor\) is odd, which happens iff
+                    \(2^k x \ge \lfloor 2^k x \rfloor + 1\) after removing
                     previous bits. In our scaled representation, <code>a >= num</code> tests whether the
-                    current bit of m<sub>1</sub> is 1.
+                    current bit of \(m_1\) is \(1\).
                 </p>
 
                 <ul>
                     <li>
                         <strong>Both bits are 1</strong> (<code>a >= num</code> and implicitly <code>b >= num</code>
-                        since b &gt; a): Subtract <code>num</code> from both to take away this bit,
+                        since \(b > a\)): Subtract <code>num</code> from both to take away this bit,
                         then continue to the next bit.
                     </li>
                     <li>
@@ -644,7 +644,7 @@
                 </ul>
 
                 <p>
-                    Note that a's bit being 1 while b's is 0 cannot occur since m<sub>1</sub> &lt; m<sub>2</sub> always holds.
+                    Note that \(a\)'s bit being \(1\) while \(b\)'s is \(0\) cannot occur since \(m_1 < m_2\) always holds.
                 </p>
 
                 <p>
