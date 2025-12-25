@@ -176,15 +176,15 @@
 
 
                 <p>
-                    A way to quantify why this one is harder than the previous inputs is counting the subarrays that are
-                    already monotone. For indices \(0 \le i \le j < n\), we write
+                    A way to quantify why this one is harder than the previous inputs is counting the contiguous
+                    sections that are already monotone. For indices \(0 \le i \le j < n\), we write
                     \(A[i..j] = (a_i, a_{i+1}, \dots, a_j)\)
-                    for the contiguous subarray of \(A\) from position \(i\) to \(j\).
-                    From now on, these monotone subarrays will be called <em>runs</em>.
+                    for the contiguous section of \(A\) from position \(i\) to \(j\).
+                    From now on, these monotone sections will be called <em>runs</em>.
                 </p>
 
                 <p>
-                    More precisely, an <em>ascending run</em> of \(A\) is a subarray \(A[i..j]\) with
+                    More precisely, an <em>ascending run</em> of \(A\) is a section \(A[i..j]\) with
                     \(0 \le i \le j < n\) such that  \(a_i \le a_{i+1} \le \dots \le a_j\) and that \(j\) is maximal,
                     i.e. it can't be increased without breaking the monotonicity of the elements.
                     A <em>descending run</em> is defined analogously. In this article, we use the word <em>run</em> for both
@@ -221,7 +221,8 @@
                 </p>
                 <p>
                     The cost of merging two runs is proportional to their combined length, as each element
-                    is compared and copied exactly once.
+                    is compared and copied exactly once. More formally, we define the <em>merge cost</em> of
+                    combining runs \(R_i\) and \(R_j\) as \(\text{len}(R_i) + \text{len}(R_j)\).
                 </p>
 
                 <p>
@@ -267,12 +268,9 @@
                 <p>
                     ...
                 </p>
-                <p>
-                    ...
-                </p>
 
                 <p>
-                    The two approaches how this can play out are explained below:
+                    The two possible merge orders are explained below:
                 </p>
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
@@ -625,7 +623,9 @@
                 </ul>
 
                 <p>
-                    Note that \(a\)'s bit being \(1\) while \(b\)'s is \(0\) cannot occur since \(m_1 < m_2\) always holds.
+                    Note that \(a\)'s bit being \(1\) while \(b\)'s is \(0\) cannot occur: since \(R_2\) immediately
+                    follows \(R_1\), the midpoint of \(R_2\) is always to the right of \(R_1\)'s midpoint,
+                    so \(m_1 < m_2\) always holds.
                 </p>
 
                 <p>
