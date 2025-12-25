@@ -588,7 +588,7 @@
     int result = 0;
     int a = 2 * s1 + n1;  /* 2 * midpoint1 */
     int b = a + n1 + n2;  /* 2 * midpoint2 */
-    for (;;) {
+    while (true) {
         ++result;
         if (a >= num) {        /* both bits are 1 */
             a -= num;
