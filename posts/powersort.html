@@ -695,6 +695,34 @@
                     intermediate result, evicting useful data and causing cache thrashing.
                 </p>
 
+                <h4>Conclusion</h4>
+
+                <p>
+                    Powersort is a really nice piece of computer science in my opinion, because it is both effective in practice,
+                    and it has some neat theory behind it as well. When I first looked into the topic, I didn't find any source
+                    that introduces the core ideas of Powersort in a "semi-formal" way that is mostly self-contained.
+                </p>
+
+                <p>
+                    As further material, the official publications provide detail and proofs this post does not plan to have,
+                    but for me also the public pull requests were very interesting sources to read; see for example the one for the official Python language
+                    (<a href="https://github.com/python/cpython/pull/28108">https://github.com/python/cpython/pull/28108</a>).
+                </p>
+
+                <p>
+                    This post also didn't really touch on the history of Powersort so far. The idea of exploiting pre-existing runs
+                    already appeared in Donald Knuth's <em>The Art of Computer Programming</em>, and was extended to <a href="https://en.wikipedia.org/wiki/Timsort">TimSort</a> by Tim Peters
+                    to use a heuristic merge order that is cache-friendly (compare earlier section). Later, a
+                    <a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol112-esa2018/LIPIcs.ESA.2018.4/LIPIcs.ESA.2018.4.pdf">bug</a>
+                    was found in the TimSort where some inputs created really bad merge-orders, leading open a gap for a better merge-policy...
+                </p>
+
+                <p>
+                    The publication of Powersort is still relatively new, so there are some encouraging places left where there has not yet been an implementation (like it was for NumPy in my case).
+
+
+                </p>
+
             </section>
 
         </article>
