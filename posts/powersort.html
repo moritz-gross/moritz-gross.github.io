@@ -135,7 +135,7 @@
                 <h4>Introduction</h4>
                 <p>
                     <em>Powersort</em> is a modern sorting algorithm (proposed 2018 in <a href="https://arxiv.org/pdf/1805.04154">Nearly-Optimal Mergesorts: Fast, Practical Sorting Methods That Optimally Adapt to Existing Runs</a>)
-                    that keeps the worst-case guarantees of previous algorithms like Quicksort and Mergesort, but works
+                    that keeps the worst-case guarantees of Mergesort, but works
                     faster on "easy" inputs.
                     This leads us to first define what we exactly mean by easy and hard, and how we can exploit these
                     ideas reliably without spending much additional computation on them.
@@ -186,7 +186,7 @@
                 <p>
                     More precisely, an <em>ascending run</em> of \(A\) is a subarray \(A[i..j]\) with
                     \(0 \le i \le j < n\) such that
-                    \(a_i \le a_{i+1} \le \dots \le a_j\), i.e. monotonically increasing.
+                    \(a_i \le a_{i+1} \le \dots \le a_j\), i.e. weakly monotonically increasing.
                     A <em>descending run</em> is defined analogously. In this article, we use the word <em>run</em> for both
                     ascending and descending runs.
                 </p>
@@ -454,26 +454,45 @@
                     The key insight: creating large intermediate results can heavily influence overall runtime.
                 </p>
 
-                <h4>Locality of Reference</h4>
+                <h4>Caching Behaviour</h4>
 
                 <p>
-                    Beyond the number of comparisons and swaps, real-world sorting performance depends heavily on
-                    <em>locality of reference</em>&mdash;how well an algorithm's memory access patterns align with
-                    the CPU's cache hierarchy.
+                    The cost analysis above counts element copies, but real-world performance also depends on
+                    <em>cache efficiency</em>. Modern CPUs have multiple levels of
+                    <a href="https://en.wikipedia.org/wiki/CPU_cache">cache</a> (L1, L2, L3) that are
+                    orders of magnitude faster than main memory. Algorithms that keep their working set
+                    small and access memory sequentially run much faster than those that have irregular accessing patterns.
                 </p>
 
                 <p>
-                    Modern processors have multiple levels of <a href="https://en.wikipedia.org/wiki/CPU_cache">cache</a>
-                    (L1, L2, L3) that are orders of magnitude faster than main memory.
-                    <em>Spatial locality</em> means accessing memory addresses that are close together;
-                    <em>temporal locality</em> means accessing the same addresses repeatedly in a short time window.
-                    Algorithms that exhibit good locality keep their working set in cache and avoid expensive
-                    memory fetches.
+                    When merging two runs, the CPU streams through both, comparing elements and copying
+                    them to a buffer. If both runs fit in cache, this is fast. If they don't, the CPU
+                    repeatedly stalls waiting for main memory.
                 </p>
 
                 <p>
-                    TODO: integrate <a href="https://arxiv.org/abs/2209.06909">Multiway Powersort</a>.
+                    Powersort's "merge small neighbors first" strategy is cache-friendly for two reasons:
                 </p>
+
+                <ul>
+                    <li>
+                        <strong>Small working sets:</strong> High-power merges combine short, adjacent runs.
+                        Their combined data often fits entirely in L2 or L3 cache, making the merge fast.
+                        Low-power merges (spanning large portions of the array) happen last, when there's
+                        no choice but to process more data.
+                    </li>
+                    <li>
+                        <strong>Temporal locality:</strong> Runs are pushed onto the stack as they're discovered
+                        by scanning left-to-right. When two high-power runs get merged immediately, their
+                        elements were just touched, so they're likely still in cache.
+                    </li>
+                </ul>
+
+                <p>
+                    In contrast, a left-to-right merge order would repeatedly stream through a growing
+                    intermediate result, evicting useful data and causing cache thrashing.
+                </p>
+
 
                 <h4>The Power of a Run</h4>
 
