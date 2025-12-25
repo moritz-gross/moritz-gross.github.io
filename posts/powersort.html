@@ -667,6 +667,23 @@
                 </p>
 
                 <p>
+                    // <em>TODO: double check calculations and source. Ignore in review for now.</em> <br>
+
+                    Consider, for example, the <a href="https://www.intel.com/content/www/us/en/products/sku/134586/intel-core-i512400-processor-18m-cache-up-to-4-40-ghz/specifications.html">Intel Core™ i5-12400</a>,
+                    a typical mid-range processor found in many home computers:
+                </p>
+                <ul>
+                    <li>L1 Cache: <a href="https://en.wikipedia.org/wiki/Alder_Lake">48 KB</a> per core</li>
+                    <li>L2 Cache: <a href="https://www.intel.com/content/www/us/en/products/sku/134586/intel-core-i512400-processor-18m-cache-up-to-4-40-ghz/specifications.html">7.5 MB</a></li>
+                    <li>L3 Cache: <a href="https://www.intel.com/content/www/us/en/products/sku/134586/intel-core-i512400-processor-18m-cache-up-to-4-40-ghz/specifications.html">18 MB</a></li>
+                </ul>
+
+                <p>
+                    If we're sorting 32-bit integers (4 bytes each), the L1 data cache can hold approximately \(48.000 / 4 = 12.000\) integers per core,
+                    L2 can hold \(7.500.000 / 4 \approx 2.000.000\) integers, and L3 can hold \(18.000.000 / 4 \approx 4.700.000\) integers.
+                </p>
+
+                <p>
                     When merging two runs, the CPU streams through both, comparing elements and copying
                     them to a buffer. If both runs fit in cache, this is fast. If they don't, the CPU
                     repeatedly stalls waiting for main memory.
