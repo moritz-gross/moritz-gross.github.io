@@ -715,7 +715,13 @@
                     already appeared in Donald Knuth's <em>The Art of Computer Programming</em>, and was extended to <a href="https://en.wikipedia.org/wiki/Timsort">TimSort</a> by Tim Peters
                     to use a heuristic merge order that is cache-friendly (compare earlier section). Later, a
                     <a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol112-esa2018/LIPIcs.ESA.2018.4/LIPIcs.ESA.2018.4.pdf">bug</a>
-                    was found in the TimSort where some inputs created really bad merge-orders, leading open a gap for a better merge-policy...
+                    was found in TimSort where some inputs created really bad merge-orders, leading open a gap for a better merge-policy.
+                </p>
+
+                <p>
+                    Powersort's theoretical guarantee distinguishes it from TimSort: while TimSort uses
+                    clever heuristics, Powersort <em>provably</em> achieves merge costs within \(O(n)\) of
+                    the information-theoretic optimum (measured as entropy of run lengths).
                 </p>
 
                 <p>
