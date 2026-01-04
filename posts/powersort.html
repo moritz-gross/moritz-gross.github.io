@@ -135,9 +135,8 @@
                 <h4>Introduction</h4>
                 <p>
                     <em>Powersort</em> is a modern sorting algorithm (proposed 2018 in <a href="https://arxiv.org/pdf/1805.04154">Nearly-Optimal Mergesorts: Fast, Practical Sorting Methods That Optimally Adapt to Existing Runs</a>)
-                    that keeps the worst-case guarantees of Mergesort, but works
-                    faster on "easy" inputs.
-                    This leads us to first define what we exactly mean by easy and hard, and how we can exploit these
+                    that keeps the worst-case guarantees of Mergesort, and works faster on "easy" inputs.
+                    This leads us to first define what is meant by easy and hard, and how we can exploit these
                     ideas reliably without spending much additional computation on them.
                 </p>
 
@@ -147,8 +146,7 @@
                     we write the array as \(A = (a_0, a_1, \dots, a_{n-1})\) for length \(n \in \mathbb{N}\),
                     where \(a_i\) denotes the element at index \(i\).
                     First off, we consider the arguably "easiest" input possible for sorting; an ascending array,
-                    i.e. an array that is already sorted.
-                    In this case, nothing needs to be done:
+                    so an array that is already sorted. In this case, nothing needs to be done:
                 </p>
 
                 <div class="array-chart" id="chart-ascending"></div>
@@ -164,12 +162,12 @@
 
                 <p>
                     Just from visual intuition, we can sense that this should not be considered as hard, as we can
-                    just flip it horizontally and be done immediately.
+                    just flip it horizontally and be done immediately without real sorting.
                 </p>
 
                 <p>
-                    After a bit of testing, a promising hard candidate might look somewhat like the following. The bars
-                    can be swapped by drag-and-drop, so try out other arrangements to get more familiar.
+                    After a bit of testing, a promising hard candidate might look somewhat like the following (though there are many other valid examples).
+                    The bars can be swapped by drag-and-drop, so try out other arrangements to get more familiar.
                 </p>
 
                 <div class="array-chart" id="chart-hard-1"></div>
@@ -178,7 +176,7 @@
                 <p>
                     A way to quantify why this one is harder than the previous inputs is counting the contiguous
                     sections that are already monotone. For indices \(0 \le i \le j < n\), we write
-                    \(A[i..j] = (a_i, a_{i+1}, \dots, a_j)\)
+                    \(A[i..j] = (a_i, a_{i+1}, \dots, a_{j-1}, a_j)\)
                     for the contiguous section of \(A\) from position \(i\) to \(j\).
                     From now on, these monotone sections will be called <em>runs</em>.
                 </p>
@@ -189,9 +187,6 @@
                     i.e. it can't be increased without breaking the monotonicity of the elements.
                     A <em>descending run</em> is defined analogously. In this article, we use the word <em>run</em> for both
                     ascending and descending runs.
-                </p>
-
-                <p>
                     The runs are color-coded in the figures so that two neighboring runs have different colors.
                     We can now state more precisely that the arrays shown at the start of the post each consist of a
                     single run, while this new hard input decomposes into several shorter runs.
@@ -199,7 +194,7 @@
 
                 <h4>Merging of runs</h4>
                 <p>
-                    To use these runs productively for sorting, we can borrow the merge-operation of Mergesort.
+                    To use these runs productively for sorting, we can borrow the merge-operation of the Mergesort algorithm.
                     It takes two runs that are next to each other and merges them to one
                     run that contains all the elements of the two input runs.
                     The merge works by maintaining two pointers, one for each run, and repeatedly picking
@@ -221,8 +216,7 @@
                 </p>
                 <p>
                     The cost of merging two runs is proportional to their combined length, as each element
-                    is compared and copied exactly once. More formally, we define the <em>merge cost</em> of
-                    combining runs \(R_i\) and \(R_j\) as \(\text{len}(R_i) + \text{len}(R_j)\).
+                    is compared and copied exactly once: \(\text{len}(R_i) + \text{len}(R_j)\).
                 </p>
 
                 <p>
@@ -248,25 +242,8 @@
 
                 <p>
                     There are 3 runs, the left one being by far the longest with 7 items, and the middle and right one
-                    being shorter with size 2 and 1 respectively.
-                    Before reading further, try acting out the sorting algorithm by hand (it won't take long as there are
-                    only two choices for the merging order).
-                </p>
-
-                <p>
-                    ...
-                </p>
-                <p>
-                    ...
-                </p>
-                <p>
-                    ...
-                </p>
-                <p>
-                    ...
-                </p>
-                <p>
-                    ...
+                    shorter with size 2 and 1 respectively.
+                    Before reading further, try walking through both choices for the first merge-operation by hand.
                 </p>
 
                 <p>
@@ -296,12 +273,12 @@
                 </div>
 
                 <p>
-                    Total Cost:  \(\text{len}(R_1) + \text{len}(R_2) + \text{len}(R_1+R_2) + \text{len}(R_3) = (7 + 2) + (9 + 1) = 9 + 10 = 19\)
+                    Total Cost:  \((\text{len}(R_1) + \text{len}(R_2)) \; + \; (\text{len}(R_1+R_2) + \text{len}(R_3)) \; = \; (7 + 2) + (9 + 1) = 9 + 10 = 19\)
                 </p>
 
                 <p>
-                    A naive left-to-right merge order is very inefficient, creating an "unbalanced" order of operations.
-                    The created array \(R_1+R_2\) appears unnecessarily big.
+                    This merge order is very inefficient, as it creates an "unbalanced" order of operations.
+                    The intermediate array \(R_1+R_2\) seems unnecessarily big.
                 </p>
 
 
@@ -326,13 +303,12 @@
                     </div>
                 </div>
                 <p>
-                    Total Cost: \(\text{len}(R_2) + \text{len}(R_3) + \text{len}(R_1) + \text{len}(R_2+R_3) = (2 + 1) + (7 + 3) = 3 + 10 = 13\)
+                    Total Cost: \((\text{len}(R_2) + \text{len}(R_3)) \; + \; (\text{len}(R_1) + \text{len}(R_2+R_3)) \; = \; (2 + 1) + (7 + 3) \; = \; 3 + 10 = 13\)
                 </p>
 
                 <p>
-                    Merging the two smaller runs \(R_2\) and \(R_3\) first is much cheaper. The reason appears to be related because
-                    \(R_2\) and \(R_3\) have a similar size, while \(R_1\) is much bigger, thus merging it with any other run doesn't change
-                    its size much.
+                    Merging the two smaller runs \(R_2\) and \(R_3\) first is much cheaper, as the intermediate array they
+                    create is way shorter than when using the array \(R_2\).
                 </p>
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
@@ -340,10 +316,11 @@
                 <h4>Related example: Matrix Chain Multiplication</h4>
 
                 <p>
-                    A similar idea appears in a different context: matrix multiplication.
+                    A similar idea appears in a different application: matrix multiplication.
                     When multiplying three matrices \(A \times B \times C\), the result is identical
                     whether we compute \((A \times B) \times C\) or
-                    \(A \times (B \times C)\). However, the computational cost can differ dramatically.
+                    \(A \times (B \times C)\), as both matrix-multiplication and merging of arrays are <em>associative</em>.
+                    However, the computational cost can differ dramatically.
                 </p>
 
                 <p>
@@ -357,7 +334,7 @@
 
                 <p>
                     Multiplying two matrices of dimensions \((m \times n)\) and \((n \times p)\)
-                    costs \(m \cdot n \cdot p\) scalar multiplications.
+                    costs \(m \cdot n \cdot p\) scalar multiplications and results in a matrix of size \(m \cdot p\).
                 </p>
 
                 <!-- Scale: 3px per unit, so 10→30px, 30→90px -->
@@ -449,15 +426,15 @@
                 </svg>
 
                 <p>
-                    The difference is a factor of \(3\times\) in this example, solely from choosing a different order of operations.
-                    The key insight: creating large intermediate results can heavily influence overall runtime.
+                    The difference is a factor of \(3\times\), solely from choosing a different order of operations:
+                    creating large intermediate results can heavily influence overall runtime.
                 </p>
 
 
                 <h4>The Power of a Run</h4>
 
                 <p>
-                    From the merge order examples above, we saw that merging "similar-sized" runs first leads to
+                    From the merge order examples above, we saw that first merging "similar-sized" runs leads to
                     better performance. But checking all possible merge orders to find the optimal one would be
                     far too expensive: there are exponentially many possible merge trees.
                     Powersort's key insight is a simple method that produces a <em>nearly-optimal</em> merge
@@ -505,12 +482,6 @@
                     </li>
                 </ul>
 
-                <p>
-                    This is analogous to how Huffman coding assigns shorter codes to frequent symbols: by
-                    prioritizing "cheap" local merges, Powersort builds a merge tree whose total cost is within
-                    a constant factor of optimal.
-                </p>
-
                 <h4>Stack-Based Execution</h4>
 
                 <p>
@@ -529,12 +500,12 @@
                     (The code below is taken from the <a href="https://github.com/numpy/numpy/pull/29208/changes">implementation</a> in NumPy (and slightly simplified for this post))
                 </p>
 
-                <pre><code class="language-c">static int found_new_run_(type *arr, run *stack, int *stack_ptr, int n2, int num, buffer_ *buffer)
+                <pre><code class="language-c">static int found_new_run_(type *arr, run *stack, int *stack_ptr, int n2, int n, buffer_ *buffer)
 {
     if (*stack_ptr > 0) {
         int s1 = stack[*stack_ptr - 1].s;
         int n1 = stack[*stack_ptr - 1].l;
-        int power = powerloop(s1, n1, n2, num);
+        int power = powerloop(s1, n1, n2, n);
         while (*stack_ptr > 1 && stack[*stack_ptr - 2].power > power) {
             merge_at_(arr, stack, *stack_ptr - 2, buffer);
             stack[*stack_ptr - 2].l += stack[*stack_ptr - 1].l;
@@ -562,18 +533,18 @@
                     (Again, the code below is taken from the <a href="https://github.com/numpy/numpy/pull/29208/changes">implementation</a> in NumPy)
                 </p>
 
-                <pre><code class="language-c">static int powerloop(int s1, int n1, int n2, int num)
+                <pre><code class="language-c">static int powerloop(int s1, int n1, int n2, int n)
 {
     int result = 0;
     int a = 2 * s1 + n1;  /* 2 * midpoint1 */
     int b = a + n1 + n2;  /* 2 * midpoint2 */
     while (true) {
         ++result;
-        if (a >= num) {        /* both bits are 1 */
-            a -= num;
-            b -= num;
+        if (a >= n) {        /* both bits are 1 */
+            a -= n;
+            b -= n;
         }
-        else if (b >= num) {   /* a's bit is 0, b's bit is 1 */
+        else if (b >= n) {   /* a's bit is 0, b's bit is 1 */
             break;
         }
         a <<= 1;
@@ -602,22 +573,22 @@
                     \(m_2\). The key insight: the \(k\)-th bit of a fraction \(x\) is \(1\)
                     iff \(\lfloor 2^k x \rfloor\) is odd, which happens iff
                     \(2^k x \ge \lfloor 2^k x \rfloor + 1\) after removing
-                    previous bits. In our scaled representation, <code>a >= num</code> tests whether the
+                    previous bits. In our scaled representation, <code>a >= n</code> tests whether the
                     current bit of \(m_1\) is \(1\).
                 </p>
 
                 <ul>
                     <li>
-                        <strong>Both bits are 1</strong> (<code>a >= num</code> and implicitly <code>b >= num</code>
-                        since \(b > a\)): Subtract <code>num</code> from both to take away this bit,
+                        <strong>Both bits are 1</strong> (<code>a >= n</code> and implicitly <code>b >= n</code>
+                        since \(b > a\)): Subtract <code>n</code> from both to take away this bit,
                         then continue to the next bit.
                     </li>
                     <li>
-                        <strong>Bits differ</strong> (<code>a < num</code> but <code>b >= num</code>):
+                        <strong>Bits differ</strong> (<code>a < n</code> but <code>b >= n</code>):
                         We found the first differing bit at position <code>result</code>. Return immediately.
                     </li>
                     <li>
-                        <strong>Both bits are 0</strong> (<code>a < num</code> and <code>b < num</code>):
+                        <strong>Both bits are 0</strong> (<code>a < n</code> and <code>b < n</code>):
                         Double both values (<code>a <<= 1</code>, <code>b <<= 1</code>) to examine the next bit.
                     </li>
                 </ul>
