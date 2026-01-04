@@ -161,12 +161,12 @@
 
 
                 <p>
-                    Just from visual intuition, we can sense that this should not be considered as hard, as we can
-                    just flip it horizontally and be done immediately without real sorting.
+                    However, this should not be considered hard: we can simply reverse the array in linear time
+                    without any comparisons.
                 </p>
 
                 <p>
-                    After a bit of testing, a promising hard candidate might look somewhat like the following (though there are many other valid examples).
+                    A harder input looks like the following (though there are many other valid examples).
                     The bars can be swapped by drag-and-drop, so try out other arrangements to get more familiar.
                 </p>
 
@@ -212,7 +212,7 @@
     for (int x = 0; x < k; x++) arr[left + x] = buf[x]; // copy elements from buffer
 }</code></pre>
                 <p>
-                    (Also see section <em>B.1 Merging</em> of <a href="https://arxiv.org/pdf/1805.04154">Nearly-Optimal Mergesorts</a>)
+                    For more details on optimizing merge operations, see section <em>B.1 Merging</em> of <a href="https://arxiv.org/pdf/1805.04154">Nearly-Optimal Mergesorts</a>.
                 </p>
                 <p>
                     The cost of merging two runs is proportional to their combined length, as each element
@@ -229,7 +229,7 @@
 
                 <p>
                     So far, it is not specified in which order which runs are supposed to be merged.
-                    By just playing around with the array above, we can see that any order of merges results in a correctly
+                    Experimenting with the array above shows that any order of merges results in a correctly
                     sorted array. The difference lies in that different merge-orders generally take a different amount
                     of time.
                 </p>
@@ -277,7 +277,7 @@
                 </p>
 
                 <p>
-                    This merge order is very inefficient, as it creates an "unbalanced" order of operations.
+                    This merge order is inefficient, as it creates an "unbalanced" order of operations.
                     The intermediate array \(R_1+R_2\) seems unnecessarily big.
                 </p>
 
@@ -308,7 +308,7 @@
 
                 <p>
                     Merging the two smaller runs \(R_2\) and \(R_3\) first is much less expensive, as the intermediate array they
-                    create is way shorter than when using the array \(R_1\).
+                    create is much shorter than when using the array \(R_1\).
                 </p>
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
@@ -509,7 +509,7 @@
                 </p>
 
                 <p>
-                    (The code below is taken from the <a href="https://github.com/numpy/numpy/pull/29208/changes">implementation</a> in NumPy (and slightly simplified for this post))
+                    The following code comes from the <a href="https://github.com/numpy/numpy/pull/29208/changes">NumPy implementation</a>, slightly simplified for this post:
                 </p>
 
                 <pre><code class="language-c">static int found_new_run_(type *arr, run *stack, int *stack_ptr, int n2, int n, buffer_ *buffer)
@@ -542,7 +542,7 @@
                 </p>
 
                 <p>
-                    (Again, the code below is taken from the <a href="https://github.com/numpy/numpy/pull/29208/changes">implementation</a> in NumPy)
+                    The <code>powerloop</code> function from the <a href="https://github.com/numpy/numpy/pull/29208/changes">NumPy implementation</a> demonstrates this:
                 </p>
 
                 <pre><code class="language-c">static int powerloop(int s1, int n1, int n2, int n)
@@ -642,9 +642,10 @@
                 <h4>Caching Behaviour</h4>
 
                 <p>
-                    The cost analysis above counts element copies, but real-world performance also depends on
-                    <em>cache efficiency</em>. Modern CPUs have multiple levels of
-                    <a href="https://en.wikipedia.org/wiki/CPU_cache">cache</a> (L1, L2, L3) that are
+                    Beyond the theoretical cost analysis, Powersort's merge order also has practical performance
+                    benefits related to modern CPU architecture. The cost analysis above counts element copies,
+                    but real-world performance also depends on <em>cache efficiency</em>. Modern CPUs have multiple
+                    levels of <a href="https://en.wikipedia.org/wiki/CPU_cache">cache</a> (L1, L2, L3) that are
                     orders of magnitude faster than main memory. Algorithms that keep their working set
                     small and access memory sequentially run much faster than those that have irregular accessing patterns.
                 </p>
@@ -698,8 +699,8 @@
                 <h4>Closing thoughts</h4>
 
                 <p>
-                    Powersort is a really nice piece of computer science in my opinion, because it is both effective in practice,
-                    and it has some neat theory behind it as well. When I first looked into the topic, I didn't find any source
+                    Powersort is an elegant piece of computer science because it is both effective in practice
+                    and has some neat theory behind it as well. When I first looked into the topic, I didn't find any source
                     that introduces the core ideas of Powersort in a "semi-formal" way that is mostly self-contained.
                 </p>
 
