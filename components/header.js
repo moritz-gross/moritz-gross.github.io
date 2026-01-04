@@ -6,7 +6,7 @@ const isHome = location.pathname.endsWith('index.html') || location.pathname.end
 document.currentScript.insertAdjacentHTML('afterend', `
 <header>
     <div class="header-left">
-        <h3>Moritz Groß</h3>
+        <h3><a href="${pathPrefix}index.html">Moritz Groß</a></h3>
         <nav>
             <a href="${pathPrefix}index.html">Home</a>
             <a href="${pathPrefix}blog.html">Blog</a>

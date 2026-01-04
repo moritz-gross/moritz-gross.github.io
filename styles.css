@@ -48,6 +48,15 @@ header {
     margin: 0;
 }
 
+.header-left h3 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.header-left h3 a:hover {
+    text-decoration: underline;
+}
+
 .header-left nav {
     display: flex;
     gap: 1rem;
