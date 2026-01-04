@@ -482,6 +482,18 @@
                     </li>
                 </ul>
 
+                <p>
+                    This bisection approach directly connects to merge tree structure. An optimal merge tree
+                    for balanced data recursively splits the array in half, similar to how mergesort divides
+                    its input. The power measure effectively asks: <em>at what depth of this hypothetical
+                    binary splitting would these two runs end up in different halves?</em> Runs that diverge
+                    late (high power) are neighbors in this conceptual tree structure and should be merged
+                    first to minimize intermediate result sizes. In our earlier example with \(R_1\), \(R_2\),
+                    and \(R_3\), the power calculation correctly identified that \(R_2\) and \(R_3\) (power 3)
+                    are more "locally adjacent" than \(R_1\) and \(R_2\) (power 1), matching the optimal
+                    merge order we found by hand.
+                </p>
+
                 <h4>Stack-Based Execution</h4>
 
                 <p>
