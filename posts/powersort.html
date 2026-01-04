@@ -121,7 +121,7 @@
         <article class="post">
 
             <header class="post-header">
-                <h3 class="post-title">Powersort</h3>
+                <h2 class="post-title">Powersort</h2>
             </header>
 
             <section class="post-content">
@@ -132,7 +132,7 @@
 
                 <script src="../components/toc.js"></script>
 
-                <h4>Introduction</h4>
+                <h3>Introduction</h3>
                 <p>
                     <em>Powersort</em> is a modern sorting algorithm (proposed 2018 in <a href="https://arxiv.org/pdf/1805.04154">Nearly-Optimal Mergesorts: Fast, Practical Sorting Methods That Optimally Adapt to Existing Runs</a>)
                     that keeps the worst-case guarantees of Mergesort, and works faster on "easy" inputs.
@@ -192,7 +192,7 @@
                     single run, while this new hard input decomposes into several shorter runs.
                 </p>
 
-                <h4>Merging of runs</h4>
+                <h3>Merging of runs</h3>
                 <p>
                     To use these runs productively for sorting, we can borrow the merge-operation of the Mergesort algorithm.
                     It takes two runs that are next to each other and merges them to one
@@ -225,7 +225,7 @@
                     to be just one big run.
                 </p>
 
-                <h4>Finding good merge trees</h4>
+                <h3>Finding good merge trees</h3>
 
                 <p>
                     So far, it is not specified in which order which runs are supposed to be merged.
@@ -313,7 +313,7 @@
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
 
-                <h4>Related example: Matrix Chain Multiplication</h4>
+                <h3>Related example: Matrix Chain Multiplication</h3>
 
                 <p>
                     A similar idea appears in a different application: matrix multiplication.
@@ -431,7 +431,7 @@
                 </p>
 
 
-                <h4>The Power of a Run</h4>
+                <h3>The Power of a Run</h3>
 
                 <p>
                     From the merge order examples above, we saw that first merging "similar-sized" runs leads to
@@ -494,7 +494,7 @@
                     merge order we found by hand.
                 </p>
 
-                <h4>Stack-Based Execution</h4>
+                <h3>Stack-Based Execution</h3>
 
                 <p>
                     Powersort processes runs left-to-right, maintaining a stack of pending runs. When a new
@@ -533,7 +533,7 @@
                     merges happen before low-power (global) ones.
                 </p>
 
-                <h4>Computing Power Efficiently</h4>
+                <h3>Computing Power Efficiently</h3>
 
                 <p>
                     The definition of power involves comparing binary expansions of fractions, which sounds
@@ -639,7 +639,7 @@
                     This matches the optimal order we identified earlier.
                 </p>
 
-                <h4>Caching Behaviour</h4>
+                <h3>Caching Behaviour</h3>
 
                 <p>
                     Beyond the theoretical cost analysis, Powersort's merge order also has practical performance
@@ -696,7 +696,7 @@
                     intermediate result, evicting useful data and causing cache thrashing.
                 </p>
 
-                <h4>Closing thoughts</h4>
+                <h3>Closing thoughts</h3>
 
                 <p>
                     Powersort is an elegant piece of computer science because it is both effective in practice
@@ -726,9 +726,24 @@
 
                 <p>
                     The publication of Powersort is still relatively new, so there are some encouraging places left where there has not yet been an implementation (like it was for NumPy in my case).
-
-
                 </p>
+
+                <hr style="border-style: dashed; margin: 2rem 0;">
+
+                <h3>References</h3>
+
+                <p>Powersort Algorithm:</p>
+                <ul>
+                    <li>Munro, J. Ian, and Sebastian Wild. <a href="https://arxiv.org/pdf/1805.04154">"Nearly-Optimal Mergesorts: Fast, Practical Sorting Methods That Optimally Adapt to Existing Runs."</a> 26th Annual European Symposium on Algorithms (ESA 2018).</li>
+                    <li><a href="https://github.com/python/cpython/pull/28108">Python CPython Pull Request #28108</a> — Powersort implementation discussion and code</li>
+                    <li><a href="https://github.com/numpy/numpy/pull/29208">NumPy Pull Request #29208</a> — Powersort implementation in NumPy</li>
+                </ul>
+
+                <p>Related Sorting Algorithms:</p>
+                <ul>
+                    <li><a href="https://en.wikipedia.org/wiki/Timsort">Timsort</a> (Wikipedia) — Predecessor algorithm that inspired Powersort</li>
+                    <li>Auger, Nicolas, et al. <a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol112-esa2018/LIPIcs.ESA.2018.4/LIPIcs.ESA.2018.4.pdf">"On the Worst-Case Complexity of TimSort."</a> ESA 2018.</li>
+                </ul>
 
             </section>
 
