@@ -494,6 +494,18 @@
                     merge order we found by hand.
                 </p>
 
+                <figure style="margin: 2rem 0; text-align: center;">
+                    <img src="images/powersort_tree__paper_wild.png" alt="Binary partitioning tree showing from original Powersort publication" style="max-width: 70%; height: auto; border: 1px solid #ddd; padding: 0.5rem;">
+                    <figcaption style="margin: 0.75rem auto 0 auto; font-size: 0.9rem; color: #666; font-style: italic; max-width: 70%; text-align: left;">
+                        Figure from <a href="https://arxiv.org/pdf/1805.04154">Munro & Wild, 2018</a> (the original Powersort publication),
+                        showing the partitioning tree for a more complex input array.
+                        <br>
+                        The tree recursively bisects the interval [0,1] at powers of two (1/2, 1/4, 3/4, etc.).
+                        The italic numbers show the power of each node, which determines the merge order.
+                        Higher powers (deeper in the tree) correspond to runs that are closer together and should be merged first.
+                    </figcaption>
+                </figure>
+
                 <h3>Stack-Based Execution</h3>
 
                 <p>
