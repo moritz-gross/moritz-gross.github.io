@@ -197,6 +197,17 @@
                     single run, while this new hard input decomposes into several shorter runs.
                 </p>
 
+                <p>
+                    The measure we use to describe <em>hard</em> inputs is entropy. Usually in information theory,
+                    it is used to measure the amount of "surprise" a random variable (RV) has, so how much information is revealed
+                    by seeing the realization of the RV. The commonality with runs for adaptive sorting is that in both cases,
+                    some whole object taking up 100%, be it the entire array or the probability mass of a RV, is split up
+                    into parts that partition it. If a RV has a lot of information, it will be split up into many small parts,
+                    and if it has little information, it will be split up into fewer parts. In the limit, just having one possible
+                    outcome with 100% chance has entropy of 0, and the same applies here if there is only one run,
+                    either ascending or descending. We won't use more details on entropy going forward, so we skip a formal derivation.
+                </p>
+
                 <h3>Merging of runs</h3>
                 <p>
                     To use these runs productively for sorting, we can borrow the merge-operation of the Mergesort algorithm.
