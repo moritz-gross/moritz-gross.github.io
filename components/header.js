@@ -27,6 +27,5 @@ document.currentScript.insertAdjacentHTML('afterend', `
             </div>
         </div>
     </div>
-    ${isHome ? `<img src="${pathPrefix}portrait.jpg" alt="Portrait of Moritz Groß" class="portrait" loading="lazy">` : ''}
 </header>
 `);
