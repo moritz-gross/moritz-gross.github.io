@@ -17,6 +17,17 @@ body {
     /* give a little breathing room */
     box-sizing: border-box;
     /* include padding in the width */
+    position: relative;
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    left: -4px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(134, 119, 101, 0.35);
 }
 
 /* Skip link - hidden until focused */
