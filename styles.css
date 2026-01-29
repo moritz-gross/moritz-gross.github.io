@@ -193,8 +193,8 @@ time {
 
 /* Table of Contents */
 .toc {
-    background: color-mix(in srgb, black 5%, transparent);
-    border-radius: 4px;
+    background: none;
+    border-radius: 0;
     padding: 1rem 1.5rem;
 }
 .toc ul { margin: 0.5rem 0 0; padding-left: 1.25rem; }
