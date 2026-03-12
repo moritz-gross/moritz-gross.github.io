@@ -137,17 +137,16 @@
                     <em>Powersort</em> is a modern sorting algorithm (proposed 2018 in <a href="https://arxiv.org/pdf/1805.04154">Nearly-Optimal Mergesorts: Fast, Practical Sorting Methods That Optimally Adapt to Existing Runs</a>)
                     that keeps the worst-case guarantees of Mergesort, but works
                     faster on "easy" inputs.
-                    This leads us to first define what we exactly mean by easy and hard, and how we can exploit these
-                    ideas reliably without spending much additional computation on them.
+                    This leads us to first define what we exactly mean by easy and hard, and how we can use these
+                    ideas reliably without spending too much additional computation in the process.
                 </p>
 
                 <p>
-                    Even though all the following can be applied to any comparable type of object (e.g. strings),
-                    we use integers for easy visualization. Consistent with C-style languages,
+                    Even though all of these ideas can be applied to any comparable type of object (e.g. strings in lexicographical order),
+                    we use integers for convenience. Consistent with C-style languages,
                     we write the array as \(A = (a_0, a_1, \dots, a_{n-1})\) for length \(n \in \mathbb{N}\),
                     where \(a_i\) denotes the element at index \(i\).
-                    First off, we consider the arguably "easiest" input possible for sorting; an ascending array,
-                    i.e. an array that is already sorted.
+                    First off, we consider the arguably easiest input possible for sorting; an ascending array.
                     In this case, nothing needs to be done:
                 </p>
 
@@ -163,13 +162,13 @@
 
 
                 <p>
-                    Just from visual intuition, we can sense that this should not be considered as hard, as we can
+                    Pretty clearly, this should not be considered difficult, as we can
                     just flip it horizontally and be done immediately.
                 </p>
 
                 <p>
-                    After a bit of testing, a promising hard candidate might look somewhat like the following. The bars
-                    can be swapped by drag-and-drop, so try out other arrangements to get more familiar.
+                    A promising hard candidate might look somewhat like the following: (the bars
+                    can be swapped by drag-and-drop, so try out other arrangements to get more familiar)
                 </p>
 
                 <div class="array-chart" id="chart-hard-1"></div>
@@ -177,17 +176,17 @@
 
                 <p>
                     A way to quantify why this one is harder than the previous inputs is counting the contiguous
-                    sections that are already monotone. For indices \(0 \le i \le j < n\), we write
+                    sections that are already sorted. For indices \(0 \le i \le j < n\), we write
                     \(A[i..j] = (a_i, a_{i+1}, \dots, a_j)\)
-                    for the contiguous section of \(A\) from position \(i\) to \(j\).
-                    From now on, these monotone sections will be called <em>runs</em>.
+                    for the subarray of \(A\) from position \(i\) to \(j\).
+                    From now on, if such a section is monotonic, it will be called a <em>run</em>.
                 </p>
 
                 <p>
                     More precisely, an <em>ascending run</em> of \(A\) is a section \(A[i..j]\) with
                     \(0 \le i \le j < n\) such that  \(a_i \le a_{i+1} \le \dots \le a_j\) and that \(j\) is maximal,
                     i.e. it can't be increased without breaking the monotonicity of the elements.
-                    A <em>descending run</em> is defined analogously. In this article, we use the word <em>run</em> for both
+                    A <em>descending run</em> is defined analogously. We use the word <em>run</em> for both
                     ascending and descending runs.
                 </p>
 
@@ -236,8 +235,8 @@
                 <p>
                     So far, it is not specified in which order which runs are supposed to be merged.
                     By just playing around with the array above, we can see that any order of merges results in a correctly
-                    sorted array. The difference lies in that different merge-orders generally take a different amount
-                    of time.
+                    sorted array, as merging runs is an associative operation.
+                    The issue is that some merge-orders need <em>more operations/time</em>, despite still producing the correct result.
                 </p>
 
                 <p>
@@ -296,12 +295,12 @@
                 </div>
 
                 <p>
-                    Total Cost:  \(\text{len}(R_1) + \text{len}(R_2) + \text{len}(R_1+R_2) + \text{len}(R_3) = (7 + 2) + (9 + 1) = 9 + 10 = 19\)
+                    Total Cost:  \((\text{len}(R_1) + \text{len}(R_2)) + (\text{len}(R_1+R_2) + \text{len}(R_3)) = (7 + 2) + (9 + 1) = 19\)
                 </p>
 
                 <p>
                     A naive left-to-right merge order is very inefficient, creating an "unbalanced" order of operations.
-                    The created array \(R_1+R_2\) appears unnecessarily big.
+                    The created array \(R_1+R_2\) appears unnecessarily big. Now for the other merge order:
                 </p>
 
 
@@ -326,13 +325,13 @@
                     </div>
                 </div>
                 <p>
-                    Total Cost: \(\text{len}(R_2) + \text{len}(R_3) + \text{len}(R_1) + \text{len}(R_2+R_3) = (2 + 1) + (7 + 3) = 3 + 10 = 13\)
+                    Total Cost: \((\text{len}(R_2) + \text{len}(R_3)) + (\text{len}(R_1) + \text{len}(R_2+R_3)) = (2 + 1) + (7 + 3) = 13\)
                 </p>
 
                 <p>
                     Merging the two smaller runs \(R_2\) and \(R_3\) first is much cheaper. The reason appears to be related because
-                    \(R_2\) and \(R_3\) have a similar size, while \(R_1\) is much bigger, thus merging it with any other run doesn't change
-                    its size much.
+                    \(R_2\) and \(R_3\) have a similar size, while \(R_1\) is much bigger, thus merging it with any other run creates
+                    a new run that is not much bigger.
                 </p>
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
@@ -341,7 +340,7 @@
 
                 <p>
                     A similar idea appears in a different context: matrix multiplication.
-                    When multiplying three matrices \(A \times B \times C\), the result is identical
+                    When multiplying three matrices \(A \times B \times C,\) the result is identical
                     whether we compute \((A \times B) \times C\) or
                     \(A \times (B \times C)\). However, the computational cost can differ dramatically.
                 </p>
@@ -449,20 +448,87 @@
                 </svg>
 
                 <p>
-                    The difference is a factor of \(3\times\) in this example, solely from choosing a different order of operations.
-                    The key insight: creating large intermediate results can heavily influence overall runtime.
+                    The difference is a factor of 3 in this example, solely from choosing a different order of operations.
+                    Again, a large intermediate object can heavily influence overall runtime.
                 </p>
 
+
+                <h4>Measuring difficulty: the entropy of runs</h4>
+
+                <p>
+                    We now know that instead of the number of runs, we should log at the <em>distribution</em> of runs lengths instead.
+                    Given runs \(R_1, \dots, R_k\) with lengths \(n_1, \dots, n_k\) summing to \(n\),
+                    define the <em>run-length distribution</em> as \(p_i=n_i/n.\) The Shannon entropy of this distribution is:
+                </p>
+
+                $$H = -\sum_{i=1}^{k} p_i \log_2 p_i$$
+
+                <p>
+                    This quantity, originating from information theory, gives a tight lower bound on the optimal merge cost.
+                    To see why, notice that every merge tree defines a <em>weighted path length</em>: each run \(R_i\)
+                    sits at some depth \(d_i\) in the tree, meaning its elements pass through \(d_i\) merges
+                    on the way to the root. Since each merge costs proportional to the number of elements involved,
+                    run \(R_i\) contributes \(n_i \cdot d_i\) to the total cost.
+                </p>
+
+                <p>
+                    If we could merge <em>any</em> two runs (not just adjacent ones), minimizing \(\sum n_i \cdot d_i\)
+                    would be exactly the problem solved by
+                    <a href="https://en.wikipedia.org/wiki/Huffman_coding">Huffman coding</a>, where symbols with
+                    probabilities \(p_i\) get codewords of length \(d_i.\)
+                    Shannon's source coding theorem tells us the optimal weighted path length lies between
+                    \(H\) and \(H + 1\) per symbol, giving a merge cost of \(\Theta(n \cdot H)\).
+                </p>
+
+                <p>
+                    Our setting is more constrained: only adjacent runs can be merged, so the optimal
+                    merge tree can only be <em>at least</em> as expensive as the unconstrained Huffman solution.
+                    This means \(n \cdot H\) is a lower bound on the merge cost. As we will see,
+                    Powersort achieves a cost within a constant factor of this bound even with the adjacency constraint.
+                </p>
+
+                <p>
+                    TODO: Improve how adjacency of runs is handled here ...
+                </p>
+
+                <p>
+                    We can validate this against the examples we already know:
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>Already sorted</strong> (1 run): \(H = -(1) \log_2(1) = 0\).
+                        No merges needed, cost is \(0\). Correct.
+                    </li>
+                    <li>
+                        <strong>Maximally fragmented</strong> (\(n\) runs of length 1): \(H = -n \cdot \frac{1}{n} \log_2 \frac{1}{n} = \log_2 n\).
+                        Cost is \(\Theta(n \log n)\), recovering the classic comparison sort bound. Also correct.
+                    </li>
+                    <li>
+                        <strong>Our 3-run example</strong> (lengths 7, 2, 1 with \(n=10\)):
+                        \(H = -\frac{7}{10}\log_2\frac{7}{10} - \frac{2}{10}\log_2\frac{2}{10} - \frac{1}{10}\log_2\frac{1}{10} \approx 1.16\).
+                        The optimal merge cost should be around \(10 \cdot 1.16 \approx 12\), which lines up
+                        with the cost of 13 we computed for the better merge order.
+                    </li>
+                </ul>
+
+                <p>
+                    So the spectrum from "easy" to "hard" that we introduced at the start holds mathematically:
+                    it corresponds precisely to the entropy of the run-length distribution, which ranges from \(0\)
+                    (already sorted) to \(\log_2 n\) (no pre-existing order at all).
+                </p>
+
+                <p>
+                    Computing the actual <em>optimal</em> merge tree (via Huffman's algorithm) takes \(O(k \log k)\) time.
+                    Can we get close to optimal faster? This is what Powersort's <em>power</em> heuristic achieves.
+                </p>
 
                 <h4>The Power of a Run</h4>
 
                 <p>
-                    From the merge order examples above, we saw that merging "similar-sized" runs first leads to
-                    better performance. But checking all possible merge orders to find the optimal one would be
-                    far too expensive: there are exponentially many possible merge trees.
-                    Powersort's key insight is a simple method that produces a <em>nearly-optimal</em> merge
-                    order in linear time: assign each pair of consecutive runs a cheap to calculate measure called <em>power</em>,
-                    then always merge the pair with the highest power first.
+                    Powersort assigns each pair of consecutive runs a cheap-to-calculate measure called <em>power</em>,
+                    then always merges the pair with the highest power first. This produces a merge tree whose total
+                    cost is within a constant factor of \(n \cdot H\), in linear time.
                 </p>
 
                 <p>
@@ -506,9 +572,8 @@
                 </ul>
 
                 <p>
-                    This is analogous to how Huffman coding assigns shorter codes to frequent symbols: by
-                    prioritizing "cheap" local merges, Powersort builds a merge tree whose total cost is within
-                    a constant factor of optimal.
+                    This mirrors the structure of a Huffman tree (as discussed in the previous section): small,
+                    frequent merges happen at the leaves (high depth), while the large global merges happen near the root.
                 </p>
 
                 <h4>Stack-Based Execution</h4>
