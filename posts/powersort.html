@@ -162,20 +162,37 @@
 
 
                 <p>
-                    Next up, let's think about <em>hard</em> inputs. A very straightforward initial idea could be just
-                    taking the opposite of the previous array; one that is fully descending:
+                    Next up, let's think about <em>hard</em> inputs. A natural way to measure
+                    how "unsorted" an array is: the <em>inversion count</em>, the number of pairs
+                    \((i, j)\) with \(i < j\) but \(a_i > a_j\). The ascending array above has
+                    zero inversions, which lines up with the intuition that it's easy. The input with
+                    the most inversions is the fully descending array, with \(\binom{n}{2} = n(n-1)/2\)
+                    inversions:
                 </p>
 
                 <div class="array-chart" id="chart-descending"></div>
 
-
                 <p>
-                    Pretty clearly, this should not be considered difficult, as we can
-                    just flip it horizontally and be done immediately.
+                    Yet we can just flip it and be done immediately. So why does the inversion count suggest
+                    this is the hardest input? Because it measures difficulty <em>for a specific
+                    class of algorithms</em>.
+                    <a href="https://en.wikipedia.org/wiki/Bubble_sort">Bubble sort</a> performs
+                    exactly one swap per inversion, running in \(\Theta(n + \text{Inv}(A))\) time.
+                    <a href="https://en.wikipedia.org/wiki/Insertion_sort">Insertion sort</a>
+                    similarly does \(\Theta(n + \text{Inv}(A))\) comparisons.
+                    For these algorithms, the descending array genuinely is worst-case.
                 </p>
 
                 <p>
-                    A promising hard candidate might look somewhat like the following: (the bars
+                    So whether an input is "hard" depends on which structural property the algorithm
+                    exploits. Inversion count captures pairwise disorder and is the right metric for
+                    algorithms that fix one pair at a time. But an algorithm that can detect and
+                    reverse entire sorted sections treats the descending array as trivially easy.
+                    This is the kind of structure Powersort exploits, and we will define it precisely below.
+                </p>
+
+                <p>
+                    A promising hard candidate for such an algorithm might look like the following: (the bars
                     can be swapped by drag-and-drop, so try out other arrangements to get more familiar)
                 </p>
 
