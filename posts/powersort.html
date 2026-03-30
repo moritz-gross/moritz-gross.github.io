@@ -650,10 +650,10 @@
                 </p>
 
                 <p>
-                    The following code comes from the <a href="https://github.com/numpy/numpy/pull/29208/changes">NumPy implementation</a>, slightly simplified for this post:
+                    The following code is adapted from the <a href="https://github.com/numpy/numpy/pull/29208/changes">NumPy implementation</a> and slightly simplified for this post:
                 </p>
 
-                <pre><code class="language-c">static int found_new_run_(type *arr, run *stack, int *stack_ptr, int n2, int n, buffer_ *buffer)
+                <pre><code class="language-c">static void found_new_run_(type *arr, run *stack, int *stack_ptr, int n2, int n, buffer_ *buffer)
 {
     if (*stack_ptr > 0) {
         int s1 = stack[*stack_ptr - 1].s;
