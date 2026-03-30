@@ -214,6 +214,19 @@
                 </p>
 
                 <p>
+                    In the actual algorithm, a descending run is reversed <em>immediately after it is detected</em>.
+                    So from that point on, all pending runs are treated as ascending runs, and every later merge
+                    operates on ascending inputs only.
+                </p>
+
+                <p>
+                    One could imagine a different design where descending runs are kept as they are and the merge
+                    procedure simply scans them from right to left. That would avoid the explicit reversal step.
+                    In practice, however, implementations such as TimSort and Powersort usually normalize runs
+                    up front, because then the rest of the algorithm only has to deal with one representation.
+                </p>
+
+                <p>
                     The runs are color-coded in the figures so that two neighboring runs have different colors.
                     We can now state more precisely that the arrays shown at the start of the post each consist of a
                     single run, while this new hard input decomposes into several shorter runs.
@@ -224,6 +237,8 @@
                     To use these runs productively for sorting, we can borrow the merge-operation of Mergesort.
                     It takes two runs that are next to each other and merges them to one
                     run that contains all the elements of the two input runs.
+                    Since descending runs have already been reversed at detection time, the merge routine below
+                    only needs to handle ascending runs.
                     The merge works by maintaining two pointers, one for each run, and repeatedly picking
                     the smaller element. Since both runs are already sorted, this produces a sorted result
                     in linear time:
