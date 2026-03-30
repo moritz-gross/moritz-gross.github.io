@@ -216,7 +216,8 @@
                 <p>
                     In the actual algorithm, a descending run is reversed <em>immediately after it is detected</em>.
                     So from that point on, all pending runs are treated as ascending runs, and every later merge
-                    operates on ascending inputs only.
+                    operates on ascending inputs only. For a brief implementation-oriented summary of how NumPy
+                    handles this, see the <a href="#appendix-numpy-execution">appendix</a>.
                 </p>
 
                 <p>
@@ -238,7 +239,8 @@
                     It takes two runs that are next to each other and merges them to one
                     run that contains all the elements of the two input runs.
                     Since descending runs have already been reversed at detection time, the merge routine below
-                    only needs to handle ascending runs.
+                    only needs to handle ascending runs. The <a href="#appendix-numpy-execution">appendix</a>
+                    sketches where this normalization and the later stack-based merges happen in NumPy's code.
                     The merge works by maintaining two pointers, one for each run, and repeatedly picking
                     the smaller element. Since both runs are already sorted, this produces a sorted result
                     in linear time:
@@ -821,7 +823,7 @@
                 <ul>
                     <li>
                         <strong>Small working sets:</strong> High-power merges combine short, adjacent runs.
-                        Their combined data often fits entirely in L2 or L3 cache, making the merge fast.
+                        Their combined data is more likely to fit in L2 or L3 cache, which can make the merge faster.
                         Low-power merges (spanning large portions of the array) happen last, when there's
                         no choice but to process more data.
                     </li>
@@ -834,7 +836,7 @@
 
                 <p>
                     In contrast, a left-to-right merge order would repeatedly stream through a growing
-                    intermediate result, evicting useful data and causing cache thrashing.
+                    intermediate result, making it more likely that useful data gets evicted from cache.
                 </p>
 
                 <h3>Closing thoughts</h3>
@@ -869,7 +871,7 @@
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
 
-                <h3>Appendix: How NumPy Executes This</h3>
+                <h3 id="appendix-numpy-execution">Appendix: How NumPy Executes This</h3>
 
                 <p>
                     For readers who want to connect the exposition to real code,
