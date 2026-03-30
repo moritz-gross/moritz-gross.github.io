@@ -140,13 +140,9 @@
                 <h3>Introduction</h3>
                 <p>
                     <em>Powersort</em> is a modern sorting algorithm (proposed 2018 in <a href="https://arxiv.org/pdf/1805.04154">Nearly-Optimal Mergesorts: Fast, Practical Sorting Methods That Optimally Adapt to Existing Runs</a>)
-                    that keeps the worst-case guarantees of Mergesort, but works
-                    faster on "easy" inputs.
-                    This leads us to first define what we exactly mean by easy and hard, and how we can use these
-                    ideas reliably without spending too much additional computation in the process.
-                    that keeps the worst-case guarantees of Mergesort, and works faster on "easy" inputs.
-                    This leads us to first define what is meant by easy and hard, and how we can exploit these
-                    ideas reliably without spending much additional computation on them.
+                    that keeps the worst-case guarantees of Mergesort, but works faster on inputs that already
+                    contain useful order. This leads us to first define what we mean by easy and hard inputs,
+                    and how an algorithm can exploit that structure without spending much additional work finding it.
                 </p>
 
                 <p>
@@ -210,9 +206,11 @@
                 <p>
                     More precisely, an <em>ascending run</em> of \(A\) is a section \(A[i..j]\) with
                     \(0 \le i \le j < n\) such that  \(a_i \le a_{i+1} \le \dots \le a_j\) and that \(j\) is maximal,
-                    i.e. it can't be increased without breaking the monotonicity of the elements.
-                    A <em>descending run</em> is defined analogously. We use the word <em>run</em> for both
-                    ascending and descending runs.
+                    i.e. it can't be increased without breaking monotonicity.
+                    A <em>descending run</em> is defined similarly, except that we require
+                    \(a_i > a_{i+1} > \dots > a_j\) to be <em>strictly</em> decreasing. That strictness matters in
+                    stable implementations: a descending run can then be reversed without changing the relative order
+                    of equal keys. We use the word <em>run</em> for both ascending and descending runs.
                 </p>
 
                 <p>
@@ -354,9 +352,10 @@
                 </p>
 
                 <p>
-                    Merging the two smaller runs \(R_2\) and \(R_3\) first is much cheaper. The reason appears to be related because
-                    \(R_2\) and \(R_3\) have a similar size, while \(R_1\) is much bigger, thus merging it with any other run doesn't change
-                    its size much.
+                    Merging the two smaller runs \(R_2\) and \(R_3\) first is much cheaper. Intuitively,
+                    \(R_2\) and \(R_3\) are comparable in size, so merging them first creates only a small
+                    intermediate result. In contrast, \(R_1\) is already large, so merging it early just
+                    creates a large intermediate result that must be processed again later.
                 </p>
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
@@ -482,7 +481,7 @@
                 <h3>Measuring difficulty: the entropy of runs</h3>
 
                 <p>
-                    We now know that instead of the number of runs, we should log at the <em>distribution</em> of runs lengths instead.
+                    We now know that instead of only counting runs, we should look at the <em>distribution</em> of run lengths.
                     Given runs \(R_1, \dots, R_k\) with lengths \(n_1, \dots, n_k\) summing to \(n\),
                     define the <em>run-length distribution</em> as \(p_i=n_i/n.\) The Shannon entropy of this distribution is:
                 </p>
@@ -509,11 +508,10 @@
                 <p>
                     Our setting is more constrained: only adjacent runs can be merged, so the optimal
                     merge tree can only be <em>at least</em> as expensive as the unconstrained Huffman solution.
-                    This means \(n \cdot H\) is a lower bound on the merge cost. As we will see,
-                    Powersort achieves a cost within a constant factor of this bound even with the adjacency constraint.
-                </p>
+                    This means \(n \cdot H\) is a lower bound on the merge cost. Powersort's guarantee is stronger
+                    than a constant-factor approximation: Munro and Wild prove that its merge cost is at most
+                    \(nH + 2n\), so it is within \(O(n)\) additive error of this lower bound even with the adjacency constraint.
 
-                <p>
                     TODO: Improve how adjacency of runs is handled here ...
                 </p>
 
@@ -552,7 +550,7 @@
                     better performance. But checking all possible merge orders to find the optimal one would be
                     far too expensive: there are exponentially many possible merge trees.
                     Powersort's key insight is a simple method that produces a <em>nearly-optimal</em> merge
-                    order in linear time: assign each pair of consecutive runs a cheap to calculate measure called <em>power</em>,
+                    order in linear time: assign each pair of consecutive runs a cheap-to-compute quantity called <em>power</em>,
                     then always merge the pair with the highest power first.
                 </p>
 
@@ -789,8 +787,9 @@
                 </ul>
 
                 <p>
-                    If we're sorting 32-bit integers (4 bytes each), the L1 data cache can hold approximately \(48.000 / 4 = 12.000\) integers per core,
-                    L2 can hold \(7.500.000 / 4 \approx 2.000.000\) integers, and L3 can hold \(18.000.000 / 4 \approx 4.700.000\) integers.
+                    If we're sorting 32-bit integers (4 bytes each), the L1 data cache can hold approximately \(48{,}000 / 4 = 12{,}000\) integers per core,
+                    L2 can hold roughly \(7{,}500{,}000 / 4 \approx 1{,}875{,}000\) integers, and L3 can hold
+                    \(18{,}000{,}000 / 4 = 4{,}500{,}000\) integers.
                 </p>
 
                 <p>
@@ -832,26 +831,24 @@
 
                 <p>
                     As further material, the official publications provide detail and proofs this post does not plan to have,
-                    but for me also the public pull requests were very interesting sources to read; see for example the one for the official Python language
+                    but for me also the public pull requests were very interesting sources to read; see for example the one for CPython
                     (<a href="https://github.com/python/cpython/pull/28108">https://github.com/python/cpython/pull/28108</a>).
                 </p>
 
                 <p>
                     This post also didn't really touch on the history of Powersort so far. The idea of exploiting pre-existing runs
-                    already appeared in Donald Knuth's <em>The Art of Computer Programming</em>, and was extended to <a href="https://en.wikipedia.org/wiki/Timsort">TimSort</a> by Tim Peters
-                    to use a heuristic merge order that is cache-friendly (compare earlier section). Later, a
-                    <a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol112-esa2018/LIPIcs.ESA.2018.4/LIPIcs.ESA.2018.4.pdf">bug</a>
-                    was found in TimSort where some inputs created really bad merge-orders, leading open a gap for a better merge-policy.
+                    already appeared in Donald Knuth's <em>The Art of Computer Programming</em>, and was extended to <a href="https://en.wikipedia.org/wiki/Timsort">TimSort</a> by Tim Peters,
+                    which uses a heuristic merge policy that often performs very well in practice. But TimSort's rules
+                    are intricate: they were difficult to analyze cleanly, and some implementations even suffered from
+                    correctness bugs in their stack management. Powersort keeps the same high-level idea of exploiting runs,
+                    but replaces the heuristic merge policy with one that is simpler to reason about and comes with a proof.
                 </p>
 
                 <p>
                     Powersort's theoretical guarantee distinguishes it from TimSort: while TimSort uses
-                    clever heuristics, Powersort <em>provably</em> achieves merge costs within \(O(n)\) of
-                    the information-theoretic optimum (measured as entropy of run lengths).
-                </p>
-
-                <p>
-                    The publication of Powersort is still relatively new, so there are some encouraging places left where there has not yet been an implementation (like it was for NumPy in my case).
+                    clever heuristics, Powersort <em>provably</em> achieves a merge cost of at most \(nH + 2n\),
+                    where \(H\) is the entropy of the run-length distribution. In other words, it stays within
+                    \(O(n)\) of the information-theoretic lower bound.
                 </p>
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
@@ -910,8 +907,9 @@
 
     const chartRegistry = {};
 
-    // Find maximal monotone runs, greedily from left to right.
-    // Each run is { start, end, dir } with dir in {"asc", "desc", "flat"}.
+    // Find maximal runs greedily from left to right.
+    // Ascending runs are nondecreasing; descending runs are strictly decreasing,
+    // so a descending run can be reversed without breaking stability.
     function findRuns(data) {
         const runs = [];
         const n = data.length;
@@ -921,49 +919,23 @@
         while (i < n) {
             const start = i;
 
-            // Handle singleton at the end
             if (i === n - 1) {
-                runs.push({ start, end: i, dir: "flat" });
+                runs.push({ start, end: i, dir: "asc" });
                 break;
             }
 
-            // Determine direction from first non-equal step
             let j = i + 1;
-            let dir = 0; // +1 = asc, -1 = desc
-
-            while (j < n && dir === 0) {
-                if (data[j] > data[j - 1]) {
-                    dir = 1;
-                } else if (data[j] < data[j - 1]) {
-                    dir = -1;
-                } else {
+            if (data[j] < data[j - 1]) {
+                while (j < n && data[j] < data[j - 1]) {
                     j++;
                 }
-            }
-
-            // All remaining equal: treat as one ascending run
-            if (dir === 0) {
-                runs.push({ start, end: n - 1, dir: "asc" });
-                break;
-            }
-
-            // Grow run while it stays monotone (non-strict) in that direction
-            while (j < n) {
-                if (dir === 1 && data[j] >= data[j - 1]) {
+                runs.push({ start, end: j - 1, dir: "desc" });
+            } else {
+                while (j < n && data[j] >= data[j - 1]) {
                     j++;
-                } else if (dir === -1 && data[j] <= data[j - 1]) {
-                    j++;
-                } else {
-                    break;
                 }
+                runs.push({ start, end: j - 1, dir: "asc" });
             }
-
-            runs.push({
-                start,
-                end: j - 1,
-                dir: dir === 1 ? "asc" : "desc",
-            });
-
             i = j;
         }
 
