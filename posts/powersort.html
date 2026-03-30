@@ -504,7 +504,8 @@
                 $$H = -\sum_{i=1}^{k} p_i \log_2 p_i$$
 
                 <p>
-                    This quantity, originating from information theory, gives a tight lower bound on the optimal merge cost.
+                    This quantity, originating from information theory, is a natural measure of how difficult
+                    the merging task is.
                     To see why, notice that every merge tree defines a <em>weighted path length</em>: each run \(R_i\)
                     sits at some depth \(d_i\) in the tree, meaning its elements pass through \(d_i\) merges
                     on the way to the root. Since each merge costs proportional to the number of elements involved,
@@ -516,18 +517,18 @@
                     would be exactly the problem solved by
                     <a href="https://en.wikipedia.org/wiki/Huffman_coding">Huffman coding</a>, where symbols with
                     probabilities \(p_i\) get codewords of length \(d_i.\)
-                    Shannon's source coding theorem tells us the optimal weighted path length lies between
-                    \(H\) and \(H + 1\) per symbol, giving a merge cost of \(\Theta(n \cdot H)\).
+                    Shannon's source coding theorem then implies that the unconstrained optimum lies between
+                    \(nH\) and \(n(H+1)\).
                 </p>
 
                 <p>
                     Our setting is more constrained: only adjacent runs can be merged, so the optimal
                     merge tree can only be <em>at least</em> as expensive as the unconstrained Huffman solution.
-                    This means \(n \cdot H\) is a lower bound on the merge cost. Powersort's guarantee is stronger
-                    than a constant-factor approximation: Munro and Wild prove that its merge cost is at most
-                    \(nH + 2n\), so it is within \(O(n)\) additive error of this lower bound even with the adjacency constraint.
-
-                    TODO: Improve how adjacency of runs is handled here ...
+                    This means \(nH\) is still a lower bound, but it is not generally the exact optimum once
+                    adjacency is required. The precise Powersort guarantee proved by Munro and Wild is stronger:
+                    for run lengths \(L_1, \dots, L_r\), its merge cost is at most
+                    \(H(L_1/n, \dots, L_r/n)\,n + 2n\). So Powersort is within a linear additive term of
+                    the entropy lower bound, even under the adjacency constraint.
                 </p>
 
                 <p>
@@ -541,7 +542,7 @@
                     </li>
                     <li>
                         <strong>Maximally fragmented</strong> (\(n\) runs of length 1): \(H = -n \cdot \frac{1}{n} \log_2 \frac{1}{n} = \log_2 n\).
-                        Cost is \(\Theta(n \log n)\), recovering the classic comparison sort bound. Also correct.
+                        The theorem gives a merge cost of \(n \log n + O(n)\), recovering the classic worst-case bound.
                     </li>
                     <li>
                         <strong>Our 3-run example</strong> (lengths 7, 2, 1 with \(n=10\)):
