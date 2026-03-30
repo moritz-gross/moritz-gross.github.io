@@ -566,8 +566,9 @@
                     better performance. But checking all possible merge orders to find the optimal one would be
                     far too expensive: there are exponentially many possible merge trees.
                     Powersort's key insight is a simple method that produces a <em>nearly-optimal</em> merge
-                    order in linear time: assign each pair of consecutive runs a cheap-to-compute quantity called <em>power</em>,
-                    then always merge the pair with the highest power first.
+                    order in linear time: assign each pair of consecutive runs a cheap-to-compute quantity called <em>power</em>.
+                    As runs are processed from left to right, these powers determine when pending runs on the stack
+                    should be merged.
                 </p>
 
                 <p>
@@ -865,6 +866,40 @@
                     clever heuristics, Powersort <em>provably</em> achieves a merge cost of at most \(nH + 2n\),
                     where \(H\) is the entropy of the run-length distribution. In other words, it stays within
                     \(O(n)\) of the information-theoretic lower bound.
+                </p>
+
+                <hr style="border-style: dashed; margin: 2rem 0;">
+
+                <h3>Appendix: How NumPy Executes This</h3>
+
+                <p>
+                    For readers who want to connect the exposition to real code,
+                    NumPy's implementation follows the same high-level structure quite closely.
+                </p>
+
+                <ul>
+                    <li>
+                        <code>count_run_</code> scans the array from left to right, detects the next monotone run,
+                        reverses it immediately if it is descending, and extends short runs to <code>minrun</code>
+                        using insertion sort.
+                    </li>
+                    <li>
+                        <code>timsort_</code> repeatedly calls <code>count_run_</code>, so runs are discovered in left-to-right order
+                        and pushed onto a stack of pending runs.
+                    </li>
+                    <li>
+                        Whenever a new run is found, <code>found_new_run_</code> computes its power relative to the run
+                        on top of the stack and merges older runs until the stack invariant is restored.
+                    </li>
+                    <li>
+                        After all runs have been discovered, <code>force_collapse_</code> performs the remaining merges
+                        until only one run remains.
+                    </li>
+                </ul>
+
+                <p>
+                    So the implementation-level story is: detect and normalize runs, scan left to right, use powers
+                    to control stack collapses, then drain the stack at the end.
                 </p>
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
