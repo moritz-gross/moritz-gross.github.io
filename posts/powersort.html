@@ -140,13 +140,9 @@
                 <h3>Introduction</h3>
                 <p>
                     <em>Powersort</em> is a modern sorting algorithm (proposed 2018 in <a href="https://arxiv.org/pdf/1805.04154">Nearly-Optimal Mergesorts: Fast, Practical Sorting Methods That Optimally Adapt to Existing Runs</a>)
-                    that keeps the worst-case guarantees of Mergesort, but works
-                    faster on "easy" inputs.
-                    This leads us to first define what we exactly mean by easy and hard, and how we can use these
-                    ideas reliably without spending too much additional computation in the process.
-                    that keeps the worst-case guarantees of Mergesort, and works faster on "easy" inputs.
-                    This leads us to first define what is meant by easy and hard, and how we can exploit these
-                    ideas reliably without spending much additional computation on them.
+                    that keeps the worst-case guarantees of Mergesort, but works faster on inputs that already
+                    contain useful order. This leads us to first define what we mean by easy and hard inputs,
+                    and how an algorithm can exploit that structure without spending much additional work finding it.
                 </p>
 
                 <p>
@@ -210,9 +206,25 @@
                 <p>
                     More precisely, an <em>ascending run</em> of \(A\) is a section \(A[i..j]\) with
                     \(0 \le i \le j < n\) such that  \(a_i \le a_{i+1} \le \dots \le a_j\) and that \(j\) is maximal,
-                    i.e. it can't be increased without breaking the monotonicity of the elements.
-                    A <em>descending run</em> is defined analogously. We use the word <em>run</em> for both
-                    ascending and descending runs.
+                    i.e. it can't be increased without breaking monotonicity.
+                    A <em>descending run</em> is defined similarly, except that we require
+                    \(a_i > a_{i+1} > \dots > a_j\) to be <em>strictly</em> decreasing. That strictness matters in
+                    stable implementations: a descending run can then be reversed without changing the relative order
+                    of equal keys. We use the word <em>run</em> for both ascending and descending runs.
+                </p>
+
+                <p>
+                    In the actual algorithm, a descending run is reversed <em>immediately after it is detected</em>.
+                    So from that point on, all pending runs are treated as ascending runs, and every later merge
+                    operates on ascending inputs only. For a brief implementation-oriented summary of how NumPy
+                    handles this, see the <a href="#appendix-numpy-execution">appendix</a>.
+                </p>
+
+                <p>
+                    One could imagine a different design where descending runs are kept as they are and the merge
+                    procedure simply scans them from right to left. That would avoid the explicit reversal step.
+                    In practice, however, implementations such as TimSort and Powersort usually normalize runs
+                    up front, because then the rest of the algorithm only has to deal with one representation.
                 </p>
 
                 <p>
@@ -226,6 +238,9 @@
                     To use these runs productively for sorting, we can borrow the merge-operation of Mergesort.
                     It takes two runs that are next to each other and merges them to one
                     run that contains all the elements of the two input runs.
+                    Since descending runs have already been reversed at detection time, the merge routine below
+                    only needs to handle ascending runs. The <a href="#appendix-numpy-execution">appendix</a>
+                    sketches where this normalization and the later stack-based merges happen in NumPy's code.
                     The merge works by maintaining two pointers, one for each run, and repeatedly picking
                     the smaller element. Since both runs are already sorted, this produces a sorted result
                     in linear time:
@@ -244,8 +259,7 @@
                     (Also see section <em>B.1 Merging</em> of <a href="https://arxiv.org/pdf/1805.04154">Nearly-Optimal Mergesorts</a>)
                 </p>
                 <p>
-                    The cost of merging two runs is proportional to their combined length, as each element
-                    is compared and copied exactly once. More formally, we define the <em>merge cost</em> of
+                    The cost of merging two runs is proportional to their combined length, so we define the <em>merge cost</em> of
                     combining runs \(R_i\) and \(R_j\) as \(\text{len}(R_i) + \text{len}(R_j)\).
                 </p>
 
@@ -277,21 +291,9 @@
                     only two choices for the merging order).
                 </p>
 
-                <p>
-                    ...
-                </p>
-                <p>
-                    ...
-                </p>
-                <p>
-                    ...
-                </p>
-                <p>
-                    ...
-                </p>
-                <p>
-                    ...
-                </p>
+                <div style="margin: 11rem 0; text-align: center; color: #666; font-style: italic;">
+                    Pause here and try it yourself before continuing.
+                </div>
 
                 <p>
                     The two possible merge orders are explained below:
@@ -354,9 +356,10 @@
                 </p>
 
                 <p>
-                    Merging the two smaller runs \(R_2\) and \(R_3\) first is much cheaper. The reason appears to be related because
-                    \(R_2\) and \(R_3\) have a similar size, while \(R_1\) is much bigger, thus merging it with any other run doesn't change
-                    its size much.
+                    Merging the two smaller runs \(R_2\) and \(R_3\) first is much cheaper. Intuitively,
+                    \(R_2\) and \(R_3\) are comparable in size, so merging them first creates only a small
+                    intermediate result. In contrast, \(R_1\) is already large, so merging it early just
+                    creates a large intermediate result that must be processed again later.
                 </p>
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
@@ -482,7 +485,7 @@
                 <h3>Measuring difficulty: the entropy of runs</h3>
 
                 <p>
-                    We now know that instead of the number of runs, we should log at the <em>distribution</em> of runs lengths instead.
+                    We now know that instead of only counting runs, we should look at the <em>distribution</em> of run lengths.
                     Given runs \(R_1, \dots, R_k\) with lengths \(n_1, \dots, n_k\) summing to \(n\),
                     define the <em>run-length distribution</em> as \(p_i=n_i/n.\) The Shannon entropy of this distribution is:
                 </p>
@@ -490,7 +493,8 @@
                 $$H = -\sum_{i=1}^{k} p_i \log_2 p_i$$
 
                 <p>
-                    This quantity, originating from information theory, gives a tight lower bound on the optimal merge cost.
+                    This quantity, originating from information theory, is a natural measure of how difficult
+                    the merging task is.
                     To see why, notice that every merge tree defines a <em>weighted path length</em>: each run \(R_i\)
                     sits at some depth \(d_i\) in the tree, meaning its elements pass through \(d_i\) merges
                     on the way to the root. Since each merge costs proportional to the number of elements involved,
@@ -502,19 +506,18 @@
                     would be exactly the problem solved by
                     <a href="https://en.wikipedia.org/wiki/Huffman_coding">Huffman coding</a>, where symbols with
                     probabilities \(p_i\) get codewords of length \(d_i.\)
-                    Shannon's source coding theorem tells us the optimal weighted path length lies between
-                    \(H\) and \(H + 1\) per symbol, giving a merge cost of \(\Theta(n \cdot H)\).
+                    Shannon's source coding theorem then implies that the unconstrained optimum lies between
+                    \(nH\) and \(n(H+1)\).
                 </p>
 
                 <p>
                     Our setting is more constrained: only adjacent runs can be merged, so the optimal
                     merge tree can only be <em>at least</em> as expensive as the unconstrained Huffman solution.
-                    This means \(n \cdot H\) is a lower bound on the merge cost. As we will see,
-                    Powersort achieves a cost within a constant factor of this bound even with the adjacency constraint.
-                </p>
-
-                <p>
-                    TODO: Improve how adjacency of runs is handled here ...
+                    This means \(nH\) is still a lower bound, but it is not generally the exact optimum once
+                    adjacency is required. The precise Powersort guarantee proved by Munro and Wild is stronger:
+                    for run lengths \(L_1, \dots, L_r\), its merge cost is at most
+                    \(H(L_1/n, \dots, L_r/n)\,n + 2n\). So Powersort is within a linear additive term of
+                    the entropy lower bound, even under the adjacency constraint.
                 </p>
 
                 <p>
@@ -528,7 +531,7 @@
                     </li>
                     <li>
                         <strong>Maximally fragmented</strong> (\(n\) runs of length 1): \(H = -n \cdot \frac{1}{n} \log_2 \frac{1}{n} = \log_2 n\).
-                        Cost is \(\Theta(n \log n)\), recovering the classic comparison sort bound. Also correct.
+                        The theorem gives a merge cost of \(n \log n + O(n)\), recovering the classic worst-case bound.
                     </li>
                     <li>
                         <strong>Our 3-run example</strong> (lengths 7, 2, 1 with \(n=10\)):
@@ -552,8 +555,9 @@
                     better performance. But checking all possible merge orders to find the optimal one would be
                     far too expensive: there are exponentially many possible merge trees.
                     Powersort's key insight is a simple method that produces a <em>nearly-optimal</em> merge
-                    order in linear time: assign each pair of consecutive runs a cheap to calculate measure called <em>power</em>,
-                    then always merge the pair with the highest power first.
+                    order in linear time: assign each pair of consecutive runs a cheap-to-compute quantity called <em>power</em>.
+                    As runs are processed from left to right, these powers determine when pending runs on the stack
+                    should be merged.
                 </p>
 
                 <p>
@@ -635,10 +639,10 @@
                 </p>
 
                 <p>
-                    The following code comes from the <a href="https://github.com/numpy/numpy/pull/29208/changes">NumPy implementation</a>, slightly simplified for this post:
+                    The following code is adapted from the <a href="https://github.com/numpy/numpy/pull/29208/changes">NumPy implementation</a> and slightly simplified for this post:
                 </p>
 
-                <pre><code class="language-c">static int found_new_run_(type *arr, run *stack, int *stack_ptr, int n2, int n, buffer_ *buffer)
+                <pre><code class="language-c">static void found_new_run_(type *arr, run *stack, int *stack_ptr, int n2, int n, buffer_ *buffer)
 {
     if (*stack_ptr > 0) {
         int s1 = stack[*stack_ptr - 1].s;
@@ -789,8 +793,9 @@
                 </ul>
 
                 <p>
-                    If we're sorting 32-bit integers (4 bytes each), the L1 data cache can hold approximately \(48.000 / 4 = 12.000\) integers per core,
-                    L2 can hold \(7.500.000 / 4 \approx 2.000.000\) integers, and L3 can hold \(18.000.000 / 4 \approx 4.700.000\) integers.
+                    If we're sorting 32-bit integers (4 bytes each), the L1 data cache can hold approximately \(48{,}000 / 4 = 12{,}000\) integers per core,
+                    L2 can hold roughly \(7{,}500{,}000 / 4 \approx 1{,}875{,}000\) integers, and L3 can hold
+                    \(18{,}000{,}000 / 4 = 4{,}500{,}000\) integers.
                 </p>
 
                 <p>
@@ -806,7 +811,7 @@
                 <ul>
                     <li>
                         <strong>Small working sets:</strong> High-power merges combine short, adjacent runs.
-                        Their combined data often fits entirely in L2 or L3 cache, making the merge fast.
+                        Their combined data is more likely to fit in L2 or L3 cache, which can make the merge faster.
                         Low-power merges (spanning large portions of the array) happen last, when there's
                         no choice but to process more data.
                     </li>
@@ -819,7 +824,7 @@
 
                 <p>
                     In contrast, a left-to-right merge order would repeatedly stream through a growing
-                    intermediate result, evicting useful data and causing cache thrashing.
+                    intermediate result, making it more likely that useful data gets evicted from cache.
                 </p>
 
                 <h3>Closing thoughts</h3>
@@ -832,26 +837,58 @@
 
                 <p>
                     As further material, the official publications provide detail and proofs this post does not plan to have,
-                    but for me also the public pull requests were very interesting sources to read; see for example the one for the official Python language
+                    but for me also the public pull requests were very interesting sources to read; see for example the one for CPython
                     (<a href="https://github.com/python/cpython/pull/28108">https://github.com/python/cpython/pull/28108</a>).
                 </p>
 
                 <p>
                     This post also didn't really touch on the history of Powersort so far. The idea of exploiting pre-existing runs
-                    already appeared in Donald Knuth's <em>The Art of Computer Programming</em>, and was extended to <a href="https://en.wikipedia.org/wiki/Timsort">TimSort</a> by Tim Peters
-                    to use a heuristic merge order that is cache-friendly (compare earlier section). Later, a
-                    <a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol112-esa2018/LIPIcs.ESA.2018.4/LIPIcs.ESA.2018.4.pdf">bug</a>
-                    was found in TimSort where some inputs created really bad merge-orders, leading open a gap for a better merge-policy.
+                    already appeared in Donald Knuth's <em>The Art of Computer Programming</em>, and was extended to <a href="https://en.wikipedia.org/wiki/Timsort">TimSort</a> by Tim Peters,
+                    which uses a heuristic merge policy that often performs very well in practice. But TimSort's rules
+                    are intricate: they were difficult to analyze cleanly, and some implementations even suffered from
+                    correctness bugs in their stack management. Powersort keeps the same high-level idea of exploiting runs,
+                    but replaces the heuristic merge policy with one that is simpler to reason about and comes with a proof.
                 </p>
 
                 <p>
                     Powersort's theoretical guarantee distinguishes it from TimSort: while TimSort uses
-                    clever heuristics, Powersort <em>provably</em> achieves merge costs within \(O(n)\) of
-                    the information-theoretic optimum (measured as entropy of run lengths).
+                    clever heuristics, Powersort <em>provably</em> achieves a merge cost of at most \(nH + 2n\),
+                    where \(H\) is the entropy of the run-length distribution. In other words, it stays within
+                    \(O(n)\) of the information-theoretic lower bound.
                 </p>
 
+                <hr style="border-style: dashed; margin: 2rem 0;">
+
+                <h3 id="appendix-numpy-execution">Appendix: How NumPy Executes This</h3>
+
                 <p>
-                    The publication of Powersort is still relatively new, so there are some encouraging places left where there has not yet been an implementation (like it was for NumPy in my case).
+                    For readers who want to connect the exposition to real code,
+                    NumPy's implementation follows the same high-level structure quite closely.
+                </p>
+
+                <ul>
+                    <li>
+                        <code>count_run_</code> scans the array from left to right, detects the next monotone run,
+                        reverses it immediately if it is descending, and extends short runs to <code>minrun</code>
+                        using insertion sort.
+                    </li>
+                    <li>
+                        <code>timsort_</code> repeatedly calls <code>count_run_</code>, so runs are discovered in left-to-right order
+                        and pushed onto a stack of pending runs.
+                    </li>
+                    <li>
+                        Whenever a new run is found, <code>found_new_run_</code> computes its power relative to the run
+                        on top of the stack and merges older runs until the stack invariant is restored.
+                    </li>
+                    <li>
+                        After all runs have been discovered, <code>force_collapse_</code> performs the remaining merges
+                        until only one run remains.
+                    </li>
+                </ul>
+
+                <p>
+                    So the implementation-level story is: detect and normalize runs, scan left to right, use powers
+                    to control stack collapses, then drain the stack at the end.
                 </p>
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
@@ -910,8 +947,9 @@
 
     const chartRegistry = {};
 
-    // Find maximal monotone runs, greedily from left to right.
-    // Each run is { start, end, dir } with dir in {"asc", "desc", "flat"}.
+    // Find maximal runs greedily from left to right.
+    // Ascending runs are nondecreasing; descending runs are strictly decreasing,
+    // so a descending run can be reversed without breaking stability.
     function findRuns(data) {
         const runs = [];
         const n = data.length;
@@ -921,49 +959,23 @@
         while (i < n) {
             const start = i;
 
-            // Handle singleton at the end
             if (i === n - 1) {
-                runs.push({ start, end: i, dir: "flat" });
+                runs.push({ start, end: i, dir: "asc" });
                 break;
             }
 
-            // Determine direction from first non-equal step
             let j = i + 1;
-            let dir = 0; // +1 = asc, -1 = desc
-
-            while (j < n && dir === 0) {
-                if (data[j] > data[j - 1]) {
-                    dir = 1;
-                } else if (data[j] < data[j - 1]) {
-                    dir = -1;
-                } else {
+            if (data[j] < data[j - 1]) {
+                while (j < n && data[j] < data[j - 1]) {
                     j++;
                 }
-            }
-
-            // All remaining equal: treat as one ascending run
-            if (dir === 0) {
-                runs.push({ start, end: n - 1, dir: "asc" });
-                break;
-            }
-
-            // Grow run while it stays monotone (non-strict) in that direction
-            while (j < n) {
-                if (dir === 1 && data[j] >= data[j - 1]) {
+                runs.push({ start, end: j - 1, dir: "desc" });
+            } else {
+                while (j < n && data[j] >= data[j - 1]) {
                     j++;
-                } else if (dir === -1 && data[j] <= data[j - 1]) {
-                    j++;
-                } else {
-                    break;
                 }
+                runs.push({ start, end: j - 1, dir: "asc" });
             }
-
-            runs.push({
-                start,
-                end: j - 1,
-                dir: dir === 1 ? "asc" : "desc",
-            });
-
             i = j;
         }
 
