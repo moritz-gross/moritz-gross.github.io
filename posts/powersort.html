@@ -290,20 +290,17 @@
         }
 
         .power-control,
-        .power-step-control,
         .power-stat {
             background: rgba(255, 255, 255, 0.72);
             border: 1px solid #d9d4cd;
             border-radius: 10px;
         }
 
-        .power-control,
-        .power-step-control {
+        .power-control {
             padding: 0.8rem 0.9rem;
         }
 
-        .power-control-header,
-        .power-step-header {
+        .power-control-header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
@@ -311,14 +308,12 @@
             margin-bottom: 0.55rem;
         }
 
-        .power-control label,
-        .power-step-control label {
+        .power-control label {
             font-weight: 700;
             font-size: 0.92rem;
         }
 
-        .power-control output,
-        .power-step-control output {
+        .power-control output {
             font-variant-numeric: tabular-nums;
             font-weight: 700;
             color: #4c4338;
@@ -330,19 +325,9 @@
             accent-color: #867765;
         }
 
-        .power-step-control {
-            margin-bottom: 1rem;
-        }
-
-        .power-step-caption {
-            margin: 0.45rem 0 0 0;
-            font-size: 0.85rem;
-            opacity: 0.78;
-        }
-
         .power-stats {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 0.75rem;
             margin-bottom: 1rem;
         }
@@ -1262,7 +1247,7 @@
                 <div class="power-widget" id="power-widget">
                     <h4 class="power-widget-title">Interactive: Power as Repeated Bisection</h4>
                     <p class="power-widget-copy">
-                        All parameters are normalized to the unit interval. Move the start position and the two run lengths, then scrub the depth to see when the two midpoint positions first land in different dyadic cells.
+                        All parameters are normalized to the unit interval. Move the start position and the two run lengths, and the diagram will expand to the full power depth so you can see every bisection layer up to the first separating split.
                     </p>
 
                     <div class="power-presets">
@@ -1296,15 +1281,6 @@
                         </div>
                     </div>
 
-                    <div class="power-step-control">
-                        <div class="power-step-header">
-                            <label for="power-input-depth">Visible depth</label>
-                            <output id="power-output-depth" for="power-input-depth">3</output>
-                        </div>
-                        <input id="power-input-depth" type="range" min="1" max="3" step="1" value="3">
-                        <p class="power-step-caption">Each extra row adds one more bisection layer of the unit interval.</p>
-                    </div>
-
                     <div class="power-stats">
                         <div class="power-stat">
                             <span class="power-stat-label">Left midpoint <code>m1</code></span>
@@ -1317,10 +1293,6 @@
                         <div class="power-stat">
                             <span class="power-stat-label">Power</span>
                             <div class="power-stat-value" id="power-value">3</div>
-                        </div>
-                        <div class="power-stat">
-                            <span class="power-stat-label">Current depth</span>
-                            <div class="power-stat-value" id="power-current-depth">3</div>
                         </div>
                     </div>
 
@@ -1982,10 +1954,10 @@
         );
     }
 
-    function renderPowerDepths(container, data, visibleDepth) {
+    function renderPowerDepths(container, data) {
         container.innerHTML = "";
 
-        data.layers.slice(0, visibleDepth).forEach((layer) => {
+        data.layers.forEach((layer) => {
             const row = document.createElement("div");
             row.className = "power-depth-row";
 
@@ -2049,12 +2021,9 @@
             n1: document.getElementById("power-output-n1"),
             n2: document.getElementById("power-output-n2"),
         };
-        const depthInput = document.getElementById("power-input-depth");
-        const depthOutput = document.getElementById("power-output-depth");
         const midpoint1El = document.getElementById("power-midpoint-1");
         const midpoint2El = document.getElementById("power-midpoint-2");
         const powerEl = document.getElementById("power-value");
-        const currentDepthEl = document.getElementById("power-current-depth");
         const overviewEl = document.getElementById("power-overview");
         const noteEl = document.getElementById("power-note");
         const depthsEl = document.getElementById("power-depths");
@@ -2066,7 +2035,6 @@
 
         const state = {
             ...presets["r2-r3"],
-            visibleDepth: 3,
         };
 
         function syncSliderBounds() {
@@ -2084,36 +2052,21 @@
         }
 
         function updateNote(data) {
-            const layer = data.layers[state.visibleDepth - 1];
-
-            if (!layer.separated) {
-                noteEl.textContent = `At depth ${layer.depth}, both midpoints are still inside ${formatBoundary(layer.leftCell, layer.cellCount)}. The first separating split appears at depth ${data.power}.`;
-                return;
-            }
-
+            const layer = data.layers[data.power - 1];
             noteEl.textContent = `At depth ${layer.depth}, m1 falls in ${formatBoundary(layer.leftCell, layer.cellCount)} and m2 falls in ${formatBoundary(layer.rightCell, layer.cellCount)}. This is the first separating split, so the power is ${data.power}.`;
         }
 
-        function render(resetVisibleDepth) {
+        function render() {
             syncSliderBounds();
 
             const data = computePowerWidgetData(state);
 
-            if (resetVisibleDepth || state.visibleDepth > data.power || state.visibleDepth < 1) {
-                state.visibleDepth = data.power;
-            }
-
-            depthInput.max = String(data.power);
-            depthInput.value = String(state.visibleDepth);
-            depthOutput.textContent = String(state.visibleDepth);
-
             midpoint1El.textContent = formatMidpoint(data.midpoint1DoubleTicks);
             midpoint2El.textContent = formatMidpoint(data.midpoint2DoubleTicks);
             powerEl.textContent = String(data.power);
-            currentDepthEl.textContent = String(state.visibleDepth);
 
             renderPowerOverview(overviewEl, state, data);
-            renderPowerDepths(depthsEl, data, state.visibleDepth);
+            renderPowerDepths(depthsEl, data);
             updateNote(data);
         }
 
@@ -2128,17 +2081,12 @@
                 state.n2 = clamp(rawValue, POWER_WIDGET_MIN_RUN, POWER_WIDGET_SCALE - state.s1 - state.n1);
             }
 
-            render(true);
+            render();
         }
 
         inputs.s1.addEventListener("input", () => updateStateFromSlider("s1"));
         inputs.n1.addEventListener("input", () => updateStateFromSlider("n1"));
         inputs.n2.addEventListener("input", () => updateStateFromSlider("n2"));
-
-        depthInput.addEventListener("input", () => {
-            state.visibleDepth = Number(depthInput.value);
-            render(false);
-        });
 
         widget.addEventListener("click", (event) => {
             const button = event.target.closest("button");
@@ -2148,10 +2096,10 @@
             if (!preset || !presets[preset]) return;
 
             Object.assign(state, presets[preset]);
-            render(true);
+            render();
         });
 
-        render(true);
+        render();
     }
 
     // Expose the swap function globally for easy use from the console (optional)
