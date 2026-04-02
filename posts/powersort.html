@@ -97,6 +97,160 @@
             white-space: nowrap;
         }
 
+        .entropy-widget {
+            margin: 1.5rem 0;
+            border: 1px solid #d9d4cd;
+            border-radius: 10px;
+            background: rgba(134, 119, 101, 0.06);
+            overflow: hidden;
+        }
+
+        .entropy-widget summary {
+            cursor: pointer;
+            font-weight: 700;
+            padding: 0.9rem 1.25rem;
+            background: rgba(134, 119, 101, 0.08);
+        }
+
+        .entropy-widget summary:hover {
+            background: rgba(134, 119, 101, 0.12);
+        }
+
+        .entropy-widget-body {
+            padding: 1rem 1.25rem;
+        }
+
+        .entropy-widget p {
+            margin-top: 0.5rem;
+        }
+
+        .entropy-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            align-items: center;
+            margin: 0.9rem 0 0.75rem 0;
+        }
+
+        .entropy-presets {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 0.6rem;
+            margin: 0 0 0.75rem 0;
+            overflow-x: auto;
+            padding-bottom: 0.15rem;
+        }
+
+        .entropy-widget label {
+            font-weight: 700;
+        }
+
+        .entropy-widget input {
+            flex: 1 1 260px;
+            min-width: 220px;
+            padding: 0.5rem 0.65rem;
+            border: 1px solid #bbb2a6;
+            border-radius: 7px;
+            font: inherit;
+            background: #fff;
+        }
+
+        .entropy-widget button {
+            border: 1px solid #bbb2a6;
+            border-radius: 7px;
+            background: #f8f5f1;
+            padding: 0.48rem 0.75rem;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .entropy-widget button:hover {
+            background: #f1ece6;
+        }
+
+        .entropy-error {
+            color: #a33d2e;
+            min-height: 1.2rem;
+            margin: 0.15rem 0 0.6rem 0;
+        }
+
+        .entropy-distribution {
+            display: flex;
+            min-height: 46px;
+            border: 1px solid #cfc7bc;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .entropy-segment {
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.35rem 0.2rem;
+            font-size: 0.78rem;
+            border-right: 1px solid rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .entropy-segment:last-child {
+            border-right: none;
+        }
+
+        .entropy-segment.run-0 {
+            background-color: rgba(138, 181, 225, 0.28);
+        }
+
+        .entropy-segment.run-1 {
+            background-color: rgba(233, 208, 106, 0.28);
+        }
+
+        .entropy-segment.run-2 {
+            background-color: rgba(42, 157, 117, 0.22);
+        }
+
+        .entropy-segment.run-3 {
+            background-color: rgba(244, 131, 97, 0.22);
+        }
+
+        .entropy-stats {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-top: 0.9rem;
+        }
+
+        .entropy-stat {
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid #d9d4cd;
+            border-radius: 8px;
+            padding: 0.7rem 0.8rem;
+        }
+
+        .entropy-stat-label {
+            display: block;
+            font-size: 0.82rem;
+            opacity: 0.75;
+            margin-bottom: 0.22rem;
+        }
+
+        .entropy-stat-value {
+            font-size: 1rem;
+        }
+
+        .entropy-note {
+            margin-top: 0.8rem;
+            font-size: 0.92rem;
+            opacity: 0.85;
+        }
+
+        @media (max-width: 620px) {
+            .entropy-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .merge-block.run-0,
         .merge-block.run-1,
         .merge-block.run-2,
@@ -489,6 +643,52 @@
                 </p>
 
                 $$H = -\sum_{i=1}^{k} p_i \log_2 p_i$$
+
+                <details class="entropy-widget" id="entropy-widget">
+                    <summary>Try It: Entropy of Run Lengths</summary>
+                    <div class="entropy-widget-body">
+                        <p>
+                            Enter positive run lengths separated by commas, for example <code>7, 2, 1</code>.
+                        </p>
+
+                        <div class="entropy-controls">
+                            <label for="entropy-input">Run lengths</label>
+                            <input id="entropy-input" type="text" value="7, 2, 1" inputmode="numeric" aria-describedby="entropy-error entropy-note">
+                        </div>
+
+                        <div class="entropy-presets">
+                            <button type="button" data-entropy-action="random">Random</button>
+                            <button type="button" data-entropy-preset="example">7, 2, 1</button>
+                            <button type="button" data-entropy-preset="sorted">Sorted</button>
+                            <button type="button" data-entropy-preset="uniform">Uniform</button>
+                        </div>
+
+                        <div class="entropy-error" id="entropy-error" aria-live="polite"></div>
+
+                        <div class="entropy-distribution" id="entropy-distribution" aria-label="Run length distribution"></div>
+
+                        <div class="entropy-stats">
+                            <div class="entropy-stat">
+                                <span class="entropy-stat-label">Total length \(n\)</span>
+                                <div class="entropy-stat-value" id="entropy-total"></div>
+                            </div>
+                            <div class="entropy-stat">
+                                <span class="entropy-stat-label">Entropy \(H\)</span>
+                                <div class="entropy-stat-value" id="entropy-h"></div>
+                            </div>
+                            <div class="entropy-stat">
+                                <span class="entropy-stat-label">Lower-bound benchmark \(nH\)</span>
+                                <div class="entropy-stat-value" id="entropy-nh"></div>
+                            </div>
+                            <div class="entropy-stat">
+                                <span class="entropy-stat-label">Normalized run fractions \(p_i\)</span>
+                                <div class="entropy-stat-value" id="entropy-probs"></div>
+                            </div>
+                        </div>
+
+                        <div class="entropy-note" id="entropy-note"></div>
+                    </div>
+                </details>
 
                 <p>
                     This quantity, originating from information theory, is a natural measure of how difficult
@@ -1145,11 +1345,157 @@
         dragState.fromIndex = null;
     }
 
+    function parseRunLengths(text) {
+        const parts = text.split(",").map((part) => part.trim()).filter(Boolean);
+        if (parts.length === 0) {
+            throw new Error("Please enter at least one positive integer.");
+        }
+
+        const values = parts.map((part) => {
+            if (!/^\d+$/.test(part)) {
+                throw new Error("Run lengths must be positive integers separated by commas.");
+            }
+            const value = Number(part);
+            if (value <= 0) {
+                throw new Error("Run lengths must be positive integers.");
+            }
+            return value;
+        });
+
+        return values;
+    }
+
+    function formatList(values, digits) {
+        return values.map((value) => value.toFixed(digits).replace(/\.0+$/, "").replace(/(\.\d*[1-9])0+$/, "$1")).join(", ");
+    }
+
+    function entropyNote(h, runCount) {
+        if (runCount === 1) {
+            return "Single-run input: no merges are needed, so the entropy is 0.";
+        }
+        if (h < 0.8) {
+            return "Low entropy: most of the mass is concentrated in a few large runs.";
+        }
+        if (h < 1.5) {
+            return "Moderate entropy: the runs are uneven, but there is still visible structure to exploit.";
+        }
+        return "Higher entropy: the run lengths are more evenly spread, which usually means a harder merging task.";
+    }
+
+    function randomRunLengths() {
+        const runCount = 3 + Math.floor(Math.random() * 4);
+        const values = [];
+        for (let i = 0; i < runCount; i++) {
+            values.push(1 + Math.floor(Math.random() * 9));
+        }
+        return values;
+    }
+
+    function renderEntropyDistribution(container, runLengths) {
+        container.innerHTML = "";
+        const total = runLengths.reduce((sum, value) => sum + value, 0);
+
+        runLengths.forEach((length, index) => {
+            const segment = document.createElement("div");
+            segment.className = `entropy-segment run-${index % 4}`;
+            segment.style.flexGrow = String(length);
+            segment.style.flexBasis = "0";
+            segment.title = `Run ${index + 1}: length ${length}`;
+            segment.textContent = length;
+            container.appendChild(segment);
+        });
+
+        container.setAttribute("aria-label", `Run length distribution with total length ${total}`);
+    }
+
+    function initEntropyWidget() {
+        const widget = document.getElementById("entropy-widget");
+        if (!widget) return;
+
+        const input = document.getElementById("entropy-input");
+        const error = document.getElementById("entropy-error");
+        const distribution = document.getElementById("entropy-distribution");
+        const totalEl = document.getElementById("entropy-total");
+        const hEl = document.getElementById("entropy-h");
+        const nhEl = document.getElementById("entropy-nh");
+        const probsEl = document.getElementById("entropy-probs");
+        const noteEl = document.getElementById("entropy-note");
+
+        const presets = {
+            example: [7, 2, 1],
+            sorted: [10],
+            uniform: [1, 1, 1, 1, 1, 1, 1, 1],
+        };
+
+        function update(valueString) {
+            try {
+                const runLengths = parseRunLengths(valueString);
+                const total = runLengths.reduce((sum, value) => sum + value, 0);
+                const probabilities = runLengths.map((value) => value / total);
+                const h = probabilities.reduce((sum, p) => sum - p * Math.log2(p), 0);
+                const nh = total * h;
+
+                error.textContent = "";
+                renderEntropyDistribution(distribution, runLengths);
+                totalEl.textContent = String(total);
+                hEl.textContent = h.toFixed(3);
+                nhEl.textContent = nh.toFixed(2);
+                probsEl.textContent = `(${formatList(probabilities, 3)})`;
+                noteEl.textContent = entropyNote(h, runLengths.length);
+            } catch (err) {
+                error.textContent = err.message;
+                distribution.innerHTML = "";
+                totalEl.textContent = "—";
+                hEl.textContent = "—";
+                nhEl.textContent = "—";
+                probsEl.textContent = "—";
+                noteEl.textContent = "Adjust the input and recompute to see the distribution.";
+            }
+        }
+
+        widget.addEventListener("click", (event) => {
+            const button = event.target.closest("button");
+            if (!button) return;
+
+            const preset = button.dataset.entropyPreset;
+            const action = button.dataset.entropyAction;
+
+            if (preset) {
+                input.value = presets[preset].join(", ");
+                update(input.value);
+                return;
+            }
+
+            if (action === "random") {
+                input.value = randomRunLengths().join(", ");
+                update(input.value);
+                return;
+            }
+
+        });
+
+        input.addEventListener("change", () => {
+            update(input.value);
+        });
+
+        input.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                update(input.value);
+            }
+        });
+
+        update(input.value);
+    }
+
     // Expose the swap function globally for easy use from the console (optional)
     window.swapInChart = swapInChart;
 
     // Initialize once the DOM is ready
-    document.addEventListener("DOMContentLoaded", initCharts);
+    document.addEventListener("DOMContentLoaded", () => {
+        initCharts();
+        initEntropyWidget();
+    });
 </script>
 
 </body>
