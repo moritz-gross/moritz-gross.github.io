@@ -514,6 +514,276 @@
             background: rgba(42, 157, 117, 0.55);
         }
 
+        .stack-widget {
+            margin: 1.2rem 0 1.45rem 0;
+            padding: 0.82rem 0.95rem 0.9rem 0.95rem;
+            border: 1px solid #d9d4cd;
+            border-radius: 10px;
+            background: linear-gradient(180deg, rgba(248, 245, 241, 0.96), rgba(255, 255, 255, 0.98));
+            font-size: 0.94rem;
+        }
+
+        .stack-widget-title {
+            margin: 0 0 0.22rem 0;
+            font-size: 0.98rem;
+        }
+
+        .stack-widget-copy {
+            margin: 0 0 0.68rem 0;
+            font-size: 0.88rem;
+            line-height: 1.45;
+        }
+
+        .stack-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            align-items: center;
+            margin-bottom: 0.55rem;
+        }
+
+        .stack-controls label {
+            font-weight: 700;
+            font-size: 0.83rem;
+        }
+
+        .stack-controls input {
+            flex: 1 1 220px;
+            min-width: 180px;
+            padding: 0.36rem 0.52rem;
+            border: 1px solid #bbb2a6;
+            border-radius: 6px;
+            font: inherit;
+            background: #fff;
+        }
+
+        .stack-presets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-bottom: 0.55rem;
+        }
+
+        .stack-widget button {
+            border: 1px solid #bbb2a6;
+            border-radius: 6px;
+            background: #f8f5f1;
+            padding: 0.34rem 0.58rem;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .stack-widget button:hover {
+            background: #f1ece6;
+        }
+
+        .stack-widget button:disabled {
+            opacity: 0.45;
+            cursor: default;
+        }
+
+        .stack-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.55rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.45rem;
+        }
+
+        .stack-nav {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .stack-step-counter {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #5b503c;
+        }
+
+        .stack-error {
+            color: #a33d2e;
+            min-height: 1rem;
+            margin: 0 0 0.42rem 0;
+            font-size: 0.84rem;
+        }
+
+        .stack-status {
+            margin-bottom: 0.45rem;
+            padding: 0.48rem 0.58rem;
+            border: 1px solid #d9d4cd;
+            border-radius: 7px;
+            background: rgba(255, 255, 255, 0.76);
+            font-size: 0.84rem;
+            line-height: 1.42;
+        }
+
+        .stack-status-title {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.12rem;
+            color: #4a4034;
+        }
+
+        .stack-helper {
+            margin: 0 0 0.55rem 0;
+            font-size: 0.8rem;
+            opacity: 0.76;
+        }
+
+        .stack-panel {
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid #d9d4cd;
+            border-radius: 8px;
+            padding: 0.48rem 0.56rem;
+        }
+
+        .stack-panel-title {
+            margin-bottom: 0.32rem;
+            font-size: 0.77rem;
+            font-weight: 700;
+            opacity: 0.78;
+        }
+
+        .stack-panel-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.4fr) minmax(220px, 0.9fr);
+            gap: 0.55rem;
+        }
+
+        .stack-run-strip {
+            display: flex;
+            min-height: 30px;
+            border: 1px solid rgba(134, 119, 101, 0.18);
+            border-radius: 6px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .stack-run-segment {
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.18rem 0.12rem;
+            font-size: 0.68rem;
+            font-weight: 700;
+            border-right: 1px solid rgba(0, 0, 0, 0.08);
+            transition: opacity 120ms ease;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .stack-run-segment:last-child {
+            border-right: none;
+        }
+
+        .stack-run-segment.run-0 {
+            background-color: rgba(138, 181, 225, 0.32);
+        }
+
+        .stack-run-segment.run-1 {
+            background-color: rgba(233, 208, 106, 0.34);
+        }
+
+        .stack-run-segment.run-2 {
+            background-color: rgba(42, 157, 117, 0.26);
+        }
+
+        .stack-run-segment.run-3 {
+            background-color: rgba(244, 131, 97, 0.26);
+        }
+
+        .stack-run-segment.is-undiscovered {
+            opacity: 0.24;
+            filter: saturate(0.45);
+        }
+
+        .stack-run-segment.is-active {
+            opacity: 1;
+            box-shadow: inset 0 0 0 2px rgba(74, 64, 52, 0.26);
+        }
+
+        .stack-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            min-height: 56px;
+        }
+
+        .stack-empty {
+            font-size: 0.82rem;
+            opacity: 0.65;
+            padding: 0.2rem 0;
+        }
+
+        .stack-run-card {
+            min-width: 110px;
+            flex: 0 1 132px;
+            padding: 0.42rem 0.48rem;
+            border: 1px solid #d9d4cd;
+            border-radius: 7px;
+            background: #fff;
+        }
+
+        .stack-run-card.is-top {
+            border-color: rgba(42, 157, 117, 0.45);
+            box-shadow: inset 0 0 0 1px rgba(42, 157, 117, 0.12);
+        }
+
+        .stack-run-card.is-focus {
+            border-color: rgba(181, 137, 0, 0.42);
+            box-shadow: inset 0 0 0 1px rgba(181, 137, 0, 0.12);
+        }
+
+        .stack-run-card-label {
+            margin-bottom: 0.16rem;
+            font-size: 0.76rem;
+            font-weight: 700;
+        }
+
+        .stack-run-card-meta,
+        .stack-run-card-power {
+            font-size: 0.72rem;
+            opacity: 0.8;
+        }
+
+        .stack-run-card-power {
+            margin-top: 0.24rem;
+        }
+
+        .stack-invariant {
+            margin-top: 0.4rem;
+            font-size: 0.8rem;
+            opacity: 0.82;
+        }
+
+        .stack-trace {
+            margin: 0;
+            padding-left: 1.15rem;
+            max-height: 10.5rem;
+            overflow: auto;
+            font-size: 0.75rem;
+            line-height: 1.35;
+        }
+
+        .stack-trace li {
+            margin: 0 0 0.2rem 0;
+            opacity: 0.62;
+        }
+
+        .stack-trace li.is-complete {
+            opacity: 0.82;
+        }
+
+        .stack-trace li.is-current {
+            opacity: 1;
+            font-weight: 700;
+            color: #4a4034;
+        }
+
         @media (max-width: 620px) {
             .entropy-stats {
                 grid-template-columns: 1fr;
@@ -521,6 +791,10 @@
 
             .power-controls,
             .power-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .stack-panel-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -535,6 +809,10 @@
 
             .power-depth-row-header {
                 flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stack-toolbar {
                 align-items: flex-start;
             }
         }
@@ -1136,6 +1414,56 @@
                     than the new power, it gets merged with the top run. This ensures high-power (local)
                     merges happen before low-power (global) ones.
                 </p>
+
+                <div class="stack-widget" id="stack-widget">
+                    <h4 class="stack-widget-title">Interactive: Step Through the Stack</h4>
+                    <p class="stack-widget-copy">
+                        Enter run lengths and step through the same left-to-right stack logic shown in <code>found_new_run_</code>. The simulator shows run discovery, power computation, invariant-restoring merges, and the final collapse.
+                    </p>
+
+                    <div class="stack-controls">
+                        <label for="stack-input">Run lengths</label>
+                        <input id="stack-input" type="text" value="7, 2, 1" inputmode="numeric" aria-describedby="stack-error stack-helper">
+                    </div>
+
+                    <div class="stack-presets">
+                        <button type="button" data-stack-preset="example">Example: 7, 2, 1</button>
+                        <button type="button" data-stack-preset="balanced">Balanced: 2, 2, 2, 2</button>
+                        <button type="button" data-stack-preset="collapse">Collapse: 4, 2, 1, 3</button>
+                    </div>
+
+                    <div class="stack-toolbar">
+                        <div class="stack-nav">
+                            <button type="button" data-stack-nav="prev">Prev</button>
+                            <button type="button" data-stack-nav="next">Next</button>
+                            <button type="button" data-stack-nav="reset">Reset</button>
+                        </div>
+                        <div class="stack-step-counter" id="stack-step-counter"></div>
+                    </div>
+
+                    <div class="stack-error" id="stack-error" aria-live="polite"></div>
+
+                    <div class="stack-status" id="stack-status"></div>
+                    <p class="stack-helper" id="stack-helper">Invariant: stored powers must be weakly increasing from bottom to top.</p>
+
+                    <div class="stack-panel" style="margin-bottom: 0.55rem;">
+                        <div class="stack-panel-title">Discovered Runs</div>
+                        <div class="stack-run-strip" id="stack-run-strip" aria-label="Runs discovered so far"></div>
+                    </div>
+
+                    <div class="stack-panel-grid">
+                        <div class="stack-panel">
+                            <div class="stack-panel-title">Stack (bottom → top)</div>
+                            <div class="stack-stack" id="stack-stack" aria-label="Current stack of pending runs"></div>
+                            <div class="stack-invariant" id="stack-invariant"></div>
+                        </div>
+
+                        <div class="stack-panel">
+                            <div class="stack-panel-title">Trace</div>
+                            <ol class="stack-trace" id="stack-trace"></ol>
+                        </div>
+                    </div>
+                </div>
 
                 <h3>Computing Power Efficiently</h3>
 
@@ -1831,6 +2159,26 @@
         return formatNormalized(ticks / POWER_WIDGET_SCALE, 2);
     }
 
+    function computeRunPairPower(s1, n1, n2, n) {
+        let a = 2 * s1 + n1;
+        let b = a + n1 + n2;
+        let result = 0;
+
+        while (true) {
+            result += 1;
+
+            if (a >= n) {
+                a -= n;
+                b -= n;
+            } else if (b >= n) {
+                return result;
+            }
+
+            a *= 2;
+            b *= 2;
+        }
+    }
+
     function formatMidpoint(doubleTicks) {
         return formatNormalized(doubleTicks / (2 * POWER_WIDGET_SCALE), 3);
     }
@@ -1842,35 +2190,22 @@
     function computePowerWidgetData(state) {
         const a0 = 2 * state.s1 + state.n1;
         const b0 = a0 + state.n1 + state.n2;
-        let a = a0;
-        let b = b0;
-        let power = 0;
+        const power = computeRunPairPower(state.s1, state.n1, state.n2, POWER_WIDGET_SCALE);
         const layers = [];
 
-        while (true) {
-            power += 1;
-
-            const cellCount = 2 ** power;
-            const leftCell = Math.floor((a0 * 2 ** (power - 1)) / POWER_WIDGET_SCALE);
-            const rightCell = Math.floor((b0 * 2 ** (power - 1)) / POWER_WIDGET_SCALE);
+        for (let depth = 1; depth <= power; depth++) {
+            const cellCount = 2 ** depth;
+            const scaleFactor = 2 ** (depth - 1);
+            const leftCell = Math.floor((a0 * scaleFactor) / POWER_WIDGET_SCALE);
+            const rightCell = Math.floor((b0 * scaleFactor) / POWER_WIDGET_SCALE);
 
             layers.push({
-                depth: power,
+                depth,
                 cellCount,
                 leftCell,
                 rightCell,
                 separated: leftCell !== rightCell,
             });
-
-            if (a >= POWER_WIDGET_SCALE) {
-                a -= POWER_WIDGET_SCALE;
-                b -= POWER_WIDGET_SCALE;
-            } else if (b >= POWER_WIDGET_SCALE) {
-                break;
-            }
-
-            a *= 2;
-            b *= 2;
         }
 
         return {
@@ -2099,6 +2434,431 @@
         render();
     }
 
+    function formatMergedRunLabel(members) {
+        return members.map((member) => `R${member}`).join("+");
+    }
+
+    function cloneStackRuns(stack) {
+        return stack.map((run) => ({
+            ...run,
+            members: [...run.members],
+        }));
+    }
+
+    function buildRunsFromLengths(runLengths) {
+        const runs = [];
+        let start = 0;
+
+        runLengths.forEach((length, index) => {
+            runs.push({
+                id: index + 1,
+                label: `R${index + 1}`,
+                start,
+                len: length,
+                power: null,
+                members: [index + 1],
+            });
+            start += length;
+        });
+
+        return runs;
+    }
+
+    function describeStackInvariant(event) {
+        if (event.kind === "start") {
+            return "No stored powers yet. The first boundary power appears when the second run arrives.";
+        }
+
+        if (event.kind === "compute-power" || event.kind === "merge") {
+            const previousPower = event.stack.length > 1 ? event.stack[event.stack.length - 2].power : null;
+            if (previousPower != null && event.pendingPower != null && previousPower > event.pendingPower) {
+                return `Pending power ${event.pendingPower} is smaller than previous stored power ${previousPower}, so the while-loop must merge first.`;
+            }
+            if (event.pendingPower != null) {
+                return `Pending power ${event.pendingPower} can sit on top without violating the invariant.`;
+            }
+        }
+
+        if (event.kind === "final-merge") {
+            return "Scanning is complete. The remaining pending runs are drained by final collapse.";
+        }
+
+        if (event.kind === "done") {
+            return "Final collapse is complete: the stack now contains one run covering the whole input.";
+        }
+
+        const definedPowers = event.stack.map((run) => run.power).filter((power) => power != null);
+        if (definedPowers.length === 0) {
+            return "The current top run has no stored power yet because it has not been compared with a later run.";
+        }
+
+        return `Stored powers on the stack: ${definedPowers.join(" ≤ ")}.`;
+    }
+
+    function generateStackTrace(runLengths) {
+        const total = runLengths.reduce((sum, value) => sum + value, 0);
+        const originalRuns = buildRunsFromLengths(runLengths);
+        const stack = [];
+        const events = [];
+        let discoveredCount = 0;
+        let activeRunId = null;
+
+        function record({ kind, title, description, traceLabel, pendingPower = null }) {
+            events.push({
+                kind,
+                title,
+                description,
+                traceLabel,
+                pendingPower,
+                total,
+                discoveredCount,
+                activeRunId,
+                runs: originalRuns.map(({ id, label, start, len }) => ({ id, label, start, len })),
+                stack: cloneStackRuns(stack),
+            });
+        }
+
+        record({
+            kind: "start",
+            title: "Start with an empty stack.",
+            description: "Powersort scans runs from left to right and stores pending runs on a stack.",
+            traceLabel: "Start",
+        });
+
+        originalRuns.forEach((run) => {
+            discoveredCount = run.id;
+            activeRunId = run.id;
+
+            record({
+                kind: "discover",
+                title: `Discover ${run.label}.`,
+                description: `${run.label} starts at ${run.start} and has length ${run.len}.`,
+                traceLabel: `Discover ${run.label}`,
+            });
+
+            if (stack.length > 0) {
+                const top = stack[stack.length - 1];
+                const newPower = computeRunPairPower(top.start, top.len, run.len, total);
+                let powerDescription = `Compare the incoming ${run.label} with the current top run ${top.label}. This pair has power ${newPower}.`;
+                if (stack.length > 1 && stack[stack.length - 2].power != null) {
+                    powerDescription += ` The previous stored power is ${stack[stack.length - 2].power}.`;
+                }
+
+                record({
+                    kind: "compute-power",
+                    title: `Compute power(${top.label}, ${run.label}) = ${newPower}.`,
+                    description: powerDescription,
+                    traceLabel: `power(${top.label}, ${run.label}) = ${newPower}`,
+                    pendingPower: newPower,
+                });
+
+                while (stack.length > 1 && stack[stack.length - 2].power > newPower) {
+                    const left = stack[stack.length - 2];
+                    const right = stack[stack.length - 1];
+                    const previousPower = left.power;
+                    const leftLabel = left.label;
+                    const rightLabel = right.label;
+
+                    left.len += right.len;
+                    left.members = left.members.concat(right.members);
+                    left.label = formatMergedRunLabel(left.members);
+                    left.power = null;
+                    stack.pop();
+
+                    record({
+                        kind: "merge",
+                        title: `Merge ${leftLabel} with ${rightLabel}.`,
+                        description: `The previous stored power ${previousPower} is greater than ${newPower}, so the while-loop merges these runs before ${run.label} is pushed.`,
+                        traceLabel: `Merge ${leftLabel} + ${rightLabel}`,
+                        pendingPower: newPower,
+                    });
+                }
+
+                stack[stack.length - 1].power = newPower;
+                record({
+                    kind: "assign-power",
+                    title: `Store power ${newPower} on ${stack[stack.length - 1].label}.`,
+                    description: "This stores the boundary power on the top run so the stack powers remain weakly increasing.",
+                    traceLabel: `Store power ${newPower}`,
+                    pendingPower: newPower,
+                });
+            }
+
+            stack.push({
+                ...run,
+                power: null,
+                members: [...run.members],
+            });
+
+            record({
+                kind: "push",
+                title: `Push ${run.label} onto the stack.`,
+                description: `${run.label} becomes the new top pending run. It will receive a stored power only when a later run is discovered.`,
+                traceLabel: `Push ${run.label}`,
+            });
+
+            activeRunId = null;
+        });
+
+        while (stack.length > 1) {
+            const left = stack[stack.length - 2];
+            const right = stack[stack.length - 1];
+            const leftLabel = left.label;
+            const rightLabel = right.label;
+
+            left.len += right.len;
+            left.members = left.members.concat(right.members);
+            left.label = formatMergedRunLabel(left.members);
+            left.power = null;
+            stack.pop();
+
+            record({
+                kind: "final-merge",
+                title: `Force-collapse merges ${leftLabel} with ${rightLabel}.`,
+                description: "All runs have been discovered, so the remaining stack is drained from the top until only one run remains.",
+                traceLabel: `Final merge ${leftLabel} + ${rightLabel}`,
+            });
+        }
+
+        record({
+            kind: "done",
+            title: "Only one run remains.",
+            description: "The stack has collapsed to a single sorted run covering the whole input.",
+            traceLabel: "Done",
+        });
+
+        return events;
+    }
+
+    function stackRunLabel(run, total) {
+        const ratio = run.len / total;
+        if (ratio >= 0.18) {
+            return `${run.label} (${run.len})`;
+        }
+        if (ratio >= 0.08) {
+            return run.label;
+        }
+        return "";
+    }
+
+    function renderStackRunStrip(container, event) {
+        container.innerHTML = "";
+
+        event.runs.forEach((run, index) => {
+            const segment = document.createElement("div");
+            segment.className = `stack-run-segment run-${index % 4}`;
+            segment.style.flexGrow = String(run.len);
+            segment.style.flexBasis = "0";
+            segment.textContent = stackRunLabel(run, event.total);
+            segment.title = `${run.label}: start ${run.start}, length ${run.len}`;
+
+            if (run.id > event.discoveredCount) {
+                segment.classList.add("is-undiscovered");
+            }
+            if (run.id === event.activeRunId) {
+                segment.classList.add("is-active");
+            }
+
+            container.appendChild(segment);
+        });
+    }
+
+    function renderStackCards(container, event) {
+        container.innerHTML = "";
+
+        if (event.stack.length === 0) {
+            const empty = document.createElement("div");
+            empty.className = "stack-empty";
+            empty.textContent = "Stack is empty.";
+            container.appendChild(empty);
+            return;
+        }
+
+        event.stack.forEach((run, index) => {
+            const card = document.createElement("div");
+            card.className = "stack-run-card";
+
+            if (index === event.stack.length - 1) {
+                card.classList.add("is-top");
+            }
+            if (event.activeRunId != null && run.members.includes(event.activeRunId)) {
+                card.classList.add("is-focus");
+            }
+
+            const label = document.createElement("div");
+            label.className = "stack-run-card-label";
+            label.textContent = run.label;
+
+            const meta = document.createElement("div");
+            meta.className = "stack-run-card-meta";
+            meta.textContent = `len ${run.len} · [${run.start}, ${run.start + run.len})`;
+
+            const power = document.createElement("div");
+            power.className = "stack-run-card-power";
+            power.textContent = `power ${run.power == null ? "—" : run.power}`;
+
+            card.appendChild(label);
+            card.appendChild(meta);
+            card.appendChild(power);
+            container.appendChild(card);
+        });
+    }
+
+    function renderStackTrace(container, events, currentStep) {
+        container.innerHTML = "";
+        let currentItem = null;
+
+        events.forEach((event, index) => {
+            const item = document.createElement("li");
+            item.textContent = event.traceLabel;
+
+            if (index < currentStep) {
+                item.classList.add("is-complete");
+            }
+            if (index === currentStep) {
+                item.classList.add("is-current");
+                currentItem = item;
+            }
+
+            container.appendChild(item);
+        });
+
+        if (currentItem) {
+            currentItem.scrollIntoView({ block: "nearest" });
+        }
+    }
+
+    function initStackWidget() {
+        const widget = document.getElementById("stack-widget");
+        if (!widget) return;
+
+        const input = document.getElementById("stack-input");
+        const error = document.getElementById("stack-error");
+        const stepCounter = document.getElementById("stack-step-counter");
+        const status = document.getElementById("stack-status");
+        const runStrip = document.getElementById("stack-run-strip");
+        const stackEl = document.getElementById("stack-stack");
+        const invariantEl = document.getElementById("stack-invariant");
+        const traceEl = document.getElementById("stack-trace");
+        const prevButton = widget.querySelector('[data-stack-nav="prev"]');
+        const nextButton = widget.querySelector('[data-stack-nav="next"]');
+        const resetButton = widget.querySelector('[data-stack-nav="reset"]');
+
+        const presets = {
+            example: [7, 2, 1],
+            balanced: [2, 2, 2, 2],
+            collapse: [4, 2, 1, 3],
+        };
+
+        const state = {
+            events: [],
+            currentStep: 0,
+        };
+
+        function setDisabledState(disabled) {
+            prevButton.disabled = disabled;
+            nextButton.disabled = disabled;
+            resetButton.disabled = disabled;
+        }
+
+        function clearWidget() {
+            stepCounter.textContent = "";
+            status.textContent = "";
+            runStrip.innerHTML = "";
+            stackEl.innerHTML = "";
+            invariantEl.textContent = "";
+            traceEl.innerHTML = "";
+            setDisabledState(true);
+        }
+
+        function render() {
+            const event = state.events[state.currentStep];
+            if (!event) {
+                clearWidget();
+                return;
+            }
+
+            stepCounter.textContent = `Step ${state.currentStep + 1} / ${state.events.length} · n = ${event.total}`;
+
+            status.innerHTML = "";
+            const title = document.createElement("strong");
+            title.className = "stack-status-title";
+            title.textContent = event.title;
+            const description = document.createElement("span");
+            description.textContent = event.description;
+            status.appendChild(title);
+            status.appendChild(description);
+
+            renderStackRunStrip(runStrip, event);
+            renderStackCards(stackEl, event);
+            invariantEl.textContent = describeStackInvariant(event);
+            renderStackTrace(traceEl, state.events, state.currentStep);
+
+            prevButton.disabled = state.currentStep === 0;
+            nextButton.disabled = state.currentStep === state.events.length - 1;
+            resetButton.disabled = state.currentStep === 0;
+        }
+
+        function updateFromInput(valueString) {
+            try {
+                const runLengths = parseRunLengths(valueString);
+                state.events = generateStackTrace(runLengths);
+                state.currentStep = 0;
+                error.textContent = "";
+                render();
+            } catch (err) {
+                state.events = [];
+                state.currentStep = 0;
+                error.textContent = err.message;
+                clearWidget();
+            }
+        }
+
+        widget.addEventListener("click", (event) => {
+            const button = event.target.closest("button");
+            if (!button) return;
+
+            const preset = button.dataset.stackPreset;
+            const nav = button.dataset.stackNav;
+
+            if (preset) {
+                input.value = presets[preset].join(", ");
+                updateFromInput(input.value);
+                return;
+            }
+
+            if (nav === "prev" && state.currentStep > 0) {
+                state.currentStep -= 1;
+                render();
+                return;
+            }
+
+            if (nav === "next" && state.currentStep < state.events.length - 1) {
+                state.currentStep += 1;
+                render();
+                return;
+            }
+
+            if (nav === "reset") {
+                state.currentStep = 0;
+                render();
+            }
+        });
+
+        input.addEventListener("change", () => {
+            updateFromInput(input.value);
+        });
+
+        input.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                updateFromInput(input.value);
+            }
+        });
+
+        updateFromInput(input.value);
+    }
+
     // Expose the swap function globally for easy use from the console (optional)
     window.swapInChart = swapInChart;
 
@@ -2107,6 +2867,7 @@
         initCharts();
         initEntropyWidget();
         initPowerWidget();
+        initStackWidget();
     });
 </script>
 
