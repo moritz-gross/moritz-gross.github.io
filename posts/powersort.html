@@ -93,6 +93,10 @@
             padding-top: 1.5rem; /* Space for the line above */
         }
 
+        .nowrap {
+            white-space: nowrap;
+        }
+
         .merge-block.run-0,
         .merge-block.run-1,
         .merge-block.run-2,
@@ -172,11 +176,10 @@
                     Yet we can just flip it and be done immediately. So why does the inversion count suggest
                     this is the hardest input? Because it measures difficulty <em>for a specific
                     class of algorithms</em>.
-                    <a href="https://en.wikipedia.org/wiki/Bubble_sort">Bubble sort</a> performs
-                    exactly one swap per inversion, running in \(\Theta(n + \text{Inv}(A))\) time.
-                    <a href="https://en.wikipedia.org/wiki/Insertion_sort">Insertion sort</a>
-                    similarly does \(\Theta(n + \text{Inv}(A))\) comparisons.
-                    For these algorithms, the descending array genuinely is worst-case.
+                    <a href="https://en.wikipedia.org/wiki/Insertion_sort">Insertion sort</a>, for example,
+                    runs in \(\Theta(n + \text{Inv}(A))\) time: each inversion corresponds to one element
+                    moving left past another element, so inputs with many inversions are harder.
+                    For algorithms of this kind, the descending array is exactly worst-case.
                 </p>
 
                 <p>
@@ -370,22 +373,17 @@
                     A similar idea appears in a different context: matrix multiplication.
                     When multiplying three matrices \(A \times B \times C\), the result is identical
                     whether we compute \((A \times B) \times C\) or
-                    \(A \times (B \times C)\), as both matrix-multiplication and merging of arrays are <em>associative</em>.
+                    \(A \times (B \times C)\), as both matrix multiplication and merging of runs are <em>associative</em>.
                     However, the computational cost can differ dramatically.
                 </p>
 
                 <p>
-                    Consider three matrices with dimensions:
-                </p>
-                <ul>
-                    <li>\(A\): \(10 \times 30\)</li>
-                    <li>\(B\): \(30 \times 10\)</li>
-                    <li>\(C\): \(10 \times 30\)</li>
-                </ul>
-
-                <p>
-                    Multiplying two matrices of dimensions \((m \times n)\) and \((n \times p)\)
-                    costs \(m \cdot n \cdot p\) scalar multiplications and results in a matrix of size \(m \times p\).
+                    For example, let <span class="nowrap">\(A\) have size \(10 \times 30\)</span>,
+                    <span class="nowrap">\(B\) size \(30 \times 10\)</span>, and
+                    <span class="nowrap">\(C\) size \(10 \times 30\)</span>.
+                    Multiplying an <span class="nowrap">\((m \times n)\)-matrix</span> by an
+                    <span class="nowrap">\((n \times p)\)-matrix</span> costs
+                    <span class="nowrap">\(mnp\) scalar multiplications</span>.
                 </p>
 
                 <!-- Scale: 3px per unit, so 10→30px, 30→90px -->
@@ -536,8 +534,8 @@
                     <li>
                         <strong>Our 3-run example</strong> (lengths 7, 2, 1 with \(n=10\)):
                         \(H = -\frac{7}{10}\log_2\frac{7}{10} - \frac{2}{10}\log_2\frac{2}{10} - \frac{1}{10}\log_2\frac{1}{10} \approx 1.16\).
-                        The optimal merge cost should be around \(10 \cdot 1.16 \approx 12\), which lines up
-                        with the cost of 13 we computed for the better merge order.
+                        So \(nH \approx 11.6\) gives a natural lower-bound, and the better merge order
+                        with cost 13 is only slightly above it.
                     </li>
                 </ul>
 
@@ -582,8 +580,8 @@
                 </p>
 
                 <p>
-                    <strong>Why does this work?</strong> Imagine recursively splitting the array in half, like
-                    building a binary search tree over positions. At each level, we ask: do the two midpoints
+                    <strong>Why is this a useful quantity?</strong> One good way to build intuition is to imagine
+                    recursively splitting the array in half. At each level, we ask: do the two midpoints
                     fall into the same half, or different halves?
                 </p>
 
