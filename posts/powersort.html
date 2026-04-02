@@ -553,7 +553,9 @@
                 <p>
                     From the merge order examples above, we saw that first merging "similar-sized" runs leads to
                     better performance. But checking all possible merge orders to find the optimal one would be
-                    far too expensive: there are exponentially many possible merge trees.
+                    far too expensive: there are \((n-1)!\) many possible orders to merge adjacent runs.
+                    Even if we ignore redundant sequences that result in the same operations,
+                    the number of uniquely structured merge trees still grows exponentially (following the Catalan numbers).
                     Powersort's key insight is a simple method that produces a <em>nearly-optimal</em> merge
                     order in linear time: assign each pair of consecutive runs a cheap-to-compute quantity called <em>power</em>.
                     As runs are processed from left to right, these powers determine when pending runs on the stack
