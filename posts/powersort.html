@@ -681,7 +681,7 @@
                                 <div class="entropy-stat-value" id="entropy-nh"></div>
                             </div>
                             <div class="entropy-stat">
-                                <span class="entropy-stat-label">Normalized run fractions \(p_i\)</span>
+                                <span class="entropy-stat-label">fractions \(p_i\)</span>
                                 <div class="entropy-stat-value" id="entropy-probs"></div>
                             </div>
                         </div>
@@ -1440,7 +1440,7 @@
                 totalEl.textContent = String(total);
                 hEl.textContent = h.toFixed(3);
                 nhEl.textContent = nh.toFixed(2);
-                probsEl.textContent = `(${formatList(probabilities, 3)})`;
+                probsEl.textContent = `(${formatList(probabilities, 2)})`;
                 noteEl.textContent = entropyNote(h, runLengths.length);
             } catch (err) {
                 error.textContent = err.message;
