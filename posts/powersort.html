@@ -516,16 +516,26 @@
 
         .stack-widget {
             margin: 1.2rem 0 1.45rem 0;
-            padding: 0.82rem 0.95rem 0.9rem 0.95rem;
             border: 1px solid #d9d4cd;
             border-radius: 10px;
             background: linear-gradient(180deg, rgba(248, 245, 241, 0.96), rgba(255, 255, 255, 0.98));
             font-size: 0.94rem;
+            overflow: hidden;
         }
 
-        .stack-widget-title {
-            margin: 0 0 0.22rem 0;
-            font-size: 0.98rem;
+        .stack-widget summary {
+            cursor: pointer;
+            font-weight: 700;
+            padding: 0.72rem 1rem;
+            background: rgba(134, 119, 101, 0.08);
+        }
+
+        .stack-widget summary:hover {
+            background: rgba(134, 119, 101, 0.12);
+        }
+
+        .stack-widget-body {
+            padding: 0.82rem 0.95rem 0.9rem 0.95rem;
         }
 
         .stack-controls {
@@ -625,6 +635,14 @@
             border: 1px solid #d9d4cd;
             border-radius: 8px;
             padding: 0.48rem 0.56rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .stack-panel-trace {
+            height: calc(var(--stack-stack-height, 56px) + 2.4rem);
+            overflow: hidden;
         }
 
         .stack-panel-title {
@@ -638,6 +656,7 @@
             display: grid;
             grid-template-columns: minmax(0, 1.4fr) minmax(220px, 0.9fr);
             gap: 0.55rem;
+            align-items: stretch;
         }
 
         .stack-run-strip {
@@ -696,9 +715,11 @@
 
         .stack-stack {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.45rem;
+            flex-direction: column-reverse;
+            align-items: stretch;
+            gap: 0.35rem;
             min-height: 56px;
+            height: var(--stack-stack-height, 56px);
         }
 
         .stack-empty {
@@ -708,8 +729,10 @@
         }
 
         .stack-run-card {
-            min-width: 110px;
-            flex: 0 1 132px;
+            min-width: 0;
+            width: 100%;
+            max-width: 260px;
+            flex: 0 0 auto;
             padding: 0.42rem 0.48rem;
             border: 1px solid #d9d4cd;
             border-radius: 7px;
@@ -730,6 +753,9 @@
             margin-bottom: 0.16rem;
             font-size: 0.76rem;
             font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .stack-run-card-meta,
@@ -751,7 +777,8 @@
         .stack-trace {
             margin: 0;
             padding-left: 1.15rem;
-            max-height: 10.5rem;
+            flex: 1 1 auto;
+            min-height: 0;
             overflow: auto;
             font-size: 0.75rem;
             line-height: 1.35;
@@ -1403,9 +1430,9 @@
                     merges happen before low-power (global) ones.
                 </p>
 
-                <div class="stack-widget" id="stack-widget">
-                    <h4 class="stack-widget-title">Interactive: Step Through the Stack</h4>
-
+                <details class="stack-widget" id="stack-widget">
+                    <summary>Try It: Step Through the Stack</summary>
+                    <div class="stack-widget-body">
                     <div class="stack-controls">
                         <label for="stack-input">Run lengths</label>
                         <input id="stack-input" type="text" value="7, 2, 1" inputmode="numeric" aria-describedby="stack-error stack-helper">
@@ -1436,18 +1463,19 @@
                     </div>
 
                     <div class="stack-panel-grid">
-                        <div class="stack-panel">
+                        <div class="stack-panel stack-panel-stack">
                             <div class="stack-panel-title">Stack (bottom → top)</div>
                             <div class="stack-stack" id="stack-stack" aria-label="Current stack of pending runs"></div>
                             <div class="stack-invariant" id="stack-invariant"></div>
                         </div>
 
-                        <div class="stack-panel">
+                        <div class="stack-panel stack-panel-trace">
                             <div class="stack-panel-title">Trace</div>
                             <ol class="stack-trace" id="stack-trace"></ol>
                         </div>
                     </div>
-                </div>
+                    </div>
+                </details>
 
                 <h3>Computing Power Efficiently</h3>
 
@@ -2688,9 +2716,9 @@
         });
     }
 
-    function renderStackTrace(container, events, currentStep) {
+    function renderStackTrace(container, events, currentStep, resetScroll) {
+        const previousScrollTop = resetScroll ? 0 : container.scrollTop;
         container.innerHTML = "";
-        let currentItem = null;
 
         events.forEach((event, index) => {
             const item = document.createElement("li");
@@ -2701,20 +2729,18 @@
             }
             if (index === currentStep) {
                 item.classList.add("is-current");
-                currentItem = item;
             }
 
             container.appendChild(item);
         });
-
-        if (currentItem) {
-            currentItem.scrollIntoView({ block: "nearest" });
-        }
+        container.scrollTop = previousScrollTop;
     }
 
     function initStackWidget() {
         const widget = document.getElementById("stack-widget");
         if (!widget) return;
+        const STACK_SLOT_HEIGHT_PX = 68;
+        const STACK_SLOT_GAP_PX = 6;
 
         const input = document.getElementById("stack-input");
         const error = document.getElementById("stack-error");
@@ -2737,12 +2763,19 @@
         const state = {
             events: [],
             currentStep: 0,
+            resetTraceScroll: true,
         };
 
         function setDisabledState(disabled) {
             prevButton.disabled = disabled;
             nextButton.disabled = disabled;
             resetButton.disabled = disabled;
+        }
+
+        function syncColumnHeights() {
+            const maxDepth = Math.max(1, ...state.events.map((event) => event.stack.length));
+            const stackHeight = (maxDepth * STACK_SLOT_HEIGHT_PX) + (Math.max(0, maxDepth - 1) * STACK_SLOT_GAP_PX);
+            widget.style.setProperty("--stack-stack-height", `${stackHeight}px`);
         }
 
         function clearWidget() {
@@ -2752,6 +2785,7 @@
             stackEl.innerHTML = "";
             invariantEl.textContent = "";
             traceEl.innerHTML = "";
+            widget.style.removeProperty("--stack-stack-height");
             setDisabledState(true);
         }
 
@@ -2762,7 +2796,7 @@
                 return;
             }
 
-            stepCounter.textContent = `Step ${state.currentStep + 1} / ${state.events.length} · n = ${event.total}`;
+            stepCounter.textContent = `Step ${state.currentStep + 1} / ${state.events.length}`;
 
             status.innerHTML = "";
             const title = document.createElement("strong");
@@ -2776,7 +2810,8 @@
             renderStackRunStrip(runStrip, event);
             renderStackCards(stackEl, event);
             invariantEl.textContent = describeStackInvariant(event);
-            renderStackTrace(traceEl, state.events, state.currentStep);
+            renderStackTrace(traceEl, state.events, state.currentStep, state.resetTraceScroll);
+            state.resetTraceScroll = false;
 
             prevButton.disabled = state.currentStep === 0;
             nextButton.disabled = state.currentStep === state.events.length - 1;
@@ -2788,7 +2823,9 @@
                 const runLengths = parseRunLengths(valueString);
                 state.events = generateStackTrace(runLengths);
                 state.currentStep = 0;
+                state.resetTraceScroll = true;
                 error.textContent = "";
+                syncColumnHeights();
                 render();
             } catch (err) {
                 state.events = [];
@@ -2825,6 +2862,7 @@
 
             if (nav === "reset") {
                 state.currentStep = 0;
+                state.resetTraceScroll = true;
                 render();
             }
         });
