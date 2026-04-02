@@ -528,12 +528,6 @@
             font-size: 0.98rem;
         }
 
-        .stack-widget-copy {
-            margin: 0 0 0.68rem 0;
-            font-size: 0.88rem;
-            line-height: 1.45;
-        }
-
         .stack-controls {
             display: flex;
             flex-wrap: wrap;
@@ -624,12 +618,6 @@
             font-weight: 700;
             margin-bottom: 0.12rem;
             color: #4a4034;
-        }
-
-        .stack-helper {
-            margin: 0 0 0.55rem 0;
-            font-size: 0.8rem;
-            opacity: 0.76;
         }
 
         .stack-panel {
@@ -1417,9 +1405,6 @@
 
                 <div class="stack-widget" id="stack-widget">
                     <h4 class="stack-widget-title">Interactive: Step Through the Stack</h4>
-                    <p class="stack-widget-copy">
-                        Enter run lengths and step through the same left-to-right stack logic shown in <code>found_new_run_</code>. The simulator shows run discovery, power computation, invariant-restoring merges, and the final collapse.
-                    </p>
 
                     <div class="stack-controls">
                         <label for="stack-input">Run lengths</label>
@@ -1444,7 +1429,6 @@
                     <div class="stack-error" id="stack-error" aria-live="polite"></div>
 
                     <div class="stack-status" id="stack-status"></div>
-                    <p class="stack-helper" id="stack-helper">Invariant: stored powers must be weakly increasing from bottom to top.</p>
 
                     <div class="stack-panel" style="margin-bottom: 0.55rem;">
                         <div class="stack-panel-title">Discovered Runs</div>
