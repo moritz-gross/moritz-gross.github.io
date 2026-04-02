@@ -245,9 +245,312 @@
             opacity: 0.85;
         }
 
+        .power-widget {
+            margin: 1.75rem 0 2rem 0;
+            padding: 1.15rem 1.25rem 1.3rem 1.25rem;
+            border: 1px solid #d9d4cd;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(248, 245, 241, 0.96), rgba(255, 255, 255, 0.98));
+        }
+
+        .power-widget-title {
+            margin: 0 0 0.35rem 0;
+            font-size: 1.05rem;
+        }
+
+        .power-widget-copy {
+            margin: 0 0 1rem 0;
+        }
+
+        .power-presets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            margin-bottom: 1rem;
+        }
+
+        .power-presets button {
+            border: 1px solid #bbb2a6;
+            border-radius: 7px;
+            background: #f8f5f1;
+            padding: 0.48rem 0.75rem;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .power-presets button:hover {
+            background: #f1ece6;
+        }
+
+        .power-controls {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .power-control,
+        .power-step-control,
+        .power-stat {
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid #d9d4cd;
+            border-radius: 10px;
+        }
+
+        .power-control,
+        .power-step-control {
+            padding: 0.8rem 0.9rem;
+        }
+
+        .power-control-header,
+        .power-step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0.75rem;
+            margin-bottom: 0.55rem;
+        }
+
+        .power-control label,
+        .power-step-control label {
+            font-weight: 700;
+            font-size: 0.92rem;
+        }
+
+        .power-control output,
+        .power-step-control output {
+            font-variant-numeric: tabular-nums;
+            font-weight: 700;
+            color: #4c4338;
+        }
+
+        .power-widget input[type="range"] {
+            width: 100%;
+            margin: 0;
+            accent-color: #867765;
+        }
+
+        .power-step-control {
+            margin-bottom: 1rem;
+        }
+
+        .power-step-caption {
+            margin: 0.45rem 0 0 0;
+            font-size: 0.85rem;
+            opacity: 0.78;
+        }
+
+        .power-stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .power-stat {
+            padding: 0.7rem 0.8rem;
+        }
+
+        .power-stat-label {
+            display: block;
+            font-size: 0.82rem;
+            opacity: 0.75;
+            margin-bottom: 0.22rem;
+        }
+
+        .power-stat-value {
+            font-size: 1rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .power-axis-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            opacity: 0.72;
+            margin-bottom: 0.35rem;
+        }
+
+        .power-overview {
+            position: relative;
+            height: 72px;
+            border: 1px solid #cfc7bc;
+            border-radius: 10px;
+            background: linear-gradient(180deg, #fff, #f7f2ec);
+            overflow: hidden;
+        }
+
+        .power-track {
+            position: absolute;
+            left: 0.75rem;
+            right: 0.75rem;
+            top: 26px;
+            height: 20px;
+            border: 1px solid #c6beaf;
+            border-radius: 999px;
+            background: rgba(134, 119, 101, 0.08);
+            overflow: hidden;
+        }
+
+        .power-segment {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 0;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #4a4034;
+        }
+
+        .power-segment-prefix,
+        .power-segment-suffix {
+            background: rgba(134, 119, 101, 0.08);
+        }
+
+        .power-segment-left {
+            background: rgba(233, 208, 106, 0.55);
+        }
+
+        .power-segment-right {
+            background: rgba(42, 157, 117, 0.28);
+        }
+
+        .power-marker {
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            width: 0;
+            transform: translateX(-50%);
+            color: #4a4034;
+            pointer-events: none;
+        }
+
+        .power-marker::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            margin-left: -6px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 1px currentColor;
+            background: currentColor;
+        }
+
+        .power-marker::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 14px;
+            bottom: 0;
+            width: 2px;
+            margin-left: -1px;
+            background: currentColor;
+            opacity: 0.28;
+        }
+
+        .power-marker-left {
+            color: #b58900;
+        }
+
+        .power-marker-right {
+            color: #2a9d71;
+        }
+
+        .power-note {
+            margin: 0.95rem 0 0.8rem 0;
+            font-size: 0.94rem;
+        }
+
+        .power-depths {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .power-depth-row {
+            padding: 0.7rem 0.8rem;
+            border: 1px solid #d9d4cd;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.72);
+        }
+
+        .power-depth-row-split {
+            border-color: rgba(42, 157, 117, 0.45);
+            box-shadow: inset 0 0 0 1px rgba(42, 157, 117, 0.14);
+        }
+
+        .power-depth-row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.45rem;
+            font-size: 0.88rem;
+        }
+
+        .power-depth-label {
+            font-weight: 700;
+        }
+
+        .power-depth-status {
+            opacity: 0.78;
+        }
+
+        .power-depth-grid {
+            display: grid;
+            gap: 1px;
+            height: 26px;
+            background: rgba(134, 119, 101, 0.14);
+            border: 1px solid rgba(134, 119, 101, 0.18);
+            border-radius: 7px;
+            overflow: hidden;
+        }
+
+        .power-depth-cell {
+            min-width: 0;
+            background: rgba(134, 119, 101, 0.1);
+        }
+
+        .power-depth-cell.is-shared {
+            background: rgba(138, 181, 225, 0.65);
+        }
+
+        .power-depth-cell.has-left {
+            background: rgba(233, 208, 106, 0.8);
+        }
+
+        .power-depth-cell.has-right {
+            background: rgba(42, 157, 117, 0.55);
+        }
+
         @media (max-width: 620px) {
             .entropy-stats {
                 grid-template-columns: 1fr;
+            }
+
+            .power-controls,
+            .power-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .power-overview {
+                height: 82px;
+            }
+
+            .power-track {
+                left: 0.55rem;
+                right: 0.55rem;
+            }
+
+            .power-depth-row-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
 
@@ -956,6 +1259,81 @@
                     This matches the optimal order we identified earlier.
                 </p>
 
+                <div class="power-widget" id="power-widget">
+                    <h4 class="power-widget-title">Interactive: Power as Repeated Bisection</h4>
+                    <p class="power-widget-copy">
+                        All parameters are normalized to the unit interval. Move the start position and the two run lengths, then scrub the depth to see when the two midpoint positions first land in different dyadic cells.
+                    </p>
+
+                    <div class="power-presets">
+                        <button type="button" data-power-preset="r1-r2">Example: R1, R2</button>
+                        <button type="button" data-power-preset="r2-r3">Example: R2, R3</button>
+                    </div>
+
+                    <div class="power-controls">
+                        <div class="power-control">
+                            <div class="power-control-header">
+                                <label for="power-input-s1">Start <code>s1</code></label>
+                                <output id="power-output-s1" for="power-input-s1">0.70</output>
+                            </div>
+                            <input id="power-input-s1" type="range" min="0" max="79" step="1" value="70">
+                        </div>
+
+                        <div class="power-control">
+                            <div class="power-control-header">
+                                <label for="power-input-n1">Left length <code>n1</code></label>
+                                <output id="power-output-n1" for="power-input-n1">0.20</output>
+                            </div>
+                            <input id="power-input-n1" type="range" min="1" max="29" step="1" value="20">
+                        </div>
+
+                        <div class="power-control">
+                            <div class="power-control-header">
+                                <label for="power-input-n2">Right length <code>n2</code></label>
+                                <output id="power-output-n2" for="power-input-n2">0.10</output>
+                            </div>
+                            <input id="power-input-n2" type="range" min="1" max="10" step="1" value="10">
+                        </div>
+                    </div>
+
+                    <div class="power-step-control">
+                        <div class="power-step-header">
+                            <label for="power-input-depth">Visible depth</label>
+                            <output id="power-output-depth" for="power-input-depth">3</output>
+                        </div>
+                        <input id="power-input-depth" type="range" min="1" max="3" step="1" value="3">
+                        <p class="power-step-caption">Each extra row adds one more bisection layer of the unit interval.</p>
+                    </div>
+
+                    <div class="power-stats">
+                        <div class="power-stat">
+                            <span class="power-stat-label">Left midpoint <code>m1</code></span>
+                            <div class="power-stat-value" id="power-midpoint-1">0.80</div>
+                        </div>
+                        <div class="power-stat">
+                            <span class="power-stat-label">Right midpoint <code>m2</code></span>
+                            <div class="power-stat-value" id="power-midpoint-2">0.95</div>
+                        </div>
+                        <div class="power-stat">
+                            <span class="power-stat-label">Power</span>
+                            <div class="power-stat-value" id="power-value">3</div>
+                        </div>
+                        <div class="power-stat">
+                            <span class="power-stat-label">Current depth</span>
+                            <div class="power-stat-value" id="power-current-depth">3</div>
+                        </div>
+                    </div>
+
+                    <div class="power-axis-labels">
+                        <span>0</span>
+                        <span>1</span>
+                    </div>
+                    <div class="power-overview" id="power-overview" aria-label="Unit interval with the two runs and their midpoint markers"></div>
+
+                    <div class="power-note" id="power-note" aria-live="polite"></div>
+                    <div class="power-depths" id="power-depths" aria-label="Repeated dyadic bisection of the unit interval"></div>
+                </div>
+
                 <h3>Using a stack for locality of reference</h3>
 
                 <p>
@@ -1469,6 +1847,313 @@
         update(input.value);
     }
 
+    const POWER_WIDGET_SCALE = 100;
+    const POWER_WIDGET_MIN_RUN = 1;
+
+    function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+    }
+
+    function formatNormalized(value, digits) {
+        return value.toFixed(digits).replace(/\.0+$/, "").replace(/(\.\d*[1-9])0+$/, "$1");
+    }
+
+    function formatTicks(ticks) {
+        return formatNormalized(ticks / POWER_WIDGET_SCALE, 2);
+    }
+
+    function formatMidpoint(doubleTicks) {
+        return formatNormalized(doubleTicks / (2 * POWER_WIDGET_SCALE), 3);
+    }
+
+    function formatBoundary(cellIndex, cellCount) {
+        return `[${formatNormalized(cellIndex / cellCount, 3)}, ${formatNormalized((cellIndex + 1) / cellCount, 3)})`;
+    }
+
+    function computePowerWidgetData(state) {
+        const a0 = 2 * state.s1 + state.n1;
+        const b0 = a0 + state.n1 + state.n2;
+        let a = a0;
+        let b = b0;
+        let power = 0;
+        const layers = [];
+
+        while (true) {
+            power += 1;
+
+            const cellCount = 2 ** power;
+            const leftCell = Math.floor((a0 * 2 ** (power - 1)) / POWER_WIDGET_SCALE);
+            const rightCell = Math.floor((b0 * 2 ** (power - 1)) / POWER_WIDGET_SCALE);
+
+            layers.push({
+                depth: power,
+                cellCount,
+                leftCell,
+                rightCell,
+                separated: leftCell !== rightCell,
+            });
+
+            if (a >= POWER_WIDGET_SCALE) {
+                a -= POWER_WIDGET_SCALE;
+                b -= POWER_WIDGET_SCALE;
+            } else if (b >= POWER_WIDGET_SCALE) {
+                break;
+            }
+
+            a *= 2;
+            b *= 2;
+        }
+
+        return {
+            power,
+            layers,
+            midpoint1DoubleTicks: a0,
+            midpoint2DoubleTicks: b0,
+        };
+    }
+
+    function renderPowerOverview(container, state, data) {
+        container.innerHTML = "";
+
+        const track = document.createElement("div");
+        track.className = "power-track";
+
+        const segments = [
+            {
+                className: "power-segment power-segment-prefix",
+                left: 0,
+                width: state.s1,
+                label: "",
+            },
+            {
+                className: "power-segment power-segment-left",
+                left: state.s1,
+                width: state.n1,
+                label: state.n1 >= 10 ? "R1" : "",
+            },
+            {
+                className: "power-segment power-segment-right",
+                left: state.s1 + state.n1,
+                width: state.n2,
+                label: state.n2 >= 10 ? "R2" : "",
+            },
+            {
+                className: "power-segment power-segment-suffix",
+                left: state.s1 + state.n1 + state.n2,
+                width: POWER_WIDGET_SCALE - state.s1 - state.n1 - state.n2,
+                label: "",
+            },
+        ];
+
+        segments.forEach((segmentData) => {
+            if (segmentData.width <= 0) return;
+
+            const segment = document.createElement("div");
+            segment.className = segmentData.className;
+            segment.style.left = `${(segmentData.left / POWER_WIDGET_SCALE) * 100}%`;
+            segment.style.width = `${(segmentData.width / POWER_WIDGET_SCALE) * 100}%`;
+            segment.textContent = segmentData.label;
+            track.appendChild(segment);
+        });
+
+        [
+            {
+                className: "power-marker power-marker-left",
+                doubleTicks: data.midpoint1DoubleTicks,
+                title: `m1 = ${formatMidpoint(data.midpoint1DoubleTicks)}`,
+            },
+            {
+                className: "power-marker power-marker-right",
+                doubleTicks: data.midpoint2DoubleTicks,
+                title: `m2 = ${formatMidpoint(data.midpoint2DoubleTicks)}`,
+            },
+        ].forEach((markerData) => {
+            const marker = document.createElement("div");
+            marker.className = markerData.className;
+            marker.style.left = `${(markerData.doubleTicks / (2 * POWER_WIDGET_SCALE)) * 100}%`;
+            marker.title = markerData.title;
+            track.appendChild(marker);
+        });
+
+        container.appendChild(track);
+        container.setAttribute(
+            "aria-label",
+            `Unit interval with left run from ${formatTicks(state.s1)} to ${formatTicks(state.s1 + state.n1)} and right run from ${formatTicks(state.s1 + state.n1)} to ${formatTicks(state.s1 + state.n1 + state.n2)}`
+        );
+    }
+
+    function renderPowerDepths(container, data, visibleDepth) {
+        container.innerHTML = "";
+
+        data.layers.slice(0, visibleDepth).forEach((layer) => {
+            const row = document.createElement("div");
+            row.className = "power-depth-row";
+
+            if (layer.separated) {
+                row.classList.add("power-depth-row-split");
+            }
+
+            const header = document.createElement("div");
+            header.className = "power-depth-row-header";
+
+            const label = document.createElement("span");
+            label.className = "power-depth-label";
+            label.textContent = `Depth ${layer.depth} (${layer.cellCount} cells)`;
+
+            const status = document.createElement("span");
+            status.className = "power-depth-status";
+            status.textContent = layer.separated ? "first split" : "same cell";
+
+            header.appendChild(label);
+            header.appendChild(status);
+            row.appendChild(header);
+
+            const grid = document.createElement("div");
+            grid.className = "power-depth-grid";
+            grid.style.gridTemplateColumns = `repeat(${layer.cellCount}, minmax(0, 1fr))`;
+
+            for (let cellIndex = 0; cellIndex < layer.cellCount; cellIndex++) {
+                const cell = document.createElement("div");
+                cell.className = "power-depth-cell";
+
+                if (!layer.separated && cellIndex === layer.leftCell) {
+                    cell.classList.add("is-shared");
+                } else {
+                    if (cellIndex === layer.leftCell) {
+                        cell.classList.add("has-left");
+                    }
+                    if (cellIndex === layer.rightCell) {
+                        cell.classList.add("has-right");
+                    }
+                }
+
+                grid.appendChild(cell);
+            }
+
+            row.appendChild(grid);
+            container.appendChild(row);
+        });
+    }
+
+    function initPowerWidget() {
+        const widget = document.getElementById("power-widget");
+        if (!widget) return;
+
+        const inputs = {
+            s1: document.getElementById("power-input-s1"),
+            n1: document.getElementById("power-input-n1"),
+            n2: document.getElementById("power-input-n2"),
+        };
+        const outputs = {
+            s1: document.getElementById("power-output-s1"),
+            n1: document.getElementById("power-output-n1"),
+            n2: document.getElementById("power-output-n2"),
+        };
+        const depthInput = document.getElementById("power-input-depth");
+        const depthOutput = document.getElementById("power-output-depth");
+        const midpoint1El = document.getElementById("power-midpoint-1");
+        const midpoint2El = document.getElementById("power-midpoint-2");
+        const powerEl = document.getElementById("power-value");
+        const currentDepthEl = document.getElementById("power-current-depth");
+        const overviewEl = document.getElementById("power-overview");
+        const noteEl = document.getElementById("power-note");
+        const depthsEl = document.getElementById("power-depths");
+
+        const presets = {
+            "r1-r2": { s1: 0, n1: 70, n2: 20 },
+            "r2-r3": { s1: 70, n1: 20, n2: 10 },
+        };
+
+        const state = {
+            ...presets["r2-r3"],
+            visibleDepth: 3,
+        };
+
+        function syncSliderBounds() {
+            inputs.s1.max = String(POWER_WIDGET_SCALE - state.n1 - state.n2);
+            inputs.n1.max = String(POWER_WIDGET_SCALE - state.s1 - state.n2);
+            inputs.n2.max = String(POWER_WIDGET_SCALE - state.s1 - state.n1);
+
+            inputs.s1.value = String(state.s1);
+            inputs.n1.value = String(state.n1);
+            inputs.n2.value = String(state.n2);
+
+            outputs.s1.textContent = formatTicks(state.s1);
+            outputs.n1.textContent = formatTicks(state.n1);
+            outputs.n2.textContent = formatTicks(state.n2);
+        }
+
+        function updateNote(data) {
+            const layer = data.layers[state.visibleDepth - 1];
+
+            if (!layer.separated) {
+                noteEl.textContent = `At depth ${layer.depth}, both midpoints are still inside ${formatBoundary(layer.leftCell, layer.cellCount)}. The first separating split appears at depth ${data.power}.`;
+                return;
+            }
+
+            noteEl.textContent = `At depth ${layer.depth}, m1 falls in ${formatBoundary(layer.leftCell, layer.cellCount)} and m2 falls in ${formatBoundary(layer.rightCell, layer.cellCount)}. This is the first separating split, so the power is ${data.power}.`;
+        }
+
+        function render(resetVisibleDepth) {
+            syncSliderBounds();
+
+            const data = computePowerWidgetData(state);
+
+            if (resetVisibleDepth || state.visibleDepth > data.power || state.visibleDepth < 1) {
+                state.visibleDepth = data.power;
+            }
+
+            depthInput.max = String(data.power);
+            depthInput.value = String(state.visibleDepth);
+            depthOutput.textContent = String(state.visibleDepth);
+
+            midpoint1El.textContent = formatMidpoint(data.midpoint1DoubleTicks);
+            midpoint2El.textContent = formatMidpoint(data.midpoint2DoubleTicks);
+            powerEl.textContent = String(data.power);
+            currentDepthEl.textContent = String(state.visibleDepth);
+
+            renderPowerOverview(overviewEl, state, data);
+            renderPowerDepths(depthsEl, data, state.visibleDepth);
+            updateNote(data);
+        }
+
+        function updateStateFromSlider(key) {
+            const rawValue = Number(inputs[key].value);
+
+            if (key === "s1") {
+                state.s1 = clamp(rawValue, 0, POWER_WIDGET_SCALE - state.n1 - state.n2);
+            } else if (key === "n1") {
+                state.n1 = clamp(rawValue, POWER_WIDGET_MIN_RUN, POWER_WIDGET_SCALE - state.s1 - state.n2);
+            } else if (key === "n2") {
+                state.n2 = clamp(rawValue, POWER_WIDGET_MIN_RUN, POWER_WIDGET_SCALE - state.s1 - state.n1);
+            }
+
+            render(true);
+        }
+
+        inputs.s1.addEventListener("input", () => updateStateFromSlider("s1"));
+        inputs.n1.addEventListener("input", () => updateStateFromSlider("n1"));
+        inputs.n2.addEventListener("input", () => updateStateFromSlider("n2"));
+
+        depthInput.addEventListener("input", () => {
+            state.visibleDepth = Number(depthInput.value);
+            render(false);
+        });
+
+        widget.addEventListener("click", (event) => {
+            const button = event.target.closest("button");
+            if (!button) return;
+
+            const preset = button.dataset.powerPreset;
+            if (!preset || !presets[preset]) return;
+
+            Object.assign(state, presets[preset]);
+            render(true);
+        });
+
+        render(true);
+    }
+
     // Expose the swap function globally for easy use from the console (optional)
     window.swapInChart = swapInChart;
 
@@ -1476,6 +2161,7 @@
     document.addEventListener("DOMContentLoaded", () => {
         initCharts();
         initEntropyWidget();
+        initPowerWidget();
     });
 </script>
 
