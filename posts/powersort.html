@@ -815,7 +815,7 @@
                 <p>
                     Powersort processes runs left-to-right, maintaining a stack of pending runs. When a new
                     run is discovered, we compute its power relative to the run on top of the stack. The
-                    crucial invariant: powers on the stack must be weakly increasing from bottom to top.
+                    crucial invariant: powers on the stack must be weakly increasing (\(\leq\)) from bottom to top.
                 </p>
 
                 <p>
@@ -825,7 +825,7 @@
                 </p>
 
                 <p>
-                    The following code is adapted from the <a href="https://github.com/numpy/numpy/pull/29208/changes">NumPy implementation</a> and slightly simplified for this post:
+                    The following code is adapted from the <a href="https://github.com/numpy/numpy/pull/29208/changes">NumPy implementation</a>:
                 </p>
 
                 <pre><code class="language-c">static void found_new_run_(type *arr, run *stack, int *stack_ptr, int n2, int n, buffer_ *buffer)
@@ -853,7 +853,7 @@
 
                 <p>
                     The definition of power involves comparing binary expansions of fractions, which sounds
-                    like it might need floating-point arithmetic. The powerloop function avoids
+                    like it might need <span class="nowrap">floating-point</span> arithmetic. The powerloop function avoids
                     this entirely by working with integers and simulating the bit extraction process.
                 </p>
 
@@ -866,6 +866,7 @@
     int result = 0;
     int a = 2 * s1 + n1;  /* 2 * midpoint1 */
     int b = a + n1 + n2;  /* 2 * midpoint2 */
+    // note how this avoids dividing the lengths by 2 as in the original mathematical definition
     while (true) {
         ++result;
         if (a >= n) {        /* both bits are 1 */
@@ -907,16 +908,16 @@
 
                 <ul>
                     <li>
-                        <strong>Both bits are 1</strong> (<code>a >= n</code> and implicitly <code>b >= n</code>
+                        Both bits are 1 (<code>a >= n</code> and implicitly <code>b >= n</code>
                         since \(b > a\)): Subtract <code>n</code> from both to take away this bit,
                         then continue to the next bit.
                     </li>
                     <li>
-                        <strong>Bits differ</strong> (<code>a < n</code> but <code>b >= n</code>):
+                        Bits differ (<code>a < n</code> but <code>b >= n</code>):
                         We found the first differing bit at position <code>result</code>. Return immediately.
                     </li>
                     <li>
-                        <strong>Both bits are 0</strong> (<code>a < n</code> and <code>b < n</code>):
+                        Both bits are 0 (<code>a < n</code> and <code>b < n</code>):
                         Double both values (<code>a <<= 1</code>, <code>b <<= 1</code>) to examine the next bit.
                     </li>
                 </ul>
@@ -933,7 +934,7 @@
                 </p>
 
                 <p>
-                    <strong>Power of \((R_1, R_2)\):</strong> Here \(s_1 = 0\), \(n_1 = 7\), \(n_2 = 2\), \(n = 10\).
+                    Power of \((R_1, R_2)\): Here \(s_1 = 0\), \(n_1 = 7\), \(n_2 = 2\), \(n = 10\).
                 </p>
                 <ul>
                     <li>Initialize: \(a = 2 \cdot 0+7 = 7, b = 7+7+2 = 16\)</li>
@@ -941,7 +942,7 @@
                 </ul>
 
                 <p>
-                    <strong>Power of \((R_2, R_3)\):</strong> Here \(s_1 = 7\), \(n_1 = 2\), \(n_2 = 1\), \(n = 10\).
+                    Power of \((R_2, R_3)\): Here \(s_1 = 7\), \(n_1 = 2\), \(n_2 = 1\), \(n = 10\).
                 </p>
                 <ul>
                     <li>Initialize: \(a = 2·7+2 = 16\), \(b = 16+2+1 = 19\)</li>
@@ -955,7 +956,7 @@
                     This matches the optimal order we identified earlier.
                 </p>
 
-                <h3>Caching Behaviour</h3>
+                <h3>Using a stack for locality of reference</h3>
 
                 <p>
                     Beyond the theoretical cost analysis, Powersort's merge order also has practical performance
@@ -1016,14 +1017,13 @@
                 <h3>Closing thoughts</h3>
 
                 <p>
-                    Powersort is an elegant piece of computer science because it is both effective in practice
-                    and has some neat theory behind it as well. When I first looked into the topic, I didn't find any source
-                    that introduces the core ideas of Powersort in a "semi-formal" way that is mostly self-contained.
+                    Powersort is an elegant piece of computer science because it is both practically effective and theoretically grounded.
+                    When I first looked into the topic, I didn't find any source that introduces the core ideas of Powersort on a "late-undergrad" level that is mostly self-contained.
                 </p>
 
                 <p>
-                    As further material, the official publications provide detail and proofs this post does not plan to have,
-                    but for me also the public pull requests were very interesting sources to read; see for example the one for CPython
+                    As further material, the official publications provide detail and proofs this post does not plan to have.
+                    Additionally, public pull requests are very interesting sources to read; see for example the one for CPython
                     (<a href="https://github.com/python/cpython/pull/28108">https://github.com/python/cpython/pull/28108</a>).
                 </p>
 
@@ -1031,16 +1031,9 @@
                     This post also didn't really touch on the history of Powersort so far. The idea of exploiting pre-existing runs
                     already appeared in Donald Knuth's <em>The Art of Computer Programming</em>, and was extended to <a href="https://en.wikipedia.org/wiki/Timsort">TimSort</a> by Tim Peters,
                     which uses a heuristic merge policy that often performs very well in practice. But TimSort's rules
-                    are intricate: they were difficult to analyze cleanly, and some implementations even suffered from
+                    are intricate: they were difficult to analyze cleanly, and (some) implementations even suffered from
                     correctness bugs in their stack management. Powersort keeps the same high-level idea of exploiting runs,
-                    but replaces the heuristic merge policy with one that is simpler to reason about and comes with a proof.
-                </p>
-
-                <p>
-                    Powersort's theoretical guarantee distinguishes it from TimSort: while TimSort uses
-                    clever heuristics, Powersort <em>provably</em> achieves a merge cost of at most \(nH + 2n\),
-                    where \(H\) is the entropy of the run-length distribution. In other words, it stays within
-                    \(O(n)\) of the information-theoretic lower bound.
+                    but replaces the heuristic merge policy with one that is simpler to reason about.
                 </p>
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
@@ -1073,7 +1066,7 @@
                 </ul>
 
                 <p>
-                    So the implementation-level story is: detect and normalize runs, scan left to right, use powers
+                    So on the implementation-level: detect and normalize runs, scan left to right, use powers
                     to control stack collapses, then drain the stack at the end.
                 </p>
 
