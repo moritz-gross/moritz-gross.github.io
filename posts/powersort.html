@@ -317,11 +317,11 @@
 
                 <p>
                     Next up, let's think about <em>hard</em> inputs. A natural way to measure
-                    how "unsorted" an array is: the <em>inversion count</em>, the number of pairs
+                    how "unsorted" an array is: the <em>inversion count</em> as the number of pairs
                     \((i, j)\) with \(i < j\) but \(a_i > a_j\). The ascending array above has
                     zero inversions, which lines up with the intuition that it's easy. The input with
                     the most inversions is the fully descending array, with \(\binom{n}{2} = n(n-1)/2\)
-                    inversions:
+                    inversions (all subsets of size 2):
                 </p>
 
                 <div class="array-chart" id="chart-descending"></div>
@@ -341,16 +341,21 @@
                     exploits. Inversion count captures pairwise disorder and is the right metric for
                     algorithms that fix one pair at a time. But an algorithm that can detect and
                     reverse entire sorted sections treats the descending array as trivially easy.
-                    This is the kind of structure Powersort exploits, and we will define it precisely below.
+                    This is the kind of structure Powersort exploits.
                 </p>
 
                 <p>
-                    A promising hard candidate for such an algorithm might look like the following: (the bars
+                    One such promising hard candidate for such an algorithm might look like the following: (the bars
                     can be swapped by drag-and-drop, so try out other arrangements to get more familiar)
                 </p>
 
                 <div class="array-chart" id="chart-hard-1"></div>
 
+                <p>
+                    The runs are color-coded in the figures so that two neighboring runs have different colors.
+                    We can now state more precisely that the arrays shown at the start of the post each consist of a
+                    single run, while this new hard input decomposes into several shorter runs.
+                </p>
 
                 <p>
                     A way to quantify why this one is harder than the previous inputs is counting the contiguous
@@ -365,29 +370,14 @@
                     \(0 \le i \le j < n\) such that  \(a_i \le a_{i+1} \le \dots \le a_j\) and that \(j\) is maximal,
                     i.e. it can't be increased without breaking monotonicity.
                     A <em>descending run</em> is defined similarly, except that we require
-                    \(a_i > a_{i+1} > \dots > a_j\) to be <em>strictly</em> decreasing. That strictness matters in
-                    stable implementations: a descending run can then be reversed without changing the relative order
-                    of equal keys. We use the word <em>run</em> for both ascending and descending runs.
+                    \(a_i > a_{i+1} > \dots > a_j\) to be <em>strictly</em> decreasing. We use the word <em>run</em> for both ascending and descending runs.
                 </p>
 
                 <p>
                     In the actual algorithm, a descending run is reversed <em>immediately after it is detected</em>.
                     So from that point on, all pending runs are treated as ascending runs, and every later merge
                     operates on ascending inputs only. For a brief implementation-oriented summary of how NumPy
-                    handles this, see the <a href="#appendix-numpy-execution">appendix</a>.
-                </p>
-
-                <p>
-                    One could imagine a different design where descending runs are kept as they are and the merge
-                    procedure simply scans them from right to left. That would avoid the explicit reversal step.
-                    In practice, however, implementations such as TimSort and Powersort usually normalize runs
-                    up front, because then the rest of the algorithm only has to deal with one representation.
-                </p>
-
-                <p>
-                    The runs are color-coded in the figures so that two neighboring runs have different colors.
-                    We can now state more precisely that the arrays shown at the start of the post each consist of a
-                    single run, while this new hard input decomposes into several shorter runs.
+                    as a real world use case handles this, see the <a href="#appendix-numpy-execution">appendix</a>.
                 </p>
 
                 <h3>Merging of runs</h3>
@@ -396,8 +386,7 @@
                     It takes two runs that are next to each other and merges them to one
                     run that contains all the elements of the two input runs.
                     Since descending runs have already been reversed at detection time, the merge routine below
-                    only needs to handle ascending runs. The <a href="#appendix-numpy-execution">appendix</a>
-                    sketches where this normalization and the later stack-based merges happen in NumPy's code.
+                    only needs to handle ascending runs.
                     The merge works by maintaining two pointers, one for each run, and repeatedly picking
                     the smaller element. Since both runs are already sorted, this produces a sorted result
                     in linear time:
@@ -431,11 +420,8 @@
                 <p>
                     So far, it is not specified in which order which runs are supposed to be merged.
                     By just playing around with the array above, we can see that any order of merges results in a correctly
-                    sorted array, as merging runs is an associative operation.
+                    sorted array. Technically speaking, merging runs is an associative operation.
                     The issue is that some merge-orders need <em>more operations/time</em>, despite still producing the correct result.
-                </p>
-
-                <p>
                     Let's consider the array below, in which this effect is particularly nice to see:
                 </p>
 
@@ -453,7 +439,7 @@
                 </div>
 
                 <p>
-                    The two possible merge orders are explained below:
+                    The two possible merge orders are:
                 </p>
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
@@ -524,8 +510,8 @@
                 <h3>Related example: Matrix Chain Multiplication</h3>
 
                 <p>
-                    A similar idea appears in a different context: matrix multiplication.
-                    When multiplying three matrices \(A \times B \times C\), the result is identical
+                    A similar idea appears in a another important context: matrix multiplication.
+                    When multiplying three matrices <span class="nowrap">\(A \times B \times C\)</span>, the result is identical
                     whether we compute \((A \times B) \times C\) or
                     \(A \times (B \times C)\), as both matrix multiplication and merging of runs are <em>associative</em>.
                     However, the computational cost can differ dramatically.
@@ -630,7 +616,7 @@
 
                 <p>
                     The difference is a factor of 3 in this example, solely from choosing a different order of operations.
-                    Again, a large intermediate object can heavily influence overall runtime.
+                    A large intermediate object can heavily influence overall runtime.
                 </p>
 
 
@@ -734,7 +720,7 @@
                     <li>
                         <strong>Our 3-run example</strong> (lengths 7, 2, 1 with \(n=10\)):
                         \(H = -\frac{7}{10}\log_2\frac{7}{10} - \frac{2}{10}\log_2\frac{2}{10} - \frac{1}{10}\log_2\frac{1}{10} \approx 1.16\).
-                        So \(nH \approx 11.6\) gives a natural lower-bound, and the better merge order
+                        So \(nH \approx 11.6\) gives a natural lower-bound, and the better merge order from earlier
                         with cost 13 is only slightly above it.
                     </li>
                 </ul>
