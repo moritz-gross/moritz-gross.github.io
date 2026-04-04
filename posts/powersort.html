@@ -97,66 +97,31 @@
             white-space: nowrap;
         }
 
-        .entropy-widget {
-            margin: 1.25rem 0;
+        .interactive-widget {
             border: 1px solid #d9d4cd;
-            border-radius: 8px;
-            background: rgba(134, 119, 101, 0.06);
             overflow: hidden;
-            font-size: 0.95rem;
         }
 
-        .entropy-widget summary {
+        .interactive-widget summary {
             cursor: pointer;
             font-weight: 700;
             padding: 0.72rem 1rem;
             background: rgba(134, 119, 101, 0.08);
         }
 
-        .entropy-widget summary:hover {
+        .interactive-widget summary:hover {
             background: rgba(134, 119, 101, 0.12);
         }
 
-        .entropy-widget-body {
-            padding: 0.82rem 1rem 0.92rem 1rem;
+        .interactive-widget-body {
+            padding: var(--interactive-widget-padding, 0.88rem 1rem 0.95rem 1rem);
         }
 
-        .entropy-widget p {
-            margin-top: 0.4rem;
-        }
-
-        .entropy-controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.45rem;
-            align-items: center;
-            margin: 0.75rem 0 0.6rem 0;
-        }
-
-        .entropy-presets {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 0.45rem;
-            margin: 0 0 0.6rem 0;
-            overflow-x: auto;
-            padding-bottom: 0.1rem;
-        }
-
-        .entropy-widget label {
+        .interactive-widget label {
             font-weight: 700;
         }
 
-        .entropy-widget input {
-            flex: 1 1 260px;
-            min-width: 220px;
-            padding: 0.38rem 0.55rem;
-            border: 1px solid #bbb2a6;
-            border-radius: 6px;
-            font: inherit;
-            background: #fff;
-        }
-
-        .entropy-widget button {
+        .interactive-widget button {
             border: 1px solid #bbb2a6;
             border-radius: 6px;
             background: #f8f5f1;
@@ -165,8 +130,73 @@
             cursor: pointer;
         }
 
-        .entropy-widget button:hover {
+        .interactive-widget button:hover {
             background: #f1ece6;
+        }
+
+        .widget-text-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            align-items: center;
+        }
+
+        .widget-button-row {
+            display: flex;
+            gap: 0.45rem;
+        }
+
+        .widget-text-input {
+            border: 1px solid #bbb2a6;
+            border-radius: 6px;
+            font: inherit;
+            background: #fff;
+        }
+
+        .widget-stat-card {
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid #d9d4cd;
+            border-radius: 8px;
+        }
+
+        .widget-stat-label {
+            display: block;
+            font-size: 0.75rem;
+            opacity: 0.75;
+            margin-bottom: 0.14rem;
+        }
+
+        .widget-stat-value {
+            font-size: 0.92rem;
+        }
+
+        .entropy-widget {
+            --interactive-widget-padding: 0.82rem 1rem 0.92rem 1rem;
+            margin: 1.25rem 0;
+            border-radius: 8px;
+            background: rgba(134, 119, 101, 0.06);
+            font-size: 0.95rem;
+        }
+
+        .entropy-widget p {
+            margin-top: 0.4rem;
+        }
+
+        .entropy-controls {
+            margin: 0.75rem 0 0.6rem 0;
+        }
+
+        .entropy-presets {
+            flex-wrap: nowrap;
+            margin: 0 0 0.6rem 0;
+            overflow-x: auto;
+            padding-bottom: 0.1rem;
+        }
+
+        .entropy-widget .widget-text-input {
+            flex: 1 1 260px;
+            min-width: 220px;
+            padding: 0.38rem 0.55rem;
         }
 
         .entropy-error {
@@ -224,21 +254,7 @@
         }
 
         .entropy-stat {
-            background: rgba(255, 255, 255, 0.72);
-            border: 1px solid #d9d4cd;
-            border-radius: 7px;
             padding: 0.52rem 0.62rem;
-        }
-
-        .entropy-stat-label {
-            display: block;
-            font-size: 0.75rem;
-            opacity: 0.75;
-            margin-bottom: 0.14rem;
-        }
-
-        .entropy-stat-value {
-            font-size: 0.92rem;
         }
 
         .entropy-note {
@@ -248,9 +264,8 @@
         }
 
         .power-widget {
+            --interactive-widget-padding: 0.88rem 1rem 0.95rem 1rem;
             margin: 1.35rem 0 1.6rem 0;
-            padding: 0.88rem 1rem 0.95rem 1rem;
-            border: 1px solid #d9d4cd;
             border-radius: 10px;
             background: linear-gradient(180deg, rgba(248, 245, 241, 0.96), rgba(255, 255, 255, 0.98));
             font-size: 0.95rem;
@@ -262,23 +277,8 @@
         }
 
         .power-presets {
-            display: flex;
             flex-wrap: wrap;
-            gap: 0.45rem;
             margin-bottom: 0.75rem;
-        }
-
-        .power-presets button {
-            border: 1px solid #bbb2a6;
-            border-radius: 6px;
-            background: #f8f5f1;
-            padding: 0.34rem 0.58rem;
-            font: inherit;
-            cursor: pointer;
-        }
-
-        .power-presets button:hover {
-            background: #f1ece6;
         }
 
         .power-controls {
@@ -336,15 +336,7 @@
             padding: 0.52rem 0.62rem;
         }
 
-        .power-stat-label {
-            display: block;
-            font-size: 0.75rem;
-            opacity: 0.75;
-            margin-bottom: 0.14rem;
-        }
-
-        .power-stat-value {
-            font-size: 0.92rem;
+        .power-stat .widget-stat-value {
             font-variant-numeric: tabular-nums;
         }
 
@@ -515,70 +507,30 @@
         }
 
         .stack-widget {
+            --interactive-widget-padding: 0.82rem 0.95rem 0.9rem 0.95rem;
             margin: 1.2rem 0 1.45rem 0;
-            border: 1px solid #d9d4cd;
             border-radius: 10px;
             background: linear-gradient(180deg, rgba(248, 245, 241, 0.96), rgba(255, 255, 255, 0.98));
             font-size: 0.94rem;
-            overflow: hidden;
-        }
-
-        .stack-widget summary {
-            cursor: pointer;
-            font-weight: 700;
-            padding: 0.72rem 1rem;
-            background: rgba(134, 119, 101, 0.08);
-        }
-
-        .stack-widget summary:hover {
-            background: rgba(134, 119, 101, 0.12);
-        }
-
-        .stack-widget-body {
-            padding: 0.82rem 0.95rem 0.9rem 0.95rem;
         }
 
         .stack-controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.45rem;
-            align-items: center;
             margin-bottom: 0.55rem;
         }
 
         .stack-controls label {
-            font-weight: 700;
             font-size: 0.83rem;
         }
 
-        .stack-controls input {
+        .stack-controls .widget-text-input {
             flex: 1 1 220px;
             min-width: 180px;
             padding: 0.36rem 0.52rem;
-            border: 1px solid #bbb2a6;
-            border-radius: 6px;
-            font: inherit;
-            background: #fff;
         }
 
         .stack-presets {
-            display: flex;
             flex-wrap: wrap;
-            gap: 0.45rem;
             margin-bottom: 0.55rem;
-        }
-
-        .stack-widget button {
-            border: 1px solid #bbb2a6;
-            border-radius: 6px;
-            background: #f8f5f1;
-            padding: 0.34rem 0.58rem;
-            font: inherit;
-            cursor: pointer;
-        }
-
-        .stack-widget button:hover {
-            background: #f1ece6;
         }
 
         .stack-widget button:disabled {
@@ -1211,19 +1163,19 @@
 
                 $$H = -\sum_{i=1}^{k} p_i \log_2 p_i$$
 
-                <details class="entropy-widget" id="entropy-widget" open>
+                <details class="interactive-widget entropy-widget" id="entropy-widget" open>
                     <summary>Try It: Entropy of Run Lengths</summary>
-                    <div class="entropy-widget-body">
+                    <div class="interactive-widget-body">
                         <p>
                             Enter positive run lengths separated by commas, for example <code>7, 2, 1</code>.
                         </p>
 
-                        <div class="entropy-controls">
+                        <div class="entropy-controls widget-text-controls">
                             <label for="entropy-input">Run lengths</label>
-                            <input id="entropy-input" type="text" value="7, 2, 1" inputmode="numeric" aria-describedby="entropy-error entropy-note">
+                            <input class="widget-text-input" id="entropy-input" type="text" value="7, 2, 1" inputmode="numeric" aria-describedby="entropy-error entropy-note">
                         </div>
 
-                        <div class="entropy-presets">
+                        <div class="entropy-presets widget-button-row">
                             <button type="button" data-entropy-action="random">Random</button>
                             <button type="button" data-entropy-preset="example">7, 2, 1</button>
                             <button type="button" data-entropy-preset="sorted">Sorted</button>
@@ -1235,21 +1187,21 @@
                         <div class="entropy-distribution" id="entropy-distribution" aria-label="Run length distribution"></div>
 
                         <div class="entropy-stats">
-                            <div class="entropy-stat">
-                                <span class="entropy-stat-label">Total length \(n\)</span>
-                                <div class="entropy-stat-value" id="entropy-total"></div>
+                            <div class="entropy-stat widget-stat-card">
+                                <span class="entropy-stat-label widget-stat-label">Total length \(n\)</span>
+                                <div class="entropy-stat-value widget-stat-value" id="entropy-total"></div>
                             </div>
-                            <div class="entropy-stat">
-                                <span class="entropy-stat-label">Entropy \(H\)</span>
-                                <div class="entropy-stat-value" id="entropy-h"></div>
+                            <div class="entropy-stat widget-stat-card">
+                                <span class="entropy-stat-label widget-stat-label">Entropy \(H\)</span>
+                                <div class="entropy-stat-value widget-stat-value" id="entropy-h"></div>
                             </div>
-                            <div class="entropy-stat">
-                                <span class="entropy-stat-label">Lower-bound benchmark \(nH\)</span>
-                                <div class="entropy-stat-value" id="entropy-nh"></div>
+                            <div class="entropy-stat widget-stat-card">
+                                <span class="entropy-stat-label widget-stat-label">Lower-bound benchmark \(nH\)</span>
+                                <div class="entropy-stat-value widget-stat-value" id="entropy-nh"></div>
                             </div>
-                            <div class="entropy-stat">
-                                <span class="entropy-stat-label">fractions \(p_i\)</span>
-                                <div class="entropy-stat-value" id="entropy-probs"></div>
+                            <div class="entropy-stat widget-stat-card">
+                                <span class="entropy-stat-label widget-stat-label">fractions \(p_i\)</span>
+                                <div class="entropy-stat-value widget-stat-value" id="entropy-probs"></div>
                             </div>
                         </div>
 
@@ -1430,15 +1382,15 @@
                     merges happen before low-power (global) ones.
                 </p>
 
-                <details class="stack-widget" id="stack-widget" open>
+                <details class="interactive-widget stack-widget" id="stack-widget" open>
                     <summary>Try It: Step Through the Stack</summary>
-                    <div class="stack-widget-body">
-                    <div class="stack-controls">
+                    <div class="interactive-widget-body">
+                    <div class="stack-controls widget-text-controls">
                         <label for="stack-input">Run lengths</label>
-                        <input id="stack-input" type="text" value="7, 2, 1" inputmode="numeric" aria-describedby="stack-error stack-helper">
+                        <input class="widget-text-input" id="stack-input" type="text" value="7, 2, 1" inputmode="numeric" aria-describedby="stack-error stack-helper">
                     </div>
 
-                    <div class="stack-presets">
+                    <div class="stack-presets widget-button-row">
                         <button type="button" data-stack-preset="example">Example: 7, 2, 1</button>
                         <button type="button" data-stack-preset="balanced">Balanced: 2, 2, 2, 2</button>
                         <button type="button" data-stack-preset="collapse">Collapse: 4, 2, 1, 3</button>
@@ -1584,10 +1536,12 @@
                     This matches the optimal order we identified earlier.
                 </p>
 
-                <div class="power-widget" id="power-widget">
-                    <h4 class="power-widget-title">Interactive: Power as Repeated Bisection</h4>
+                <details class="interactive-widget power-widget" id="power-widget" open>
+                    <summary>Try It: Power as Repeated Bisection</summary>
+                    <div class="interactive-widget-body">
+                    <div class="power-widget-title">Interactive: Power as Repeated Bisection</div>
 
-                    <div class="power-presets">
+                    <div class="power-presets widget-button-row">
                         <button type="button" data-power-preset="r1-r2">Example: R1, R2</button>
                         <button type="button" data-power-preset="r2-r3">Example: R2, R3</button>
                     </div>
@@ -1619,17 +1573,17 @@
                     </div>
 
                     <div class="power-stats">
-                        <div class="power-stat">
-                            <span class="power-stat-label">Left midpoint <code>m1</code></span>
-                            <div class="power-stat-value" id="power-midpoint-1">0.80</div>
+                        <div class="power-stat widget-stat-card">
+                            <span class="power-stat-label widget-stat-label">Left midpoint <code>m1</code></span>
+                            <div class="power-stat-value widget-stat-value" id="power-midpoint-1">0.80</div>
                         </div>
-                        <div class="power-stat">
-                            <span class="power-stat-label">Right midpoint <code>m2</code></span>
-                            <div class="power-stat-value" id="power-midpoint-2">0.95</div>
+                        <div class="power-stat widget-stat-card">
+                            <span class="power-stat-label widget-stat-label">Right midpoint <code>m2</code></span>
+                            <div class="power-stat-value widget-stat-value" id="power-midpoint-2">0.95</div>
                         </div>
-                        <div class="power-stat">
-                            <span class="power-stat-label">Power</span>
-                            <div class="power-stat-value" id="power-value">3</div>
+                        <div class="power-stat widget-stat-card">
+                            <span class="power-stat-label widget-stat-label">Power</span>
+                            <div class="power-stat-value widget-stat-value" id="power-value">3</div>
                         </div>
                     </div>
 
@@ -1641,7 +1595,8 @@
 
                     <div class="power-note" id="power-note" aria-live="polite"></div>
                     <div class="power-depths" id="power-depths" aria-label="Repeated dyadic bisection of the unit interval"></div>
-                </div>
+                    </div>
+                </details>
 
                 <h3>Using a stack for locality of reference</h3>
 
@@ -2033,8 +1988,12 @@
         return values;
     }
 
+    function formatDecimal(value, digits) {
+        return value.toFixed(digits).replace(/\.0+$/, "").replace(/(\.\d*[1-9])0+$/, "$1");
+    }
+
     function formatList(values, digits) {
-        return values.map((value) => value.toFixed(digits).replace(/\.0+$/, "").replace(/(\.\d*[1-9])0+$/, "$1")).join(", ");
+        return values.map((value) => formatDecimal(value, digits)).join(", ");
     }
 
     function entropyNote(h, runCount) {
@@ -2059,21 +2018,52 @@
         return values;
     }
 
-    function renderEntropyDistribution(container, runLengths) {
-        container.innerHTML = "";
-        const total = runLengths.reduce((sum, value) => sum + value, 0);
+    function bindCommittedTextInput(input, update) {
+        input.addEventListener("change", () => {
+            update(input.value);
+        });
 
-        runLengths.forEach((length, index) => {
+        input.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                update(input.value);
+            }
+        });
+    }
+
+    function applyRunLengthPreset(input, values, update) {
+        input.value = values.join(", ");
+        update(input.value);
+    }
+
+    function renderProportionalSegments(container, items, { getClassName, getWeight, getLabel, getTitle, ariaLabel }) {
+        container.innerHTML = "";
+
+        items.forEach((item, index) => {
             const segment = document.createElement("div");
-            segment.className = `entropy-segment run-${index % 4}`;
-            segment.style.flexGrow = String(length);
+            segment.className = getClassName(item, index);
+            segment.style.flexGrow = String(getWeight(item, index));
             segment.style.flexBasis = "0";
-            segment.title = `Run ${index + 1}: length ${length}`;
-            segment.textContent = length;
+            segment.title = getTitle(item, index);
+            segment.textContent = getLabel(item, index);
             container.appendChild(segment);
         });
 
-        container.setAttribute("aria-label", `Run length distribution with total length ${total}`);
+        if (ariaLabel) {
+            container.setAttribute("aria-label", ariaLabel);
+        }
+    }
+
+    function renderEntropyDistribution(container, runLengths) {
+        const total = runLengths.reduce((sum, value) => sum + value, 0);
+
+        renderProportionalSegments(container, runLengths, {
+            getClassName: (_length, index) => `entropy-segment run-${index % 4}`,
+            getWeight: (length) => length,
+            getLabel: (length) => String(length),
+            getTitle: (length, index) => `Run ${index + 1}: length ${length}`,
+            ariaLabel: `Run length distribution with total length ${total}`,
+        });
     }
 
     function initEntropyWidget() {
@@ -2129,29 +2119,18 @@
             const action = button.dataset.entropyAction;
 
             if (preset) {
-                input.value = presets[preset].join(", ");
-                update(input.value);
+                applyRunLengthPreset(input, presets[preset], update);
                 return;
             }
 
             if (action === "random") {
-                input.value = randomRunLengths().join(", ");
-                update(input.value);
+                applyRunLengthPreset(input, randomRunLengths(), update);
                 return;
             }
 
         });
 
-        input.addEventListener("change", () => {
-            update(input.value);
-        });
-
-        input.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                update(input.value);
-            }
-        });
+        bindCommittedTextInput(input, update);
 
         update(input.value);
     }
@@ -2164,7 +2143,7 @@
     }
 
     function formatNormalized(value, digits) {
-        return value.toFixed(digits).replace(/\.0+$/, "").replace(/(\.\d*[1-9])0+$/, "$1");
+        return formatDecimal(value, digits);
     }
 
     function formatTicks(ticks) {
@@ -2654,24 +2633,20 @@
     }
 
     function renderStackRunStrip(container, event) {
-        container.innerHTML = "";
-
-        event.runs.forEach((run, index) => {
-            const segment = document.createElement("div");
-            segment.className = `stack-run-segment run-${index % 4}`;
-            segment.style.flexGrow = String(run.len);
-            segment.style.flexBasis = "0";
-            segment.textContent = stackRunLabel(run, event.total);
-            segment.title = `${run.label}: start ${run.start}, length ${run.len}`;
-
-            if (run.id > event.discoveredCount) {
-                segment.classList.add("is-undiscovered");
-            }
-            if (run.id === event.activeRunId) {
-                segment.classList.add("is-active");
-            }
-
-            container.appendChild(segment);
+        renderProportionalSegments(container, event.runs, {
+            getClassName: (run, index) => {
+                const classes = [`stack-run-segment`, `run-${index % 4}`];
+                if (run.id > event.discoveredCount) {
+                    classes.push("is-undiscovered");
+                }
+                if (run.id === event.activeRunId) {
+                    classes.push("is-active");
+                }
+                return classes.join(" ");
+            },
+            getWeight: (run) => run.len,
+            getLabel: (run) => stackRunLabel(run, event.total),
+            getTitle: (run) => `${run.label}: start ${run.start}, length ${run.len}`,
         });
     }
 
@@ -2843,8 +2818,7 @@
             const nav = button.dataset.stackNav;
 
             if (preset) {
-                input.value = presets[preset].join(", ");
-                updateFromInput(input.value);
+                applyRunLengthPreset(input, presets[preset], updateFromInput);
                 return;
             }
 
@@ -2867,16 +2841,7 @@
             }
         });
 
-        input.addEventListener("change", () => {
-            updateFromInput(input.value);
-        });
-
-        input.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                updateFromInput(input.value);
-            }
-        });
+        bindCommittedTextInput(input, updateFromInput);
 
         updateFromInput(input.value);
     }
