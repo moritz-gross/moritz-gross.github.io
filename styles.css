@@ -63,21 +63,11 @@ header {
 
 .header-nav a {
     color: inherit;
-    text-decoration: none;
-    opacity: 0.8;
     transition: opacity 0.2s;
+    text-decoration: none;
     font-size: 1.05rem;
     padding: 0.35rem 0;
-}
-
-.header-nav a:hover {
-    opacity: 1;
-}
-
-.portrait {
-    width: 20%;
-    height: auto;
-    border-radius: 10%;
+    opacity: 0.8;
 }
 
 #about .about-wrapper {
@@ -128,6 +118,7 @@ header {
     transition: opacity 0.2s;
 }
 
+.header-nav a:hover,
 .contact-links a:hover {
     opacity: 1;
 }
@@ -190,11 +181,13 @@ time {
     margin: 0 0 0.3rem;
 }
 
+.section-list,
 .project-list {
     margin: 0;
     padding-left: 1.1rem;
 }
 
+.section-list li + li,
 .project-list li + li {
     margin-top: 0.55rem;
 }
@@ -230,11 +223,13 @@ time {
     font-size: 0.95rem;
 }
 
-.software-page .project-meta-links a {
+.software-page .project-meta-links a,
+.toc a {
     text-decoration: none;
 }
 
-.software-page .project-meta-links a:hover {
+.software-page .project-meta-links a:hover,
+.toc a:hover {
     text-decoration: underline;
 }
 
@@ -282,10 +277,6 @@ time {
 }
 .toc ul { margin: 0.5rem 0 0; padding-left: 1.25rem; }
 .toc li { padding: 0.15rem 0; }
-.toc a { text-decoration: none; }
-.toc a:hover { text-decoration: underline; }
-
-.toc-inline { display: none; }
 .toc-sidebar {
     display: block;
     position: fixed;
