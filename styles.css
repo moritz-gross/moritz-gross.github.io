@@ -199,6 +199,85 @@ time {
     margin-top: 0.55rem;
 }
 
+.software-page .project-feature {
+    margin-bottom: 1rem;
+}
+
+.software-page .project-feature-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.4rem;
+}
+
+.software-page .project-feature-copy {
+    min-width: 0;
+}
+
+.software-page .project-feature-title {
+    margin: 0 0 0.45rem;
+    font-size: 1.08rem;
+}
+
+.software-page .project-feature-title a {
+    color: inherit;
+}
+
+.software-page .project-feature-title-with-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.software-page .project-inline-logo {
+    width: 126px;
+    height: auto;
+    display: block;
+}
+
+.software-page .project-feature-copy p {
+    margin: 0 0 0.75rem;
+}
+
+.software-page .project-meta-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.9rem;
+    font-size: 0.95rem;
+}
+
+.software-page .project-meta-links a {
+    text-decoration: none;
+}
+
+.software-page .project-meta-links a:hover {
+    text-decoration: underline;
+}
+
+.software-page .project-feature-figure {
+    margin: 0;
+    flex: 0 0 clamp(180px, 28%, 240px);
+}
+
+.software-page .project-feature-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid color-mix(in srgb, black 12%, transparent);
+    padding: 0.4rem;
+    background: color-mix(in srgb, white 80%, transparent);
+}
+
+@media (max-width: 720px) {
+    .software-page .project-feature-body {
+        flex-direction: column;
+    }
+
+    .software-page .project-feature-figure {
+        width: min(100%, 320px);
+        flex-basis: auto;
+    }
+}
+
 
 /* Table of Contents */
 .toc {
