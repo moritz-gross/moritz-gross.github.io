@@ -1,5 +1,6 @@
 // Detect if we're in a subdirectory and if this is the home page
-const pathPrefix = location.pathname.includes('/posts/') ? '../' : '';
+const scriptSrc = document.currentScript.getAttribute('src');
+const pathPrefix = scriptSrc.replace(/components\/header\.js$/, '');
 const isHome = location.pathname.endsWith('index.html') || location.pathname.endsWith('/');
 
 
