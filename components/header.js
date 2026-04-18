@@ -8,8 +8,9 @@ document.currentScript.insertAdjacentHTML('afterend', `
 <header>
     <nav class="header-nav">
         <a href="${pathPrefix}index.html">Home</a>
-        <a href="${pathPrefix}blog.html">Blog</a>
         <a href="${pathPrefix}software.html">Software</a>
+        <a href="${pathPrefix}publications.html">Publications</a>
+        <a href="${pathPrefix}blog.html">Blog</a>
     </nav>
     <div class="contact-links header-contact-links">
         <a href="mailto:hi@mgross.dev" title="Email">
