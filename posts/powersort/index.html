@@ -817,7 +817,7 @@
         <article class="post">
 
             <header class="post-header">
-                <h2 class="post-title">Powersort</h2>
+                <h1 class="article-title">Powersort</h1>
             </header>
 
             <section class="post-content">
@@ -828,7 +828,7 @@
 
                 <script src="../../components/toc.js"></script>
 
-                <h3>Introduction</h3>
+                <h2>Introduction</h2>
                 <p>
                     <em>Powersort</em> is a modern sorting algorithm (proposed 2018 in <a href="https://arxiv.org/pdf/1805.04154">Nearly-Optimal Mergesorts: Fast, Practical Sorting Methods That Optimally Adapt to Existing Runs</a>)
                     that keeps the worst-case guarantees of Mergesort, but works faster on inputs that already
@@ -913,7 +913,7 @@
                     as a real world use case handles this, see the <a href="#appendix-numpy-execution">appendix</a>.
                 </p>
 
-                <h3>Merging of runs</h3>
+                <h2>Merging of runs</h2>
                 <p>
                     To use these runs productively for sorting, we can borrow the merge-operation of Mergesort.
                     It takes two runs that are next to each other and merges them to one
@@ -948,7 +948,7 @@
                     to be just one big run.
                 </p>
 
-                <h3>Finding good merge trees</h3>
+                <h2>Finding good merge trees</h2>
 
                 <p>
                     So far, it is not specified in which order which runs are supposed to be merged.
@@ -1040,7 +1040,7 @@
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
 
-                <h3>Related example: Matrix Chain Multiplication</h3>
+                <h2>Related example: Matrix Chain Multiplication</h2>
 
                 <p>
                     A similar idea appears in a another important context: matrix multiplication.
@@ -1153,7 +1153,7 @@
                 </p>
 
 
-                <h3>Measuring difficulty: the entropy of runs</h3>
+                <h2>Measuring difficulty: the entropy of runs</h2>
 
                 <p>
                     We now know that instead of only counting runs, we should look at the <em>distribution</em> of run lengths.
@@ -1265,7 +1265,7 @@
                 </p>
 
 
-                <h3>The Power of a Run</h3>
+                <h2>The Power of a Run</h2>
 
                 <p>
                     From the merge order examples above, we saw that first merging "similar-sized" runs leads to
@@ -1343,7 +1343,7 @@
                     </figcaption>
                 </figure>
 
-                <h3>Stack-Based Execution</h3>
+                <h2>Stack-Based Execution</h2>
 
                 <p>
                     Powersort processes runs left-to-right, maintaining a stack of pending runs. When a new
@@ -1429,7 +1429,7 @@
                     </div>
                 </details>
 
-                <h3>Computing Power Efficiently</h3>
+                <h2>Computing Power Efficiently</h2>
 
                 <p>
                     The definition of power involves comparing binary expansions of fractions, which sounds
@@ -1598,7 +1598,7 @@
                     </div>
                 </details>
 
-                <h3>Using a stack for locality of reference</h3>
+                <h2>Using a stack for locality of reference</h2>
 
                 <p>
                     Beyond the theoretical cost analysis, Powersort's merge order also has practical performance
@@ -1656,7 +1656,7 @@
                     intermediate result, making it more likely that useful data gets evicted from cache.
                 </p>
 
-                <h3>Closing thoughts</h3>
+                <h2>Closing thoughts</h2>
 
                 <p>
                     Powersort is an elegant piece of computer science because it is both practically effective and theoretically grounded.
@@ -1680,7 +1680,7 @@
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
 
-                <h3 id="appendix-numpy-execution">Appendix: How NumPy Executes This</h3>
+                <h2 id="appendix-numpy-execution">Appendix: How NumPy Executes This</h2>
 
                 <p>
                     For readers who want to connect the exposition to real code,
@@ -1714,7 +1714,7 @@
 
                 <hr style="border-style: dashed; margin: 2rem 0;">
 
-                <h3>References</h3>
+                <h2>References</h2>
 
                 <p>Powersort Algorithm:</p>
                 <ul>

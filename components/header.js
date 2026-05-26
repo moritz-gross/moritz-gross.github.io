@@ -1,7 +1,6 @@
-// Detect if we're in a subdirectory and if this is the home page
+// Detect if we're in a subdirectory
 const scriptSrc = document.currentScript.getAttribute('src');
 const pathPrefix = scriptSrc.replace(/components\/header\.js$/, '');
-const isHome = location.pathname.endsWith('index.html') || location.pathname.endsWith('/');
 
 
 document.currentScript.insertAdjacentHTML('afterend', `
@@ -28,3 +27,14 @@ document.currentScript.insertAdjacentHTML('afterend', `
     </div>
 </header>
 `);
+
+const normalizePath = path => path.replace(/\/index\.html$/, '/');
+const currentPath = normalizePath(location.pathname);
+
+document.querySelectorAll('.header-nav a').forEach(link => {
+    const linkPath = normalizePath(new URL(link.href).pathname);
+    if (linkPath === currentPath) {
+        link.classList.add('is-current');
+        link.setAttribute('aria-current', 'page');
+    }
+});
