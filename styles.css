@@ -170,7 +170,9 @@ header + main {
 }
 
 .header-nav a.is-current {
-    font-weight: 700;
+    text-decoration-line: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.25em;
 }
 
 .contact-links svg {
