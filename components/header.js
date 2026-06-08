@@ -7,7 +7,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
 <header>
     <nav class="header-nav">
         <a href="${pathPrefix}index.html">Home</a>
-        <a href="${pathPrefix}software.html">open-source</a>
+        <a href="${pathPrefix}software.html">Open-Source</a>
         <a href="${pathPrefix}publications.html">Publications</a>
         <a href="${pathPrefix}blog.html">Blog</a>
     </nav>
