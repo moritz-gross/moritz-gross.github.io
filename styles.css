@@ -368,3 +368,23 @@ code {
     padding: 0.1em 0.3em;
     border-radius: 3px;
 }
+
+.abstract {
+    margin: 0.5rem 0;
+}
+
+.abstract-label {
+    cursor: pointer;
+    font-style: italic;
+    text-decoration: underline dotted;
+}
+
+.abstract p {
+    display: none;
+    margin: 0.25rem 0 0;
+}
+
+.abstract:hover p,
+.abstract:focus-within p {
+    display: block;
+}
